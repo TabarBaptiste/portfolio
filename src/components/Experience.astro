@@ -1,0 +1,115 @@
+---
+import Section from './ui/Section.astro';
+import Card from './ui/Card.astro';
+
+// Remplacer ces données par vos vraies expériences
+const experiences = [
+  {
+    title: 'Développeur Fullstack',
+    company: 'Nom de l\'entreprise',
+    period: '2023 - Présent',
+    description: 'Développement d\'applications web modernes avec React, Node.js et PostgreSQL. Mise en place de l\'architecture microservices et optimisation des performances.',
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker'],
+    type: 'work'
+  },
+  {
+    title: 'Développeur Frontend',
+    company: 'Autre entreprise',
+    period: '2022 - 2023',
+    description: 'Création d\'interfaces utilisateur réactives et accessibles. Collaboration étroite avec l\'équipe design pour implémenter les maquettes.',
+    technologies: ['Vue.js', 'Tailwind CSS', 'TypeScript'],
+    type: 'work'
+  },
+  {
+    title: 'Étudiant en Développement Web',
+    company: 'Digital School Paris',
+    period: '2020 - 2023',
+    description: 'Formation en développement web fullstack, apprentissage des technologies modernes et réalisation de projets concrets.',
+    technologies: ['HTML/CSS', 'JavaScript', 'PHP', 'MySQL'],
+    type: 'education'
+  }
+];
+---
+
+<Section 
+  id="experience" 
+  title="Mon parcours"
+  subtitle="Découvrez mes expériences professionnelles et académiques"
+>
+  <div class="relative">
+    <!-- Timeline verticale -->
+    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary-500 to-primary-600"></div>
+
+    <!-- Expériences -->
+    <div class="space-y-12">
+      {experiences.map((exp, index) => (
+        <div 
+          class={`reveal flex flex-col md:flex-row items-center gap-8 ${
+            index % 2 === 0 ? 'md:flex-row-reverse' : ''
+          }`}
+        >
+          <!-- Carte d'expérience -->
+          <div class="flex-1 w-full">
+            <Card className="relative">
+              <!-- Indicateur de type -->
+              <div class={`absolute -top-3 ${index % 2 === 0 ? 'right-4' : 'left-4'} px-3 py-1 rounded-full text-xs font-semibold ${
+                exp.type === 'work' 
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
+                  : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
+              }`}>
+                {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
+              </div>
+
+              <!-- Contenu -->
+              <div class="pt-2">
+                <div class="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 class="text-xl font-bold text-dark-100 mb-1">{exp.title}</h3>
+                    <p class="text-primary-400 font-medium">{exp.company}</p>
+                  </div>
+                  <span class="text-sm text-dark-400 whitespace-nowrap ml-4">{exp.period}</span>
+                </div>
+
+                <p class="text-dark-300 mb-4 leading-relaxed">
+                  {exp.description}
+                </p>
+
+                <!-- Technologies -->
+                <div class="flex flex-wrap gap-2">
+                  {exp.technologies.map((tech) => (
+                    <span class="px-3 py-1 rounded-lg bg-dark-800/50 text-primary-400 text-sm border border-dark-700">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <!-- Point sur la timeline (desktop uniquement) -->
+          <div class="hidden md:block relative flex-shrink-0">
+            <div class="w-4 h-4 rounded-full bg-primary-500 border-4 border-dark-900 shadow-lg shadow-primary-500/50"></div>
+            <div class="absolute inset-0 w-4 h-4 rounded-full bg-primary-500 animate-ping opacity-75"></div>
+          </div>
+
+          <!-- Espace pour l'autre côté -->
+          <div class="hidden md:block flex-1"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- CTA pour télécharger le CV -->
+  <div class="text-center mt-16 reveal">
+    <a 
+      href="#" 
+      download
+      class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-300 hover:scale-105"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      Télécharger mon CV
+    </a>
+  </div>
+</Section>

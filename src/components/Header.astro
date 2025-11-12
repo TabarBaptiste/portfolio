@@ -1,0 +1,129 @@
+---
+const navItems = [
+    { name: "Accueil", href: "#home" },
+    { name: "À propos", href: "#about" },
+    { name: "Expérience", href: "#experience" },
+    { name: "Projets", href: "#projects" },
+    { name: "Compétences", href: "#skills" },
+    { name: "Contact", href: "#contact" },
+];
+---
+
+<header
+    id="header"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+    <nav class="max-w-7xl mx-auto px-4 md:px-8 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a
+                href="#home"
+                class="text-2xl font-bold gradient-text hover:scale-110 transition-transform duration-300"
+            >
+                Portfolio
+            </a>
+
+            <!-- Navigation Desktop -->
+            <ul class="hidden md:flex items-center space-x-8">
+                {
+                    navItems.map((item) => (
+                        <li>
+                            <a
+                                href={item.href}
+                                class="text-dark-300 hover:text-primary-400 transition-colors duration-300 relative group"
+                            >
+                                {item.name}
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300" />
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+
+            <!-- Bouton Menu Mobile -->
+            <button
+                id="mobile-menu-button"
+                class="md:hidden text-dark-100 focus:outline-none"
+                aria-label="Menu"
+            >
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        id="menu-icon"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div
+            id="mobile-menu"
+            class="md:hidden hidden mt-4 glass rounded-2xl p-4 animate-fade-down"
+        >
+            <ul class="space-y-3">
+                {
+                    navItems.map((item) => (
+                        <li>
+                            <a
+                                href={item.href}
+                                class="block text-dark-200 hover:text-primary-400 transition-colors duration-300 py-2 px-4 rounded-xl hover:bg-dark-800/50"
+                            >
+                                {item.name}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<script>
+    // Effet de transparence au scroll
+    const header = document.getElementById("header");
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 100) {
+            header?.classList.add("glass", "shadow-lg");
+        } else {
+            header?.classList.remove("glass", "shadow-lg");
+        }
+
+        lastScroll = currentScroll;
+    });
+
+    // Toggle menu mobile
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    mobileMenuButton?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+
+        // Animation de l'icône
+        if (mobileMenu?.classList.contains("hidden")) {
+            menuIcon?.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        } else {
+            menuIcon?.setAttribute("d", "M6 18L18 6M6 6l12 12");
+        }
+    });
+
+    // Fermer le menu mobile au clic sur un lien
+    const mobileLinks = mobileMenu?.querySelectorAll("a");
+    mobileLinks?.forEach((link) => {
+        link.addEventListener("click", () => {
+            mobileMenu?.classList.add("hidden");
+            menuIcon?.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        });
+    });
+</script>

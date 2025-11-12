@@ -1,0 +1,77 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Portfolio - Développeur Web",
+    description = "Portfolio personnel de développeur web fullstack spécialisé en développement moderne",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+
+        <title>{title}</title>
+    </head>
+    <body class="overflow-x-hidden">
+        <slot />
+
+        <!-- Script pour les animations au scroll -->
+        <script>
+            // Observer pour les animations au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -100px 0px",
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, observerOptions);
+
+            // Observer tous les éléments avec la classe 'reveal'
+            document.addEventListener("DOMContentLoaded", () => {
+                const revealElements = document.querySelectorAll(".reveal");
+                revealElements.forEach((el) => observer.observe(el));
+            });
+
+            // Smooth scroll pour les liens d'ancrage
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const href = (anchor as HTMLAnchorElement).getAttribute("href");
+                    const target = href ? document.querySelector(href) : null;
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

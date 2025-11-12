@@ -1,0 +1,31 @@
+---
+interface Props {
+    id?: string;
+    title?: string;
+    subtitle?: string;
+    className?: string;
+}
+
+const { id, title, subtitle, className = "" } = Astro.props;
+---
+
+<section id={id} class={`py-20 px-4 md:px-8 ${className}`}>
+    <div class="max-w-6xl mx-auto">
+        {
+            title && (
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+                        {title}
+                    </h2>
+                    {subtitle && (
+                        <p class="text-dark-400 text-lg md:text-xl max-w-2xl mx-auto">
+                            {subtitle}
+                        </p>
+                    )}
+                    <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-primary-600 mx-auto mt-6 rounded-full" />
+                </div>
+            )
+        }
+        <slot />
+    </div>
+</section>
