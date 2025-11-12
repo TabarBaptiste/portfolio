@@ -2,30 +2,29 @@
 import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
 
-// Remplacer ces données par vos vraies expériences
 const experiences = [
   {
-    title: 'Développeur Fullstack',
-    company: 'Nom de l\'entreprise',
-    period: '2023 - Présent',
-    description: 'Développement d\'applications web modernes avec React, Node.js et PostgreSQL. Mise en place de l\'architecture microservices et optimisation des performances.',
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker'],
-    type: 'work'
+    title: 'Mastère Architecte Web',
+    company: 'Département du Val-de-Marne',
+    period: 'En cours - Niveau 7',
+    description: 'Formation en alternance axée sur l\'architecture web, le développement fullstack et la conception de solutions performantes et maintenables.',
+    technologies: ['Architecture Web', 'Fullstack', 'Gestion de projets'],
+    type: 'education'
   },
   {
-    title: 'Développeur Frontend',
-    company: 'Autre entreprise',
-    period: '2022 - 2023',
-    description: 'Création d\'interfaces utilisateur réactives et accessibles. Collaboration étroite avec l\'équipe design pour implémenter les maquettes.',
-    technologies: ['Vue.js', 'Tailwind CSS', 'TypeScript'],
-    type: 'work'
+    title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web',
+    company: 'Parcours DAW2I',
+    period: 'Obtenue',
+    description: 'Développement avancé d\'Applications Web Internet et Intranet. Modélisation de données, conception et réalisation de sites web, programmation client et serveur, intégration de services web.',
+    technologies: ['Front-End', 'Back-End', 'CMS', 'Services Web'],
+    type: 'education'
   },
   {
-    title: 'Étudiant en Développement Web',
-    company: 'Digital School Paris',
-    period: '2020 - 2023',
-    description: 'Formation en développement web fullstack, apprentissage des technologies modernes et réalisation de projets concrets.',
-    technologies: ['HTML/CSS', 'JavaScript', 'PHP', 'MySQL'],
+    title: 'BTS Services Informatiques aux Organisations',
+    company: 'Option SLAM',
+    period: 'Obtenu',
+    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives.',
+    technologies: ['Programmation', 'Base de données', 'Sécurité', 'Gestion de projet'],
     type: 'education'
   }
 ];
@@ -33,8 +32,8 @@ const experiences = [
 
 <Section 
   id="experience" 
-  title="Mon parcours"
-  subtitle="Découvrez mes expériences professionnelles et académiques"
+  title="Formation"
+  subtitle="Mon parcours académique et professionnel"
 >
   <div class="relative">
     <!-- Timeline verticale -->
