@@ -3,7 +3,7 @@ name: Déploiement Astro
 on:
   # Déclenche le workflow lors d'un push sur la branche main
   push:
-    branches: [main]
+    branches: [copilot/update-baptiste-profile] # TODO : Remplacer par 'main' une fois les modifications validées
   
   # Permet de déclencher manuellement le workflow depuis l'onglet Actions
   workflow_dispatch:
