@@ -89,9 +89,7 @@ import Button from "./ui/Button.astro";
         </div>
 
         <!-- Scroll indicator -->
-        <div
-            class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
-        >
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"> <!-- TODO : le bouton est mal placé -->
             <a
                 href="#about"
                 class="text-dark-400 hover:text-primary-400 transition-colors"
@@ -118,7 +116,7 @@ import Button from "./ui/Button.astro";
     const texts = [
         "Architecte Web",
         "Développeur Fullstack",
-        "Conception d'interfaces",
+        "Conception d'interfaces", // TODO : mettre quelque chose de plus accrocheur
     ];
     let textIndex = 0;
     let charIndex = 0;
