@@ -2,39 +2,98 @@
 import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
 
-// Remplacer ces données par vos vraies expériences
 const experiences = [
   {
-    title: 'Développeur Fullstack',
-    company: 'Nom de l\'entreprise',
+    title: 'Mastère Architecte Web',
+    company: 'Digital School of Paris - Institut F2I',
+    period: 'BAC+5 : 2024 - Présent',
+    year: 2026,
+    description: "Formation d’expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d’applications complexes, en gestion d’équipes techniques et en stratégie de transformation digitale",
+    technologies: [
+      "Digitalisation",
+      "Full-Stack",
+      "Gestion de projet",
+      "DevOps",
+      "Leadership",
+      "UX/UI Design"
+    ],
+    type: 'education'
+  },
+  {
+    title: 'Développeur Full-Stack - Alternance',
+    company: 'Conseil Départemental du Val-de-Marne',
     period: '2023 - Présent',
-    description: 'Développement d\'applications web modernes avec React, Node.js et PostgreSQL. Mise en place de l\'architecture microservices et optimisation des performances.',
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker'],
+    year: 2023.5,
+    description: "Refonte complète d'applications web (backend et frontend), gestion et optimisation de bases de données, maintenance et évolution de solutions existantes. Conception et développement d'une extension VS Code pour améliorer la productivité de l'équipe",
+    technologies: [
+      "Frontend",
+      "Backend",
+      "Base de données",
+      "VS Code Extension",
+      "Maintenance"
+    ],
     type: 'work'
   },
   {
-    title: 'Développeur Frontend',
-    company: 'Autre entreprise',
-    period: '2022 - 2023',
-    description: 'Création d\'interfaces utilisateur réactives et accessibles. Collaboration étroite avec l\'équipe design pour implémenter les maquettes.',
-    technologies: ['Vue.js', 'Tailwind CSS', 'TypeScript'],
+    title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web (Parcours DAW2I)',
+    company: 'Université d\'Evry Val d\'Essonne - Paris Saclay',
+    period: 'BAC+4 : 2023 - 2024',
+    year: 2023.2,
+    description: "Formation axée sur le développement avancé d’applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d’interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d’applications réelles",
+    technologies: [
+      "Front-End",
+      "Back-End",
+      "Modélisation",
+      "Intégration",
+      "CMS"
+    ],
+    type: 'education'
+  },
+  {
+    title: 'Développeur Web - Stage',
+    company: 'RJ Web',
+    period: '2023',
+    year: 2023,
+    description: "Gestion et répertoriation des activités du quartier Lavalle. Développement d'un système de facilitation des inscriptions à des évènements locaux et création d'une newsletter pour améliorer la communication avec les résidents",
+    technologies: [
+      "Développement Web",
+      "Gestion de contenu",
+      "Newsletter",
+      "Base de données",
+      "Authentification"
+    ],
     type: 'work'
   },
   {
-    title: 'Étudiant en Développement Web',
-    company: 'Digital School Paris',
-    period: '2020 - 2023',
-    description: 'Formation en développement web fullstack, apprentissage des technologies modernes et réalisation de projets concrets.',
-    technologies: ['HTML/CSS', 'JavaScript', 'PHP', 'MySQL'],
+    title: 'Développeur Web - Stage',
+    company: 'Crédit Agricole',
+    period: '2022',
+    year: 2022,
+    description: "Pôle Achat Technologie Service : Création d'interface web, gestion de bases de données et développement de scripts d'automatisation pour optimiser les processus internes",
+    technologies: [
+      "Développement Web",
+      "Base de données",
+      "Scripting",
+      "Automatisation"
+    ],
+    type: 'work'
+  },
+  {
+    title: 'BTS Services Informatiques aux Organisations - Option SLAM',
+    company: 'Lycée Léonard de Vinci, Melun',
+    period: '2021 - 2023',
+    year: 2022.5,
+    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives',
+    technologies: ['Programmation', 'Base de données', 'Sécurité', 'Collaboration', 'Développement web'],
     type: 'education'
   }
-];
+].sort((a, b) => b.year - a.year);
 ---
 
 <Section 
   id="experience" 
-  title="Mon parcours"
-  subtitle="Découvrez mes expériences professionnelles et académiques"
+  title="Parcours"
+  subtitle="Mon parcours académique et professionnel"
 >
   <div class="relative">
     <!-- Timeline verticale -->
@@ -56,7 +115,7 @@ const experiences = [
                 exp.type === 'work' 
                   ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
                   : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
-              }`}>
+              }`} style="margin-top: 3.5%">
                 {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
               </div>
 
@@ -102,7 +161,7 @@ const experiences = [
   <!-- CTA pour télécharger le CV -->
   <div class="text-center mt-16 reveal">
     <a 
-      href="#" 
+      href="Curriculum_Vitae_TABAR_LABONNE_Baptiste.pdf" 
       download
       class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-300 hover:scale-105"
     >

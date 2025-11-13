@@ -6,69 +6,90 @@ const skillCategories = [
     {
         title: "Frontend",
         icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
     </svg>`,
         skills: [
-            { name: "HTML/CSS", level: 95 },
-            { name: "JavaScript", level: 90 },
-            { name: "React", level: 85 },
-            { name: "Tailwind CSS", level: 90 },
-            { name: "Vue.js", level: 80 },
+            { name: "HTML5 / CSS3", level: 95 },
+            { name: "JavaScript / TypeScript", level: 90 },
+            { name: "Angular / Next.js / Vue.js", level: 80 },
+            { name: "ExtJS", level: 80 },
         ],
     },
     {
-        title: "Backend",
+        title: "Backend & API",
         icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
     </svg>`,
         skills: [
-            { name: "Node.js", level: 85 },
-            { name: "Express", level: 85 },
-            { name: "PHP", level: 75 },
-            { name: "Python", level: 70 },
-            { name: "REST API", level: 90 },
+            { name: "PHP / Symfony", level: 80 },
+            { name: "Node.js / NestJS / Express", level: 75 },
+            { name: "Architecture MVC", level: 90 },
+            { name: "API REST", level: 85 },
         ],
     },
     {
-        title: "Base de données",
+        title: "Base de données & Mobile",
         icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
     </svg>`,
         skills: [
-            { name: "PostgreSQL", level: 85 },
-            { name: "MySQL", level: 85 },
-            { name: "MongoDB", level: 80 },
-            { name: "Firebase", level: 75 },
+            { name: "MySQL / SQL", level: 90 },
+            { name: "PostgreSQL", level: 80 },
+            { name: "NeonDB / Firebase", level: 65 },
+            { name: "Flutter / Dart", level: 60 },
         ],
     },
     {
-        title: "Outils & Autres",
+        title: "DevOps & CI/CD",
         icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
     </svg>`,
         skills: [
-            { name: "Git", level: 90 },
-            { name: "Docker", level: 75 },
-            { name: "Figma", level: 80 },
-            { name: "Agile/Scrum", level: 85 },
+            { name: "Git / GitHub", level: 85 },
+            { name: "GitHub Actions / CircleCI", level: 85 },
+            { name: "Docker (bases)", level: 60 },
+            { name: "Netlify / Vercel", level: 80 },
+        ],
+    },
+    {
+        title: "Qualité & Performance",
+        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+    </svg>`,
+        skills: [
+            { name: "Tests unitaires", level: 60 },
+            { name: "Sentry (monitoring)", level: 65 },
+            { name: "SEO / Référencement", level: 65 },
+            { name: "Optimisation performances", level: 75 },
+        ],
+    },
+    {
+        title: "Gestion de projet",
+        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+    </svg>`,
+        skills: [
+            { name: "Méthodes Agiles / Scrum", level: 85 },
+            { name: "Jira / Trello", level: 75 },
+            { name: "GitHub Projects", level: 80 },
+            { name: "Diagrammes Gantt", level: 50 },
         ],
     },
 ];
 
 const otherSkills = [
-    "TypeScript",
-    "Next.js",
-    "Astro",
-    "Redux",
-    "GraphQL",
-    "Webpack",
-    "Jest",
-    "CI/CD",
-    "AWS",
     "Responsive Design",
-    "SEO",
-    "Accessibility",
+    "Accessibilité Web",
+    "UX/UI Design",
+    "Markdown",
+    "Sécurité Web",
+    "Architecture Web",
+    "Modélisation UML",
+    "Maintenance & Migration",
+    "Veille technologique",
+    "WAMP / PhpMyAdmin",
+    "Render / Railway",
+    "SVN",
 ];
 ---
 
@@ -125,7 +146,7 @@ const otherSkills = [
     <!-- Compétences supplémentaires -->
     <div class="reveal">
         <h3 class="text-2xl font-bold text-center mb-8 text-dark-100">
-            Autres compétences
+            Compétences complémentaires
         </h3>
         <div class="flex flex-wrap justify-center gap-3">
             {
@@ -138,90 +159,6 @@ const otherSkills = [
                     </span>
                 ))
             }
-        </div>
-    </div>
-
-    <!-- Certifications (optionnel) -->
-    <div class="mt-16 reveal">
-        <h3 class="text-2xl font-bold text-center mb-8 text-dark-100">
-            Certifications
-        </h3>
-        <div class="grid md:grid-cols-3 gap-6">
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">
-                    Certification React
-                </h4>
-                <p class="text-sm text-dark-400">2023</p>
-            </Card>
-
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">
-                    Node.js Developer
-                </h4>
-                <p class="text-sm text-dark-400">2023</p>
-            </Card>
-
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">AWS Cloud</h4>
-                <p class="text-sm text-dark-400">2024</p>
-            </Card>
         </div>
     </div>
 </Section>
