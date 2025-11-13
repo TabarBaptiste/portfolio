@@ -225,6 +225,10 @@ const socialLinks = [
 
 <script>
     // Gestion du formulaire
+    // NOTE: Ce formulaire est actuellement en mode simulation.
+    // Pour l'activer réellement, consultez CONTACT_FORM_IMPLEMENTATION.md à la racine du projet
+    // Recommandation: Utiliser Formspree pour un déploiement rapide et facile
+    
     const form = document.getElementById("contact-form") as HTMLFormElement;
     const messageDiv = document.getElementById("form-message");
 
@@ -237,6 +241,9 @@ const socialLinks = [
 
         try {
             // Simulation d'envoi (à remplacer par votre endpoint)
+            // Pour Formspree: remplacer le formulaire par <form action="https://formspree.io/f/YOUR_ID" method="POST">
+            // Pour EmailJS: utiliser emailjs.sendForm() - voir CONTACT_FORM_IMPLEMENTATION.md
+            // Pour API custom: décommenter le code ci-dessous et créer une route API
             // const response = await fetch('/api/contact', {
             //   method: 'POST',
             //   headers: { 'Content-Type': 'application/json' },
