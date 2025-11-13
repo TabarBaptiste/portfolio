@@ -5,26 +5,39 @@ import Card from './ui/Card.astro';
 const experiences = [
   {
     title: 'Mastère Architecte Web',
-    company: 'Département du Val-de-Marne',
-    period: 'En cours - Niveau 7',
-    description: 'Formation en alternance axée sur l\'architecture web, le développement fullstack et la conception de solutions performantes et maintenables.',
-    technologies: ['Architecture Web', 'Fullstack', 'Gestion de projets'],
+    company: 'Digital School of Paris - Institut F2I',
+    period: 'BAC+5',
+    description: "Formation d’expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d’applications complexes, en gestion d’équipes techniques et en stratégie de transformation digitale",
+    technologies: [
+      "Digitalisation",
+      "Full-Stack",
+      "Gestion de projet",
+      "DevOps",
+      "Leadership",
+      "UX/UI Design"
+    ],
     type: 'education'
   },
   {
-    title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web',
-    company: 'Parcours DAW2I',
-    period: 'Obtenue',
-    description: 'Développement avancé d\'Applications Web Internet et Intranet. Modélisation de données, conception et réalisation de sites web, programmation client et serveur, intégration de services web.',
-    technologies: ['Front-End', 'Back-End', 'CMS', 'Services Web'],
+    title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web (Parcours DAW2I)',
+    company: 'Université d\'Evry Val d\'Essonne - Paris Saclay',
+    period: 'BAC+3',
+    description: "Formation axée sur le développement avancé d’applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d’interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d’applications réelles",
+    technologies: [
+      "Front-End",
+      "Back-End",
+      "Modélisation",
+      "Intégration",
+      "CMS"
+    ],
     type: 'education'
   },
   {
-    title: 'BTS Services Informatiques aux Organisations',
-    company: 'Option SLAM',
-    period: 'Obtenu',
-    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives.',
-    technologies: ['Programmation', 'Base de données', 'Sécurité', 'Gestion de projet'],
+    title: 'BTS Services Informatiques aux Organisations - Option SLAM',
+    company: 'Lycée Léonard de Vinci, Melun',
+    period: 'BAC+2',
+    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives',
+    technologies: ['Programmation', 'Base de données', 'Sécurité',  'Collaboration', 'Développement web'],
     type: 'education'
   }
 ];
@@ -48,7 +61,6 @@ const experiences = [
           }`}
         >
           <!-- Carte d'expérience -->
-          <!-- TODO : La partie "type" est trop décalé vers le haut et ne sert peut-être à rien -->
           <div class="flex-1 w-full">
             <Card className="relative">
               <!-- Indicateur de type -->
@@ -56,7 +68,7 @@ const experiences = [
                 exp.type === 'work' 
                   ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
                   : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
-              }`}>
+              }`} style="margin-top: 3%">
                 {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
               </div>
 
