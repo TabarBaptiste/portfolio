@@ -29,7 +29,9 @@ import Button from "./ui/Button.astro";
         <!-- Titre principal -->
         <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Bonjour, je suis
-            <span class="gradient-text block mt-2"> Baptiste TABAR LABONNE </span>
+            <span class="gradient-text block mt-2">
+                Baptiste TABAR LABONNE
+            </span>
         </h1>
 
         <!-- Sous-titre avec effet typing -->
@@ -41,8 +43,10 @@ import Button from "./ui/Button.astro";
         <p
             class="text-lg md:text-xl text-dark-400 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-            Apprenti en Mastère Architecte Web, je conçois des solutions performantes et maintenables 
-            avec une appétence particulière pour la conception d'interfaces et la résolution de problématiques techniques.
+            Apprenti en Mastère Architecte Web, je conçois des solutions
+            performantes et maintenables avec une appétence particulière pour la
+            conception d'interfaces et la résolution de problématiques
+            techniques.
         </p>
 
         <!-- CTA Buttons -->
@@ -87,27 +91,30 @@ import Button from "./ui/Button.astro";
                 Me contacter
             </Button>
         </div>
+    </div>
 
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"> <!-- TODO : le bouton est mal placé -->
-            <a
-                href="#about"
-                class="text-dark-400 hover:text-primary-400 transition-colors"
+    <!-- Scroll indicator (positioned relative to the section, bottom center) -->
+    <div
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20"
+    >
+        <a
+            href="#about"
+            class="text-dark-400 hover:text-primary-400 transition-colors"
+            aria-label="Aller à la section À propos"
+        >
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
             >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </a>
-        </div>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
     </div>
 </section>
 
@@ -117,7 +124,7 @@ import Button from "./ui/Button.astro";
         "Développeur Fullstack",
         "Architecte Web",
         "Ingénieur développement",
-        "Consultant informatique"
+        "Consultant informatique",
     ];
     let textIndex = 0;
     let charIndex = 0;
