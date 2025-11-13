@@ -6,7 +6,8 @@ const experiences = [
   {
     title: 'Mastère Architecte Web',
     company: 'Digital School of Paris - Institut F2I',
-    period: 'BAC+5',
+    period: 'BAC+5 : 2024 - Présent',
+    year: 2026,
     description: "Formation d’expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d’applications complexes, en gestion d’équipes techniques et en stratégie de transformation digitale",
     technologies: [
       "Digitalisation",
@@ -19,9 +20,25 @@ const experiences = [
     type: 'education'
   },
   {
+    title: 'Développeur Full-Stack - Alternance',
+    company: 'Conseil Départemental du Val-de-Marne',
+    period: '2023 - Présent',
+    year: 2023.5,
+    description: "Refonte complète d'applications web (backend et frontend), gestion et optimisation de bases de données, maintenance et évolution de solutions existantes. Conception et développement d'une extension VS Code pour améliorer la productivité de l'équipe",
+    technologies: [
+      "Frontend",
+      "Backend",
+      "Base de données",
+      "VS Code Extension",
+      "Maintenance"
+    ],
+    type: 'work'
+  },
+  {
     title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web (Parcours DAW2I)',
     company: 'Université d\'Evry Val d\'Essonne - Paris Saclay',
-    period: 'BAC+3',
+    period: 'BAC+4 : 2023 - 2024',
+    year: 2023.2,
     description: "Formation axée sur le développement avancé d’applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d’interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d’applications réelles",
     technologies: [
       "Front-End",
@@ -33,19 +50,49 @@ const experiences = [
     type: 'education'
   },
   {
+    title: 'Développeur Web - Stage',
+    company: 'RJ Web',
+    period: '2023',
+    year: 2023,
+    description: "Gestion et répertoriation des activités du quartier Lavalle. Développement d'un système de facilitation des inscriptions à des évènements locaux et création d'une newsletter pour améliorer la communication avec les résidents",
+    technologies: [
+      "Développement Web",
+      "Gestion de contenu",
+      "Newsletter",
+      "Base de données",
+      "Authentification"
+    ],
+    type: 'work'
+  },
+  {
+    title: 'Développeur Web - Stage',
+    company: 'Crédit Agricole',
+    period: '2022',
+    year: 2022,
+    description: "Pôle Achat Technologie Service : Création d'interface web, gestion de bases de données et développement de scripts d'automatisation pour optimiser les processus internes",
+    technologies: [
+      "Développement Web",
+      "Base de données",
+      "Scripting",
+      "Automatisation"
+    ],
+    type: 'work'
+  },
+  {
     title: 'BTS Services Informatiques aux Organisations - Option SLAM',
     company: 'Lycée Léonard de Vinci, Melun',
-    period: 'BAC+2',
+    period: '2021 - 2023',
+    year: 2022.5,
     description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives',
-    technologies: ['Programmation', 'Base de données', 'Sécurité',  'Collaboration', 'Développement web'],
+    technologies: ['Programmation', 'Base de données', 'Sécurité', 'Collaboration', 'Développement web'],
     type: 'education'
   }
-];
+].sort((a, b) => b.year - a.year);
 ---
 
 <Section 
   id="experience" 
-  title="Formation"
+  title="Parcours"
   subtitle="Mon parcours académique et professionnel"
 >
   <div class="relative">
@@ -68,7 +115,7 @@ const experiences = [
                 exp.type === 'work' 
                   ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
                   : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
-              }`} style="margin-top: 3%">
+              }`} style="margin-top: 3.5%">
                 {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
               </div>
 
@@ -125,4 +172,3 @@ const experiences = [
     </a>
   </div>
 </Section>
-<!-- TODO : Ajouter une partie Expérience professionnelle -->
