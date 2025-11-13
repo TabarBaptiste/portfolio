@@ -2,64 +2,59 @@
 import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
 
-// Remplacer par vos vrais projets
+// Projets réels
 const projects = [
   {
-    title: 'Application de gestion d\'électricité',
-    description: 'Application web permettant d\'optimiser la consommation électrique en programmant les appareils durant les heures creuses.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-    technologies: ['HTML', 'CSS', 'JavaScript', 'Chart.js'],
-    github: '#',
-    demo: '#',
-    category: 'web'
-  },
-  {
-    title: 'Interface ExtJS moderne',
-    description: 'Migration d\'un formulaire complexe vers une interface wizard multi-étapes pour améliorer l\'UX.',
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80',
-    technologies: ['ExtJS', 'JavaScript', 'CSS'],
-    github: '#',
-    demo: '#',
-    category: 'web'
-  },
-  {
-    title: 'Portfolio Personnel',
-    description: 'Site portfolio moderne et responsive construit avec Astro et Tailwind CSS.',
-    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
-    technologies: ['Astro', 'Tailwind CSS', 'TypeScript'],
-    github: '#',
-    demo: '#',
-    category: 'web'
-  },
-  {
-    title: 'API REST Node.js',
-    description: 'API RESTful complète avec authentification JWT et documentation Swagger.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
-    technologies: ['Node.js', 'Express', 'MongoDB', 'JWT'],
-    github: '#',
-    category: 'backend'
-  },
-  {
-    title: 'Dashboard Analytics',
-    description: 'Tableau de bord interactif avec visualisations de données en temps réel.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-    technologies: ['React', 'D3.js', 'Redux', 'Material-UI'],
-    github: '#',
-    demo: '#',
-    category: 'web'
-  },
-  {
-    title: 'Application Mobile E-commerce',
-    description: 'Application mobile cross-platform pour une boutique en ligne.',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80',
-    technologies: ['React Native', 'Firebase', 'Stripe'],
-    github: '#',
-    demo: '#',
+    title: 'Beroli - Application mobile',
+    description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
+    technologies: ['Flutter', 'Dart', 'Firebase'],
+    github: 'https://github.com/matbel91765/beroli',
+    demo: 'https://www.canva.com/design/DAF-QIOEFEw/Hb1j0QiRgpWCUF9E9B322Q/view?utm_content=DAF-QIOEFEw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfc5b8fd71e',
+    demoLabel: 'Présentation',
     category: 'mobile'
+  },
+  {
+    title: 'Extension VSCode - PHP DAO Generator',
+    description: 'Extension VSCode permettant de générer automatiquement des fichiers DAO PHP à partir des attributs d\'une table de base de données. Connexion au serveur via formulaire intégré, génération de code optimisée et monitoring avec Sentry. Disponible sur le marketplace VSCode.',
+    image: '/projects/logo.png',
+    technologies: ['TypeScript', 'CI/CD', 'Sentry', 'JavaScript', 'MCP', 'Base de données'],
+    github: 'https://github.com/TabarBaptiste/dao-generation',
+    demo: 'https://marketplace.visualstudio.com/items?itemName=Baptiste-TABAR-LABONNE.php-dao-generator',
+    demoLabel: 'Marketplace',
+    category: 'web'
+  },
+  {
+    title: 'Aly dous\'heure - Site vitrine',
+    description: 'Site vitrine moderne pour une masseuse professionnelle. Système de réservation en ligne, catalogue complet des prestations, visualisation des disponibilités, formulaire de contact et géolocalisation. Interface responsive optimisée pour mobile et desktop.',
+    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    technologies: ['Astro', 'CI/CD', 'Tailwind CSS', 'JavaScript', 'Référencement SEO'],
+    github: 'https://github.com/TabarBaptiste/alydousheure_vitrine',
+    demo: 'https://aly-dousheure.netlify.app/',
+    demoLabel: 'Voir le site',
+    category: 'web'
+  },
+  {
+    title: 'RjWeb - Plateforme communautaire',
+    description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Lavalle. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
+    image: '/projects/preview.png',
+    technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
+    github: 'https://github.com/TabarBaptiste/pyramide',
+    demo: null,
+    category: 'web',
+    screenshots: [
+      { name: 'Accueil', path: '/projects/utilisateur.png' },
+      { name: 'Connexion', path: '/projects/connexion.png' },
+      { name: 'Contact', path: '/projects/contact.png' },
+      { name: 'Inscription', path: '/projects/inscription.png' },
+      { name: 'Liste inscrits', path: '/projects/inscrit.png' },
+      { name: 'Profil', path: '/projects/profil.png' },
+      { name: 'À propos', path: '/projects/about.png' }
+    ]
   }
 ];
 
-const categories = ['all', 'web', 'backend', 'mobile'];
+const categories = ['all', 'web', 'mobile'];
 ---
 
 <Section 
@@ -67,7 +62,7 @@ const categories = ['all', 'web', 'backend', 'mobile'];
   title="Mes projets"
   subtitle="Une sélection de mes réalisations récentes"
   className="bg-dark-800/30"
-> <!-- TODO : Mettre des vrais projets -->
+>
   <!-- Filtres -->
   <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
     {categories.map((category) => (
@@ -93,7 +88,7 @@ const categories = ['all', 'web', 'backend', 'mobile'];
             <img 
               src={project.image} 
               alt={project.title}
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              class={project.image && project.image.includes('logo') ? 'w-full h-full object-contain p-6 bg-white' : 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'}
               loading="lazy"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-transparent opacity-60"></div>
@@ -106,7 +101,8 @@ const categories = ['all', 'web', 'backend', 'mobile'];
                   target="_blank"
                   rel="noopener noreferrer"
                   class="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center hover:bg-primary-600 transition-colors shadow-lg"
-                  aria-label="Voir la démo"
+                  aria-label={project.demoLabel || "Voir la démo"}
+                  title={project.demoLabel || "Voir la démo"}
                 >
                   <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
@@ -119,7 +115,8 @@ const categories = ['all', 'web', 'backend', 'mobile'];
                   target="_blank"
                   rel="noopener noreferrer"
                   class="w-12 h-12 rounded-full bg-dark-700 flex items-center justify-center hover:bg-dark-600 transition-colors shadow-lg"
-                  aria-label="Voir le code"
+                  aria-label="Voir le code source"
+                  title="Voir le code sur GitHub"
                 >
                   <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
