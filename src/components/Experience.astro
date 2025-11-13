@@ -111,11 +111,11 @@ const experiences = [
           <div class="flex-1 w-full">
             <Card className="relative">
               <!-- Indicateur de type -->
-              <div class={`absolute -top-3 ${index % 2 === 0 ? 'right-4' : 'left-4'} px-3 py-1 rounded-full text-xs font-semibold ${
+              <div class={`absolute -top-3 left-4 md:${index % 2 === 0 ? 'right-4' : 'left-4'} px-3 py-1 rounded-full text-xs font-semibold ${
                 exp.type === 'work' 
                   ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
                   : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
-              }`} style="margin-top: 3.5%">
+              }`}>
                 {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
               </div>
 
