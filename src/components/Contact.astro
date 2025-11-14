@@ -224,59 +224,49 @@ const socialLinks = [
 </Section>
 
 <script>
-    // Gestion du formulaire
-    // NOTE: Ce formulaire est actuellement en mode simulation.
-    // Pour l'activer réellement, consultez CONTACT_FORM_IMPLEMENTATION.md à la racine du projet
-    // Recommandation: Utiliser Formspree pour un déploiement rapide et facile
-    
+    import emailjs from '@emailjs/browser';
+
+    // Configuration EmailJS depuis les variables d'environnement
+    const SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    // Initialiser EmailJS
+    emailjs.init(PUBLIC_KEY);
+
     const form = document.getElementById("contact-form") as HTMLFormElement;
     const messageDiv = document.getElementById("form-message");
 
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Récupérer les données du formulaire
-        // const formData = new FormData(form);
-        // const data = Object.fromEntries(formData);
-
         try {
-            // Simulation d'envoi (à remplacer par votre endpoint)
-            // Pour Formspree: remplacer le formulaire par <form action="https://formspree.io/f/YOUR_ID" method="POST">
-            // Pour EmailJS: utiliser emailjs.sendForm() - voir CONTACT_FORM_IMPLEMENTATION.md
-            // Pour API custom: décommenter le code ci-dessous et créer une route API
-            // const response = await fetch('/api/contact', {
-            //   method: 'POST',
-            //   headers: { 'Content-Type': 'application/json' },
-            //   body: JSON.stringify(data)
-            // });
+            // Envoyer l'email via EmailJS
+            await emailjs.sendForm(
+                SERVICE_ID,
+                TEMPLATE_ID,
+                form
+            );
 
-            // Simulation de succès
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // Afficher le message de succès
             if (messageDiv) {
                 messageDiv.className =
-                    "mt-4 p-4 rounded-xl bg-green-500/20 border border-green-500/50 text-green-400";
-                messageDiv.textContent =
-                    "✓ Message envoyé ! Je vous répondrai dans les plus brefs délais.";
-                messageDiv.classList.remove("hidden");
+                    'mt-4 p-4 rounded-xl bg-green-500/20 border border-green-500/50 text-green-400';
+                messageDiv.textContent = '✓ Message envoyé ! Je vous répondrai dans les plus brefs délais.';
+                messageDiv.classList.remove('hidden');
             }
 
-            // Réinitialiser le formulaire
             form.reset();
 
-            // Masquer le message après 5 secondes
             setTimeout(() => {
-                messageDiv?.classList.add("hidden");
+                messageDiv?.classList.add('hidden');
             }, 5000);
         } catch (error) {
-            // Afficher le message d'erreur
+            console.error('Erreur EmailJS:', error);
             if (messageDiv) {
                 messageDiv.className =
-                    "mt-4 p-4 rounded-xl bg-red-500/20 border border-red-500/50 text-red-400";
-                messageDiv.textContent =
-                    "✗ Une erreur s'est produite. Veuillez réessayer.";
-                messageDiv.classList.remove("hidden");
+                    'mt-4 p-4 rounded-xl bg-red-500/20 border border-red-500/50 text-red-400';
+                messageDiv.textContent = '✗ Une erreur s\'est produite. Veuillez réessayer.';
+                messageDiv.classList.remove('hidden');
             }
         }
     });
