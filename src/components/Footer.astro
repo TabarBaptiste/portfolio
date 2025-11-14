@@ -151,8 +151,8 @@ const socialLinks = [
 <!-- Bouton scroll to top flottant -->
 <button
     id="scroll-to-top"
-    class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30 flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110 z-40"
-    style="position: fixed; bottom: max(2rem, env(safe-area-inset-bottom)); right: max(2rem, env(safe-area-inset-right)); -webkit-transform: translateZ(0); transform: translateZ(0);"
+    class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30 flex items-center justify-center opacity-0 transition-all duration-300 hover:scale-110 z-40"
+    style="position: fixed !important; bottom: max(2rem, env(safe-area-inset-bottom)) !important; right: max(2rem, env(safe-area-inset-right)) !important; -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform;"
     aria-label="Retour en haut"
 >
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,11 +170,11 @@ const socialLinks = [
 
     window.addEventListener("scroll", () => {
         if (window.pageYOffset > 300) {
-            scrollToTopBtn?.classList.remove("opacity-0", "invisible");
-            scrollToTopBtn?.classList.add("opacity-100", "visible");
+            scrollToTopBtn?.classList.remove("opacity-0");
+            scrollToTopBtn?.classList.add("opacity-100");
         } else {
-            scrollToTopBtn?.classList.add("opacity-0", "invisible");
-            scrollToTopBtn?.classList.remove("opacity-100", "visible");
+            scrollToTopBtn?.classList.add("opacity-0");
+            scrollToTopBtn?.classList.remove("opacity-100");
         }
     });
 
