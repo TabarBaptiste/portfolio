@@ -20,8 +20,101 @@
         @apply bg-dark-900 text-dark-100 font-sans antialiased;
     }
 
+    /* Mode clair */
+    html:not(.dark) body {
+        @apply bg-gray-50 text-gray-900;
+    }
+
+    html:not(.dark) .glass {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    html:not(.dark) .text-dark-100 {
+        @apply text-gray-900;
+    }
+
+    html:not(.dark) .text-dark-200 {
+        @apply text-gray-800;
+    }
+
+    html:not(.dark) .text-dark-300 {
+        @apply text-gray-700;
+    }
+
+    html:not(.dark) .text-dark-400 {
+        @apply text-gray-600;
+    }
+
+    html:not(.dark) .bg-dark-800 {
+        @apply bg-white;
+    }
+
+    html:not(.dark) .bg-dark-900 {
+        @apply bg-gray-50;
+    }
+
+    html:not(.dark) .border-dark-700 {
+        @apply border-gray-300;
+    }
+
+    html:not(.dark) .bg-dark-800\/30 {
+        @apply bg-gray-100;
+    }
+
     html {
         scroll-behavior: smooth;
+    }
+
+    /* Mode clair - Hero section */
+    html:not(.dark) .bg-gradient-to-b.from-dark-900.via-dark-900\/95.to-dark-900 {
+        background: linear-gradient(to bottom, #f9fafb, #f3f4f6, #e5e7eb);
+    }
+
+    /* Mode clair - Textes */
+    html:not(.dark) .text-dark-300 {
+        @apply text-gray-600;
+    }
+
+    html:not(.dark) .text-dark-400 {
+        @apply text-gray-500;
+    }
+
+    /* Mode clair - Technologies et badges */
+    html:not(.dark) .bg-dark-800\/50 {
+        @apply bg-gray-100;
+    }
+
+    html:not(.dark) .border-dark-700 {
+        @apply border-gray-200;
+    }
+
+    /* Mode clair - Gradients pour les types d'expérience */
+    html:not(.dark) .bg-gradient-to-r.from-primary-500.to-primary-600 {
+        background: linear-gradient(to right, #3b82f6, #2563eb);
+    }
+
+    html:not(.dark) .bg-gradient-to-r.from-dark-700.to-dark-600 {
+        background: linear-gradient(to right, #e5e7eb, #d1d5db);
+    }
+
+    /* Mode clair - Scrollbar */
+    html:not(.dark) ::-webkit-scrollbar-track {
+        background: #f9fafb;
+    }
+
+    html:not(.dark) ::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+    }
+
+    html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+    }
+
+    /* Mode clair - Selection */
+    html:not(.dark) ::selection {
+        background-color: rgba(59, 130, 246, 0.3);
+        color: #1f2937;
     }
 }
 

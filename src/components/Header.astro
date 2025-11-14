@@ -40,26 +40,64 @@ const navItems = [
                 }
             </ul>
 
-            <!-- Bouton Menu Mobile -->
-            <button
-                id="mobile-menu-button"
-                class="md:hidden text-dark-100 focus:outline-none"
-                aria-label="Menu"
-            >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div class="flex items-center space-x-3">
+                <!-- Bouton Toggle Dark/Light Mode -->
+                <button
+                    id="theme-toggle-mobile"
+                    class="p-2 rounded-xl glass hover:scale-110 transition-all duration-300"
+                    aria-label="Toggle theme"
                 >
-                    <path
-                        id="menu-icon"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+                    <svg
+                        id="theme-icon-sun-mobile"
+                        class="w-5 h-5 hidden"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                        ></path>
+                    </svg>
+                    <svg
+                        id="theme-icon-moon-mobile"
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                        ></path>
+                    </svg>
+                </button>
+
+                <!-- Bouton Menu Mobile -->
+                <button
+                    id="mobile-menu-button"
+                    class="md:hidden text-dark-100 focus:outline-none"
+                    aria-label="Menu"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            id="menu-icon"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <!-- Menu Mobile -->
@@ -126,4 +164,66 @@ const navItems = [
             menuIcon?.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
         });
     });
+
+    // Gestion du thème (dark/light mode)
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+    const sunIcon = document.getElementById("theme-icon-sun");
+    const moonIcon = document.getElementById("theme-icon-moon");
+    const sunIconMobile = document.getElementById("theme-icon-sun-mobile");
+    const moonIconMobile = document.getElementById("theme-icon-moon-mobile");
+
+    // Fonction pour mettre à jour les icônes
+    const updateThemeIcons = (isDark: boolean) => {
+        if (isDark) {
+            sunIcon?.classList.add("hidden");
+            moonIcon?.classList.remove("hidden");
+            sunIconMobile?.classList.add("hidden");
+            moonIconMobile?.classList.remove("hidden");
+        } else {
+            sunIcon?.classList.remove("hidden");
+            moonIcon?.classList.add("hidden");
+            sunIconMobile?.classList.remove("hidden");
+            moonIconMobile?.classList.add("hidden");
+        }
+    };
+
+    // Fonction pour basculer le thème
+    const toggleTheme = () => {
+        const html = document.documentElement;
+        const isDark = html.classList.contains("dark");
+
+        if (isDark) {
+            html.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            updateThemeIcons(false);
+        } else {
+            html.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            updateThemeIcons(true);
+        }
+    };
+
+    // Initialiser le thème au chargement
+    const initTheme = () => {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+        ).matches;
+        const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+        if (isDark) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+        updateThemeIcons(isDark);
+    };
+
+    // Initialiser au chargement
+    initTheme();
+
+    // Ajouter les event listeners
+    themeToggle?.addEventListener("click", toggleTheme);
+    themeToggleMobile?.addEventListener("click", toggleTheme);
 </script>
