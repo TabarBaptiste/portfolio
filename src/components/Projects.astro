@@ -38,6 +38,7 @@ const projects = [
     title: 'RjWeb - Plateforme communautaire',
     description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Lavalle. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
     image: '/projects/preview.png',
+    imageLight: '/projects/preview_white.png',
     technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
     github: 'https://github.com/TabarBaptiste/pyramide',
     demo: null,
@@ -88,6 +89,8 @@ const categories = ['all', 'web', 'mobile'];
             <img 
               src={project.image} 
               alt={project.title}
+              data-image={project.image}
+              data-image-light={project.imageLight}
               class={project.image && project.image.includes('logo') ? 'w-full h-full object-contain p-6 bg-white' : 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'}
               loading="lazy"
             />
@@ -166,11 +169,14 @@ const categories = ['all', 'web', 'mobile'];
       const filter = button.getAttribute('data-filter');
       
       // Mettre à jour l'état actif des boutons
+      const isDark = document.documentElement.classList.contains('dark');
+      const activeTextColor = isDark ? 'text-white' : 'text-primary-600';
+
       filterButtons.forEach(btn => {
-        btn.classList.remove('bg-primary-500', 'text-white');
+        btn.classList.remove('bg-primary-500', 'text-white', 'text-primary-600');
         btn.classList.add('text-dark-300');
       });
-      button.classList.add('bg-primary-500', 'text-white');
+      button.classList.add('bg-primary-500', activeTextColor);
       button.classList.remove('text-dark-300');
 
       // Filtrer les projets
@@ -200,6 +206,41 @@ const categories = ['all', 'web', 'mobile'];
 
   // Activer le filtre "Tous" par défaut
   const allButton = document.querySelector('[data-filter="all"]');
-  allButton?.classList.add('bg-primary-500', 'text-white');
+  const isDark = document.documentElement.classList.contains('dark');
+  const activeTextColor = isDark ? 'text-white' : 'text-primary-600';
+  allButton?.classList.add('bg-primary-500', activeTextColor);
   allButton?.classList.remove('text-dark-300');
+
+  // Fonction pour mettre à jour les images selon le thème
+  const updateProjectImages = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    const projectImages = document.querySelectorAll('img[data-image][data-image-light]');
+    
+    projectImages.forEach(img => {
+      const imageElement = img as HTMLImageElement;
+      const darkImage = imageElement.getAttribute('data-image');
+      const lightImage = imageElement.getAttribute('data-image-light');
+      
+      if (lightImage) {
+        imageElement.src = isDark ? darkImage || '' : lightImage;
+      }
+    });
+  };
+
+  // Mettre à jour les images au chargement initial
+  updateProjectImages();
+
+  // Écouter les changements de thème
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        updateProjectImages();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 </script>
