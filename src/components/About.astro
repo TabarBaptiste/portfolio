@@ -9,7 +9,8 @@ import Card from "./ui/Card.astro";
     subtitle="Découvrez mon parcours et mes passions"
     className="bg-dark-800/30"
 >
-    <div class="grid md:grid-cols-2 gap-12 items-center"> <!-- TODO : Mettre une vraie image -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- TODO : Mettre une vraie image -->
         <!-- Image / Avatar -->
         <div class="reveal order-1 md:order-1">
             <Card className="overflow-hidden">
@@ -41,14 +42,20 @@ import Card from "./ui/Card.astro";
         <div class="reveal order-2 md:order-2 space-y-6">
             <div class="space-y-4">
                 <p class="text-dark-200 text-lg leading-relaxed">
-                    Je m'appelle Baptiste TABAR LABONNE, j'ai 20 ans. Ayant obtenu mon BTS Services Informatiques aux Organisations 
-                    et ma Licence Professionnelle, je poursuis mon évolution en tant qu'apprenti en Mastère Architecte Web (niveau 7) 
-                    au sein du Département du Val-de-Marne.
+                    Je m'appelle Baptiste TABAR LABONNE, j'ai 20 ans. Ayant
+                    obtenu mon BTS Services Informatiques aux Organisations et
+                    ma Licence Professionnelle, je poursuis mon évolution en
+                    tant qu'apprenti en Mastère Architecte Web (BAC+5) au
+                    sein du Département du Val-de-Marne.
                 </p>
                 <p class="text-dark-300 leading-relaxed">
-                    Depuis toujours passionné par l'informatique et les nouvelles technologies, je me suis orienté vers le développement web et logiciel, 
-                    avec une appétence particulière pour la conception d'interfaces et la résolution de problématiques techniques. 
-                    Mon objectif est de concevoir des solutions performantes, maintenables et adaptées aux besoins réels des utilisateurs.
+                    Depuis toujours passionné par l'informatique et les
+                    nouvelles technologies, je me suis orienté vers le
+                    développement web et logiciel. Je privilégie un code
+                    structuré, pensé pour anticipater les erreurs et à la
+                    qualité de l’expérience utilisateur. Mon objectif : créer
+                    des solutions fiables, simples à maintenir et réellement
+                    adaptées aux besoins des utilisateurs.
                 </p>
             </div>
 
@@ -71,7 +78,6 @@ import Card from "./ui/Card.astro";
     </div>
 
     <!-- Domaines d'expertise -->
-    <!-- TODO : Ajouter des "domaines" vendeur, pas forcément mettre toutes mes compétences -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
         <div class="reveal">
             <Card className="text-center">
@@ -92,9 +98,12 @@ import Card from "./ui/Card.astro";
                         ></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">Frontend</h3>
+                <h3 class="text-xl font-semibold mb-2 text-dark-100">
+                    Frontend
+                </h3>
                 <p class="text-dark-300 text-sm">
-                    Conception d’interfaces web dynamiques et performantes avec l’écosystème Node.js, alliant ergonomie, accessibilité et design moderne
+                    Conception d’interfaces web dynamiques et performantes, alliant ergonomie, accessibilité et
+                    design moderne
                 </p>
             </Card>
         </div>
@@ -122,7 +131,8 @@ import Card from "./ui/Card.astro";
                     Backend
                 </h3>
                 <p class="text-dark-300 text-sm">
-                    Développement d’applications scalables et sécurisées dans une architecture claire et maintenable
+                    Développement d’applications scalables et sécurisées dans
+                    une architecture claire et maintenable
                 </p>
             </Card>
         </div>
@@ -148,7 +158,8 @@ import Card from "./ui/Card.astro";
                 </div>
                 <h3 class="text-xl font-semibold mb-2 text-dark-100">Mobile</h3>
                 <p class="text-dark-300 text-sm">
-                    Création d’applications cross-platform, intégration fluide d’API et gestion optimisée des performances <br><br>
+                    Création d’applications cross-platform, intégration fluide
+                    d’API et gestion optimisée des performances <br /><br />
                 </p>
             </Card>
         </div>
@@ -172,9 +183,13 @@ import Card from "./ui/Card.astro";
                         ></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">Base de données</h3>
+                <h3 class="text-xl font-semibold mb-2 text-dark-100">
+                    Base de données
+                </h3>
                 <p class="text-dark-300 text-sm">
-                    Conception et administration de bases de données relationnelles et non relationnelles, optimisation des requêtes et modélisation efficace
+                    Conception et administration de bases de données
+                    relationnelles et non relationnelles, optimisation des
+                    requêtes et modélisation efficace
                 </p>
             </Card>
         </div>
@@ -200,13 +215,15 @@ import Card from "./ui/Card.astro";
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        ></path>
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">Environnement</h3>
+                <h3 class="text-xl font-semibold mb-2 text-dark-100">
+                    Environnement
+                </h3>
                 <p class="text-dark-300 text-sm">
-                    Maîtrise des environnements de développement, intégration et déploiement continus, débogage et collaboration en équipe
+                    Maîtrise des environnements de développement, intégration et
+                    déploiement continus, débogage et collaboration en équipe
                 </p>
             </Card>
         </div>
@@ -230,9 +247,13 @@ import Card from "./ui/Card.astro";
                         ></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">Migration</h3>
+                <h3 class="text-xl font-semibold mb-2 text-dark-100">
+                    Migration
+                </h3>
                 <p class="text-dark-300 text-sm">
-                    Refonte et modernisation d’applications legacy, amélioration de la sécurité, des performances et de la maintenabilité du code
+                    Refonte et modernisation d’applications legacy, amélioration
+                    de la sécurité, des performances et de la maintenabilité du
+                    code
                 </p>
             </Card>
         </div>
