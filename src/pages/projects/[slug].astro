@@ -1,0 +1,234 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Section from "../../components/ui/Section.astro";
+import Button from "../../components/ui/Button.astro";
+import { projects, type Project } from "../../data/projects";
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<Layout
+  title={`${project.title} - Baptiste TABAR LABONNE`}
+  description={project.description}
+>
+  <Header />
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <Section className="bg-dark-800/30 pt-32">
+      <div class="max-w-4xl mx-auto">
+        <!-- Breadcrumb -->
+        <nav class="mb-8 reveal">
+          <ol class="flex items-center space-x-2 text-sm text-dark-400">
+            <li>
+              <a href="/#projects" class="hover:text-primary-400 transition-colors">
+                Projets
+              </a>
+            </li>
+            <li>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </li>
+            <li class="text-dark-200">{project.title}</li>
+          </ol>
+        </nav>
+
+        <!-- Title -->
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text reveal">
+          {project.title}
+        </h1>
+
+        <!-- Description -->
+        <p class="text-lg text-dark-300 mb-8 reveal">
+          {project.description}
+        </p>
+
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-4 mb-12 reveal">
+          {project.demo && (
+            <Button href={project.demo} variant="primary">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+              {project.demoLabel || 'Voir la démo'}
+            </Button>
+          )}
+          {project.github && (
+            <Button href={project.github} variant="outline">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Code source
+            </Button>
+          )}
+        </div>
+
+        <!-- Main Image -->
+        <div class="rounded-2xl overflow-hidden shadow-2xl mb-12 reveal">
+          <img 
+            src={project.image} 
+            alt={project.title}
+            class={project.image.includes('logo') ? 'w-full object-contain bg-white p-8' : 'w-full object-cover'}
+            loading="eager"
+          />
+        </div>
+
+        <!-- Technologies -->
+        <div class="mb-12 reveal">
+          <h2 class="text-2xl font-bold text-dark-100 mb-4">Technologies utilisées</h2>
+          <div class="flex flex-wrap gap-3">
+            {project.technologies.map((tech) => (
+              <span class="px-4 py-2 rounded-xl glass text-primary-400 border border-dark-700 hover:border-primary-500 transition-colors">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- Detailed Content -->
+    {project.detailedContent && (
+      <Section className="bg-dark-900/50">
+        <div class="max-w-4xl mx-auto">
+          <!-- Introduction -->
+          {project.detailedContent.introduction && (
+            <div class="mb-12 reveal">
+              <h2 class="text-3xl font-bold text-dark-100 mb-6">À propos du projet</h2>
+              <div class="glass rounded-2xl p-8">
+                {project.detailedContent.introduction.split('\n\n').map(paragraph => (
+                  <p class="text-dark-300 text-lg leading-relaxed mb-4 last:mb-0">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Features -->
+          {project.detailedContent.features && (
+            <div class="mb-12 reveal">
+              <h2 class="text-3xl font-bold text-dark-100 mb-6">Fonctionnalités principales</h2>
+              <div class="glass rounded-2xl p-8">
+                <ul class="space-y-3">
+                  {project.detailedContent.features.map((feature) => (
+                    <li class="flex items-start text-dark-300 text-lg">
+                      {feature.startsWith('  •') ? (
+                        <span class="ml-8">{feature}</span>
+                      ) : (
+                        <>
+                          <svg class="w-6 h-6 text-primary-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                          <span>{feature}</span>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <!-- Technical Details -->
+          {project.detailedContent.technical && (
+            <div class="mb-12 reveal">
+              <h2 class="text-3xl font-bold text-dark-100 mb-6">Détails techniques</h2>
+              <div class="space-y-6">
+                {project.detailedContent.technical.map((section) => (
+                  <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-bold text-primary-400 mb-4">{section.title}</h3>
+                    <ul class="space-y-3">
+                      {section.items.map((item) => (
+                        <li class="flex items-start text-dark-300">
+                          <svg class="w-5 h-5 text-primary-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                          </svg>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Section>
+    )}
+
+    <!-- Screenshots Gallery -->
+    {project.screenshots && project.screenshots.length > 0 && (
+      <Section className="bg-dark-800/30">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-dark-100 mb-8 text-center reveal">Galerie d'images</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {project.screenshots.map((screenshot, index) => (
+              <div class="reveal glass rounded-2xl overflow-hidden group cursor-pointer" style={`animation-delay: ${index * 0.1}s`}>
+                <div class="relative overflow-hidden">
+                  <img 
+                    src={screenshot.path}
+                    alt={screenshot.name}
+                    class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-60"></div>
+                  <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <p class="text-white font-semibold">{screenshot.name}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    )}
+
+    <!-- Back to Projects -->
+    <Section>
+      <div class="text-center reveal">
+        <Button href="/#projects" variant="outline">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Retour aux projets
+        </Button>
+      </div>
+    </Section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Animation pour les éléments reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: reveal 0.6s ease-out forwards;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
