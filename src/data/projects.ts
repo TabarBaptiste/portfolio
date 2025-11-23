@@ -55,7 +55,7 @@ export const projects: Project[] = [
         {
           title: 'Workflow CI/CD',
           items: [
-            'En ce qui conserve le workflow j\'ai utilisé GitHub Actions pour le CI/CD (vérifier les fichiers dans .workflow/ pour s\'assurer que tout est correct et que je n\'ai rien oublié).',
+            'En ce qui concerne le workflow j\'ai utilisé GitHub Actions pour le CI/CD (vérifier les fichiers dans .workflow/ pour s\'assurer que tout est correct et que je n\'ai rien oublié).',
             'Un workflow « Realease » pour mettre à jour automatiquement la version de l\'extension et publier l\'extension si je décide de le faire manuellement via le workflow_dispatch',
             '« PR Checks » avec code quality et pr-lint pour vérifier que le code est correct avant de faire le pull request'
           ]
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     demoLabel: 'Voir le site',
     category: 'web',
     detailedContent: {
-      introduction: 'J\'ai créer une application à usage personnel afin d\'enregistrer mes recettes de cuisine.\nJe peux modifier, supprimer, créer, consulter (CRUD) en me connectant via un code à quatre chiffres.',
+      introduction: 'J\'ai créé une application à usage personnel afin d\'enregistrer mes recettes de cuisine.\nJe peux modifier, supprimer, créer, consulter (CRUD) en me connectant via un code à quatre chiffres.',
       technical: [
         {
           title: 'Frontend',
@@ -101,7 +101,7 @@ export const projects: Project[] = [
         },
         {
           title: 'ORM',
-          items: ['Prisma a été utilisé comme ORM pour la création simplifier de la structure de la Base de données Postgres']
+          items: ['Prisma a été utilisé comme ORM pour la création simplifiée de la structure de la Base de données Postgres']
         },
         {
           title: 'Base de données',
