@@ -100,6 +100,24 @@ const { project } = Astro.props;
       </div>
     </Section>
 
+    <!-- Canva Presentation for Beroli -->
+    {project.slug === 'beroli' && (
+      <Section className="bg-dark-800/30">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-dark-100 mb-8 text-center reveal">Présentation complète de l'application</h2>
+          <div class="glass rounded-2xl p-4 reveal">
+            <iframe
+              src="https://www.canva.com/design/DAF-QIOEFEw/H_RNdqkVg2smDcXOgbXX9w/view?embed"
+              class="w-full h-[600px] md:h-[800px] rounded-xl border-0"
+              allowfullscreen="allowfullscreen"
+              allow="fullscreen"
+              title="Présentation Beroli - Application mobile"
+            ></iframe>
+          </div>
+        </div>
+      </Section>
+    )}
+
     <!-- Detailed Content -->
     {project.detailedContent && (
       <Section className="bg-dark-900/50">

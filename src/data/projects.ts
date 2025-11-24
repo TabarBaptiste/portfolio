@@ -86,8 +86,8 @@ export const projects: Project[] = [
     image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
     technologies: ['Flutter', 'Dart', 'Firebase'],
     github: 'https://github.com/matbel91765/beroli',
-    demo: 'https://www.canva.com/design/DAF-QIOEFEw/Hb1j0QiRgpWCUF9E9B322Q/view?utm_content=DAF-QIOEFEw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfc5b8fd71e',
-    demoLabel: 'Présentation',
+    demo: 'https://www.canva.com/design/DAF-QIOEFEw/H_RNdqkVg2smDcXOgbXX9w/edit',
+    demoLabel: 'Voir la présentation Canva',
     category: 'mobile'
   },
   {
