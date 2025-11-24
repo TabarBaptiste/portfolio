@@ -200,22 +200,60 @@ const { project } = Astro.props;
         <div class="max-w-6xl mx-auto">
           <h2 class="text-3xl font-bold text-dark-100 mb-8 text-center reveal">Galerie d'images</h2>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {project.screenshots.map((screenshot, index) => (
-              <div class="reveal glass rounded-2xl overflow-hidden group cursor-pointer" style={`animation-delay: ${index * 0.1}s`}>
-                <div class="relative overflow-hidden">
-                  <img 
-                    src={screenshot.path}
-                    alt={screenshot.name}
-                    class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-60"></div>
-                  <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <p class="text-white font-semibold">{screenshot.name}</p>
+            {(() => {
+              // Grouper les screenshots par nom pour gérer les versions light/dark
+              const screenshotGroups = new Map();
+              project.screenshots.forEach(screenshot => {
+                if (!screenshotGroups.has(screenshot.name)) {
+                  screenshotGroups.set(screenshot.name, []);
+                }
+                screenshotGroups.get(screenshot.name).push(screenshot);
+              });
+
+                const uniqueScreenshots: {
+                name: string;
+                path?: string;
+                darkPath?: string;
+                lightPath?: string;
+                }[] = [];
+              screenshotGroups.forEach((group, name) => {
+                if (group.length === 2) {
+                  // Deux versions : light et dark
+                  const darkImg = group.find((s: { path: string }) => s.path.includes('black') || s.path.includes('dark'));
+                  const lightImg = group.find((s: { path: string }) => s.path.includes('white') || s.path.includes('light'));
+                  uniqueScreenshots.push({
+                    name,
+                    darkPath: darkImg?.path,
+                    lightPath: lightImg?.path
+                  });
+                } else {
+                  // Une seule version
+                  uniqueScreenshots.push({
+                    name,
+                    path: group[0].path
+                  });
+                }
+              });
+
+              return uniqueScreenshots.map((screenshot, index) => (
+                <div class="reveal glass rounded-2xl overflow-hidden group cursor-pointer" style={`animation-delay: ${index * 0.1}s`}>
+                  <div class="relative overflow-hidden">
+                    <img 
+                      src={screenshot.path || screenshot.darkPath}
+                      data-image-dark={screenshot.darkPath}
+                      data-image-light={screenshot.lightPath}
+                      alt={screenshot.name}
+                      class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-60"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                      <p class="text-white font-semibold">{screenshot.name}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
         </div>
       </Section>
@@ -235,6 +273,41 @@ const { project } = Astro.props;
   </main>
   <Footer />
 </Layout>
+
+<script>
+  // Fonction pour mettre à jour les images des screenshots selon le thème
+  const updateScreenshotImages = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    const screenshotImages = document.querySelectorAll('img[data-image-dark][data-image-light]');
+    
+    screenshotImages.forEach(img => {
+      const imageElement = img as HTMLImageElement;
+      const darkImage = imageElement.getAttribute('data-image-dark');
+      const lightImage = imageElement.getAttribute('data-image-light');
+      
+      if (darkImage && lightImage) {
+        imageElement.src = isDark ? darkImage : lightImage;
+      }
+    });
+  };
+
+  // Mettre à jour les images au chargement initial
+  updateScreenshotImages();
+
+  // Écouter les changements de thème
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        updateScreenshotImages();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+</script>
 
 <style>
   /* Animation pour les éléments reveal */

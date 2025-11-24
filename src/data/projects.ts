@@ -37,6 +37,12 @@ export const projects: Project[] = [
     demo: 'https://marketplace.visualstudio.com/items?itemName=Baptiste-TABAR-LABONNE.php-dao-generator',
     demoLabel: 'Marketplace',
     category: 'web',
+    screenshots: [
+      { name: 'Procesus de génération', path: '/projects/PHP_DAO_Generator-visual_selection.png' },
+      { name: 'Workflow CI/CD', path: '/projects/CI-CD-dao.svg' },
+      { name: 'Pipline et surveillance automatisés', path: '/projects/monitoring-black-dao.svg' },
+      { name: 'Pipline et surveillance automatisés', path: '/projects/monitoring-white-dao.svg' },
+    ],
     detailedContent: {
       introduction: 'Ce projet a été développé à la demande de mon maître d’apprentissage au Conseil Départemental du Val-de-Marne.\n\n L’objectif était de simplifier et d’accélérer la création des objets DAO utilisés quotidiennement par l’équipe, en automatisant une tâche répétitive et source d’erreurs lorsqu’elle est réalisée manuellement.\n\n Les DAO (Data Access Objects) constituent un élément central de l’architecture PHP interne : ils assurent l’accès aux données stockées dans différents systèmes de gestion de base de données.\n\n L’extension permet aujourd’hui de générer ces fichiers en quelques secondes, tout en garantissant une structure cohérente et homogène.',
       features: [
@@ -100,6 +106,9 @@ export const projects: Project[] = [
     demo: 'https://recette-perso.netlify.app/',
     demoLabel: 'Voir le site',
     category: 'web',
+    screenshots: [
+      { name: 'Détails Techniques', path: '/projects/Recettes_Details_techniques.png' },
+    ],
     detailedContent: {
       introduction: 'Application web **full-stack** permettant de créer, organiser et consulter mes recettes de cuisine.\n\n Pensée pour un usage personnel, elle offre un parcours simple et rapide : ajout, modification, suppression et consultation des recettes (**CRUD**) grâce à un accès sécurisé par **code PIN à quatre chiffres**.\n\nLe projet met l\'accent sur une **interface épurée**, une **structure claire** et une **logique backend fiable**. L\'ensemble a été conçu pour être facilement **maintenable**, **déployable** et **évolutif**, avec une gestion propre des données et un **hébergement découplé** entre le frontend et le backend',
       technical: [
