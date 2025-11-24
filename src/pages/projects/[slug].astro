@@ -33,7 +33,7 @@ const { project } = Astro.props;
         <nav class="mb-8 reveal">
           <ol class="flex items-center space-x-2 text-sm text-dark-400">
             <li>
-              <a href="/#projects" class="hover:text-primary-400 transition-colors">
+              <a href={`/#${project.slug}`} class="hover:text-primary-400 transition-colors">
                 Projets
               </a>
             </li>
@@ -224,7 +224,7 @@ const { project } = Astro.props;
     <!-- Back to Projects -->
     <Section>
       <div class="text-center reveal">
-        <Button href="/#projects" variant="outline">
+        <Button href={`/#${project.slug}`} variant="outline">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
           </svg>

@@ -139,7 +139,30 @@ export const projects: Project[] = [
     github: 'https://github.com/TabarBaptiste/alydousheure_vitrine',
     demo: 'https://aly-dousheure.netlify.app/',
     demoLabel: 'Voir le site',
-    category: 'web'
+    category: 'web',
+    detailedContent: {
+      introduction: 'Création d\'un site vitrine moderne pour une masseuse professionnelle indépendante.\n\nLe site présente les prestations, les disponibilités, les informations de contact ainsi qu\'une carte de localisation.\n\nL\'objectif était de proposer une interface claire, chaleureuse et mobile first.\n\nCe projet m\'a également permis de travailler sur un vrai besoin client en intégrant identité visuelle, optimisation du contenu et bonnes pratiques SEO.',
+      features: [
+        'Catalogue complet des prestations et tarifs',
+        'Visualisation des horaires et disponibilités',
+        'Liens directs vers appel téléphonique, WhatsApp et Instagram',
+        'Géolocalisation intégrée',
+        'Interface responsive (mobile-first)',
+        'Optimisation SEO pour la visibilité locale'
+      ],
+      technical: [
+        {
+          title: 'Technologies',
+          items: [
+            '**Astro** pour le rendu statique et la structure du site',
+            '**Tailwind CSS** pour le design et la mise en page',
+            '**Google Analytics** & **Google Search Console** pour le suivi du trafic et l\'optimisation',
+            '**@astrojs/sitemap** pour améliorer l\'indexation par les moteurs de recherche'
+          ]
+        }
+      ],
+      workflow: 'Un workflow **CI/CD GitHub Actions** est mis en place pour automatiser le process de build.\n\nÀ chaque push sur la branche `master`, le pipeline :\n\n1. Vérifie et récupère le dépôt\n2. Installe les dépendances\n3. Génère la version optimisée du site\n4. Produit un artefact prêt à être déployé\n\nCe système garantit un déploiement rapide, fiable et reproductible à chaque mise à jour du projet.'
+    }
   },
   {
     slug: 'rjweb',
