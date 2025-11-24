@@ -161,15 +161,28 @@ export const projects: Project[] = [
       { name: 'À propos', path: '/projects/about.png' }
     ],
     detailedContent: {
-      introduction: 'Plateforme web développée durant mon stage de BTS pour centraliser les activités du quartier Lavalle. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
+      introduction: 'Plateforme web réalisée durant mon stage de BTS pour centraliser et faciliter la gestion des activités du quartier Lavalle. \n\n Le site permettait aux habitants de s’inscrire aux évènements, de recevoir automatiquement les informations importantes par e-mail, et d’accéder à un espace personnel. \n\n Un espace administrateur complet permettait de gérer les évènements, les utilisateurs et les envois de newsletters.',
+      features: [
+        'Création de compte utilisateur, connexion, modification et suppression du compte.',
+        'Inscription et désinscription aux différents évènements.',
+        'Envoi automatique d’e-mails (confirmations, rappels, newsletters) avec **PHPMailer**.',
+        'Espace administrateur permettant :',
+        '  • de créer, modifier et supprimer les évènements,',
+        '  • de gérer les participants,',
+        '  • d’administrer les comptes utilisateurs.'
+      ],
       technical: [
         {
           title: 'Frontend',
-          items: ['J\'ai utilisé HTML, CSS, JavaScript.']
+          items: ['Développé en **HTML**, **CSS**, **JavaScript**.', 'Interface simple et adaptée à un public non technique.']
         },
         {
           title: 'Backend',
-          items: ['PHP pure avec requête SQL', 'PHPMyAdmin pour la base de données avec l\'environnement WampServer']
+          items: ['Développé en **PHP procédural** avec requêtes SQL directes.', 'Gestion de la base de données via **phpMyAdmin**.', 'Environnement local basé sur **WampServer**.']
+        },
+        {
+          title: 'Outils et bibliothèques',
+          items: ['**PHPMailer** pour l’envoi d’e-mails.', '**Sessions PHP** pour l’authentification.']
         }
       ]
     }

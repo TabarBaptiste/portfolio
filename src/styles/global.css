@@ -229,3 +229,14 @@
     background-color: rgba(0, 102, 230, 0.3);
     color: #ffffff;
 }
+
+/* Fix pour les interactions tactiles */
+.touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Empêcher le double-tap zoom sur les éléments interactifs */
+a, button {
+    touch-action: manipulation;
+}
