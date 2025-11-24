@@ -38,31 +38,43 @@ export const projects: Project[] = [
     demoLabel: 'Marketplace',
     category: 'web',
     detailedContent: {
-      introduction: 'J\'ai conçu une extension à la demande de mon maître d\'apprentissage au Conseil Départemental du Val-de-Marne afin de faciliter la création de objets DAO en les générants automatiquement à partir de bases de données.\n\nLes DAO (Data Access Objects) permettent l\'accès aux données stockées dans divers SGBD (système de gestion de base de données).',
+      introduction: 'Ce projet a été développé à la demande de mon maître d’apprentissage au Conseil Départemental du Val-de-Marne.\n\n L’objectif était de simplifier et d’accélérer la création des objets DAO utilisés quotidiennement par l’équipe, en automatisant une tâche répétitive et source d’erreurs lorsqu’elle est réalisée manuellement.\n\n Les DAO (Data Access Objects) constituent un élément central de l’architecture PHP interne : ils assurent l’accès aux données stockées dans différents systèmes de gestion de base de données.\n\n L’extension permet aujourd’hui de générer ces fichiers en quelques secondes, tout en garantissant une structure cohérente et homogène.',
       features: [
-        'Ajouter facilement des serveurs de bases de données.',
-        'Explorer vos bases et tables directement depuis la sidebar.',
-        'Générer automatiquement des fichiers DAO pour vos tables.',
+        'Connexion simple aux serveurs de bases de données via un formulaire intégré.',
+        'Exploration des bases, schémas et tables directement depuis la sidebar VSCode.',
+        'Génération automatique de fichiers DAO à partir de la structure des tables.',
         'Deux modes de génération :',
         '  • Sauvegarder : crée une sauvegarde dans backup/ avant d\'écraser.',
-        '  • Écraser : remplace directement les fichiers existants.'
+        '  • Écraser : remplace directement les fichiers existants.',
+        'Monitoring intégré via Sentry pour remonter les erreurs des utilisateurs et améliorer la stabilité.'
       ],
       technical: [
         {
           title: 'Développement',
-          items: ['L\'extension a été développée en TypeScript.']
+          items: ['Extension a été développée en **TypeScript**.',
+            'Architecture pensée pour être modulaire et facilement extensible.',
+            'Gestion d’erreurs renforcée grâce à **Sentry**.'
+          ]
         },
         {
-          title: 'Workflow CI/CD',
+          title: 'CI/CD – Workflows GitHub Actions',
           items: [
-            'En ce qui concerne le workflow j\'ai utilisé GitHub Actions pour le CI/CD (vérifier les fichiers dans .workflow/ pour s\'assurer que tout est correct et que je n\'ai rien oublié).',
-            'Un workflow « Realease » pour mettre à jour automatiquement la version de l\'extension et publier l\'extension si je décide de le faire manuellement via le workflow_dispatch',
-            '« PR Checks » avec code quality et pr-lint pour vérifier que le code est correct avant de faire le pull request'
+            'Trois workflows assurent le contrôle qualité, la cohérence et la publication automatisée de l\'extension.',
+            '**1. Copilot Code Review** : Analyse automatique des fichiers modifiés dans une PR, résumé des changements (lignes ajoutées/supprimées), détection des `console.log` indésirables et publication d\'un commentaire automatique sur la PR avec les recommandations d\'amélioration. \n **But** : assurer une première passe de revue de code automatisée et pédagogique.',
+            '**2. PR Checks** : Composé de deux blocs \n **pr-lint** (valide le format du titre de la PR selon Conventional Commits et ajoute automatiquement un label `needs-review`) \n **code-quality** (installation et vérification du projet avec Node 22 + `npm ci`, exécution de `tsc --noEmit` pour assurer la validité des types TypeScript, ajout automatique d\'un commentaire si une erreur bloque la PR). \n **But** : garantir une base de code propre, typée et conforme avant chaque merge.',
+            '**3. Release** : Build automatique de l\'extension, packaging via `vsce`, possibilité de publier sur le VSCode Marketplace via un `workflow_dispatch` et exécution du script de release (semantic-release). \n **But** : uniformiser et fiabiliser les livraisons de version.'
+          ]
+        },
+        {
+          title: 'Déploiement',
+          items: [
+            'La publication de l\'extension est automatisée grâce à **Azure**, permettant l\'**hébergement des artefacts de build**, la **gestion sécurisée du jeton VSCE** et le **déclenchement des workflows de publication**.',
+            'Ce pipeline garantit des mises à jour rapides, cohérentes et reproductibles.'
           ]
         },
         {
           title: 'Monitoring',
-          items: ['J\'ai utilisé Sentry pour récupérer les erreurs utilisateurs pour de les résoudre au plus vite afin d\'éviter une mauvaise expérience utilisateur.']
+          items: ['J\'ai utilisé **Sentry** pour récupérer les erreurs utilisateurs pour de les résoudre au plus vite afin d\'éviter une mauvaise expérience utilisateur.']
         }
       ]
     }
