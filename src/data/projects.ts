@@ -81,7 +81,7 @@ export const projects: Project[] = [
   {
     slug: 'recettes',
     title: 'Recettes - Application de recettes',
-    description: 'Application web fullstack pour gérer et partager des recettes de cuisine. Frontend développé avec Angular en standalone components et Tailwind CSS. Backend REST API avec Node.js, Express et Prisma ORM connecté à PostgreSQL (Neon).',
+    description: 'Application web personnelle permettant de gérer, organiser et partager facilement mes recettes de cuisine.\n\n Elle centralise toutes mes préparations en un seul endroit et me permet d’ajouter, modifier ou supprimer des recettes en quelques secondes.',
     image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
     technologies: ['Angular', 'Express', 'Prisma', 'PostgreSQL', 'Tailwind CSS', 'Render', 'Netlify'],
     github: 'https://github.com/TabarBaptiste/recettePerso',
@@ -89,31 +89,31 @@ export const projects: Project[] = [
     demoLabel: 'Voir le site',
     category: 'web',
     detailedContent: {
-      introduction: 'J\'ai créé une application à usage personnel afin d\'enregistrer mes recettes de cuisine.\nJe peux modifier, supprimer, créer, consulter (CRUD) en me connectant via un code à quatre chiffres.',
+      introduction: 'Application web **full-stack** permettant de créer, organiser et consulter mes recettes de cuisine.\n\n Pensée pour un usage personnel, elle offre un parcours simple et rapide : ajout, modification, suppression et consultation des recettes (**CRUD**) grâce à un accès sécurisé par **code PIN à quatre chiffres**.\n\nLe projet met l\'accent sur une **interface épurée**, une **structure claire** et une **logique backend fiable**. L\'ensemble a été conçu pour être facilement **maintenable**, **déployable** et **évolutif**, avec une gestion propre des données et un **hébergement découplé** entre le frontend et le backend',
       technical: [
         {
           title: 'Frontend',
-          items: ['J\'ai conçu le front avec Angular et Tailwind CSS. J\'apprécie particulièrement la structure d\'Angular (MVC) avec laquelle on s\'y retrouve facilement. Et la personnalisation simplifiée de Tailwind CSS pour l\'aspect visuel de l\'application.']
+          items: ['Le frontend est conçu avec **Angular** pour sa structure claire et modulable, ainsi qu\'avec **Tailwind CSS**, qui facilite la création d\'une interface sobre et cohérente. L\'utilisation des **standalone components** permet une architecture plus légère et moderne.']
         },
         {
           title: 'Backend',
-          items: ['J\'ai utilisé Express API REST pour le backend car il offre une grande flexibilité et performance pour créer des API RESTful.']
+          items: ['Le backend repose sur **Express**, choisi pour sa simplicité, sa performance et la flexibilité qu\'il offre dans la création d\'**API REST** robustes.']
         },
         {
           title: 'ORM',
-          items: ['Prisma a été utilisé comme ORM pour la création simplifiée de la structure de la Base de données Postgres']
+          items: ['J\'ai utilisé **Prisma** pour sa rapidité de développement et la clarté de son schéma. Il facilite la gestion des migrations et assure une bonne lisibilité du modèle de données.']
         },
         {
           title: 'Base de données',
-          items: ['Je me suis penché vers NeonDB pour sa simplicité d\'utilisation et d\'intégration, je dispose de 0,5Go de stockage qui est suffisant pour un usage personnel. Le changement vers une autre base de données en cas de stockage limité sera simplifié grâce à Prisma.']
+          items: ['La base de données est hébergée sur **NeonDB**, un service **PostgreSQL** moderne offrant une intégration simple, du stockage gratuit et un environnement scalable si besoin. Grâce à **Prisma**, une éventuelle migration vers un autre service resterait simple.']
         },
         {
           title: 'Web services',
-          items: ['J\'ai opté pour Render comme web service et j\'y ai connecté NeonDB. Render permet d\'héberger et déployer facilement le backend de l\'application avec une intégration continue depuis GitHub.']
+          items: ['Le backend est déployé sur **Render**, connecté directement à **NeonDB**. Render permet un déploiement automatique via **GitHub** et une gestion intuitive des services.']
         },
         {
           title: 'Déploiement',
-          items: ['Netlify pour le frontend et Render pour le backend ont été utilisés pour le déploiement de mon application. Ce sont deux solutions gratuites, simple d\'utilisation et accessible.']
+          items: ['Le frontend est déployé sur **Netlify**, tandis que le backend est hébergé sur **Render**.\n\nCes deux solutions offrent une mise en ligne rapide, gratuite et parfaitement adaptée aux projets personnels.']
         }
       ]
     }
