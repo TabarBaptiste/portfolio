@@ -1,69 +1,7 @@
 ---
 import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
-
-// Projets réels
-const projects = [
-  {
-    title: 'Extension VSCode - PHP DAO Generator',
-    description: 'Extension VSCode permettant de générer automatiquement des fichiers DAO PHP à partir des attributs d\'une table de base de données. Connexion au serveur via formulaire intégré, génération de code optimisée et monitoring avec Sentry. Disponible sur le marketplace VSCode.',
-    image: '/projects/logo.png',
-    technologies: ['TypeScript', 'CI/CD', 'Sentry', 'JavaScript', 'MCP', 'Base de données'],
-    github: 'https://github.com/TabarBaptiste/dao-generation',
-    demo: 'https://marketplace.visualstudio.com/items?itemName=Baptiste-TABAR-LABONNE.php-dao-generator',
-    demoLabel: 'Marketplace',
-    category: 'web'
-  },
-  {
-    title: 'Beroli - Application mobile',
-    description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
-    technologies: ['Flutter', 'Dart', 'Firebase'],
-    github: 'https://github.com/matbel91765/beroli',
-    demo: 'https://www.canva.com/design/DAF-QIOEFEw/Hb1j0QiRgpWCUF9E9B322Q/view?utm_content=DAF-QIOEFEw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfc5b8fd71e',
-    demoLabel: 'Présentation',
-    category: 'mobile'
-  },
-  {
-    title: 'Recettes - Application de recettes',
-    description: 'Application web fullstack pour gérer et partager des recettes de cuisine. Frontend développé avec Angular en standalone components et Tailwind CSS. Backend REST API avec Node.js, Express et Prisma ORM connecté à PostgreSQL (Neon).',
-    image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
-    technologies: ['Angular', 'Express', 'Prisma', 'PostgreSQL', 'Tailwind CSS', 'Render', 'Netlify'],
-    github: 'https://github.com/TabarBaptiste/recettePerso',
-    demo: 'https://recette-perso.netlify.app/',
-    demoLabel: 'Voir le site',
-    category: 'web'
-  },
-  {
-    title: 'Aly dous\'heure - Site vitrine',
-    description: 'Site vitrine moderne pour une masseuse professionnelle. Système de réservation en ligne, catalogue complet des prestations, visualisation des disponibilités, formulaire de contact et géolocalisation. Interface responsive optimisée pour mobile et desktop.',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
-    technologies: ['Astro', 'CI/CD', 'Tailwind CSS', 'JavaScript', 'Référencement SEO'],
-    github: 'https://github.com/TabarBaptiste/alydousheure_vitrine',
-    demo: 'https://aly-dousheure.netlify.app/',
-    demoLabel: 'Voir le site',
-    category: 'web'
-  },
-  {
-    title: 'RjWeb - Plateforme communautaire',
-    description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Lavalle. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
-    image: '/projects/preview.png',
-    imageLight: '/projects/preview_white.png',
-    technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
-    github: 'https://github.com/TabarBaptiste/pyramide',
-    demo: null,
-    category: 'web',
-    screenshots: [
-      { name: 'Accueil', path: '/projects/utilisateur.png' },
-      { name: 'Connexion', path: '/projects/connexion.png' },
-      { name: 'Contact', path: '/projects/contact.png' },
-      { name: 'Inscription', path: '/projects/inscription.png' },
-      { name: 'Liste inscrits', path: '/projects/inscrit.png' },
-      { name: 'Profil', path: '/projects/profil.png' },
-      { name: 'À propos', path: '/projects/about.png' }
-    ]
-  }
-];
+import { projects } from '../data/projects';
 
 const categories = ['all', 'web', 'mobile'];
 ---
@@ -88,7 +26,7 @@ const categories = ['all', 'web', 'mobile'];
 
   <!-- Grille de projets -->
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-    {projects.map((project, index) => (
+    {projects.map((project) => (
       <div 
         class="reveal project-card" 
         data-category={project.category}
@@ -149,13 +87,24 @@ const categories = ['all', 'web', 'mobile'];
             </p>
 
             <!-- Technologies -->
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mb-4">
               {project.technologies.map((tech) => (
                 <span class="px-3 py-1 rounded-lg bg-dark-800/50 text-primary-400 text-xs border border-dark-700">
                   {tech}
                 </span>
               ))}
             </div>
+
+            <!-- Voir le projet button -->
+            <a 
+              href={`/projects/${project.slug}`}
+              class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-primary-500/10 text-primary-400 border border-primary-500/30 hover:bg-primary-500 hover:text-white transition-all duration-300 group/btn"
+            >
+              <span>Voir le projet</span>
+              <svg class="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
           </div>
         </Card>
       </div>

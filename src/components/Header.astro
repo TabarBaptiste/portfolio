@@ -126,7 +126,7 @@ const navItems = [
 <script>
     // Effet de transparence au scroll
     const header = document.getElementById("header");
-    let lastScroll = 0;
+    // let lastScroll = 0;
 
     window.addEventListener("scroll", () => {
         const currentScroll = window.pageYOffset;
@@ -137,7 +137,7 @@ const navItems = [
             header?.classList.remove("glass", "shadow-lg");
         }
 
-        lastScroll = currentScroll;
+        // lastScroll = currentScroll;
     });
 
     // Toggle menu mobile
