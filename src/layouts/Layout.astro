@@ -32,6 +32,19 @@ const {
         <meta property="twitter:description" content={description} />
 
         <title>{title}</title>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NCC3V49NHS"></script>
+        <script>
+            // @ts-ignore
+            window.dataLayer = window.dataLayer || [];
+            // @ts-ignore
+            function gtag(){dataLayer.push(arguments);}
+            // @ts-ignore
+            gtag('js', new Date());
+            // @ts-ignore
+            gtag('config', 'G-NCC3V49NHS');
+        </script>
     </head>
     <body class="overflow-x-hidden">
         <slot />
