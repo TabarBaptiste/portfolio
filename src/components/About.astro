@@ -1,6 +1,15 @@
 ---
 import Section from "./ui/Section.astro";
 import Card from "./ui/Card.astro";
+
+// Calcul de l'âge automatiquement
+const birthDate = new Date('2003-12-16');
+const today = new Date();
+let age = today.getFullYear() - birthDate.getFullYear();
+const monthDiff = today.getMonth() - birthDate.getMonth();
+if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+}
 ---
 
 <Section
@@ -42,7 +51,7 @@ import Card from "./ui/Card.astro";
         <div class="reveal order-2 md:order-2 space-y-6">
             <div class="space-y-4">
                 <p class="text-dark-200 text-lg leading-relaxed">
-                    Je m'appelle Baptiste TABAR LABONNE, j'ai 20 ans. Ayant
+                    Je m'appelle Baptiste TABAR LABONNE, j'ai {age} ans. Ayant
                     obtenu mon BTS Services Informatiques aux Organisations et
                     ma Licence Professionnelle, je poursuis mon évolution en
                     tant qu'apprenti en Mastère Architecte Web (BAC+5) au
