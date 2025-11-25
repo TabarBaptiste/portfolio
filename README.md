@@ -1,43 +1,42 @@
-# Astro Starter Kit: Minimal
+# Portfolio - Baptiste TABAR LABONNE
 
-```sh
-npm create astro@latest -- --template minimal
+[![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+
+## 🌐 Portfolio en ligne
+
+Découvrez mon portfolio complet sur : **[https://portfolio-tabarlabonne.netlify.app/](https://portfolio-tabarlabonne.netlify.app/)**
+
+## 👋 À propos
+
+Je suis Baptiste TABAR LABONNE, développeur Full Stack de niveau Bac+5, passionné par la création d'applications web modernes et performantes. Ce dépôt contient le code source de mon portfolio personnel.
+
+## 🛠️ Technologies
+
+- **Astro** - Framework pour le rendu statique et dynamique
+- **TypeScript** - JavaScript typé
+- **Tailwind CSS** - Framework CSS utilitaire
+
+## 🚀 Démarrage rapide
+
+```bash
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
+npm run dev
+
+# Construire pour la production
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📞 Contact
 
-## 🚀 Project Structure
+- **Email** : [tabarbaptiste@gmail.com](tabarbaptiste@gmail.com)
+- **LinkedIn** : [TABAR LABONNE Baptiste](https://www.linkedin.com/in/baptiste-tabar-labonne-000256229/)
+- **GitHub** : [https://github.com/TabarBaptiste](https://github.com/TabarBaptiste)
 
-Inside of your Astro project, you'll see the following folders and files:
+---
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+*Développé avec ❤️ par Baptiste TABAR LABONNE*

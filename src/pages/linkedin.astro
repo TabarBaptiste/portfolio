@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Section from "../components/ui/Section.astro";
+
+// Cette page est uniquement pour usage local - elle ne sera pas liée dans le portfolio
+// Pour la rendre inaccessible en production, ajouter dans astro.config.mjs :
+// build: { exclude: ['src/pages/linkedin.astro'] }
+---
+
+<Layout
+    title="Idées de posts LinkedIn - Local"
+    description="Page personnelle pour sauvegarder des idées de posts LinkedIn"
+>
+    <Header />
+    <main class="min-h-screen">
+        <Section className="bg-dark-800/30 pt-32">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+                    Idées de posts LinkedIn
+                </h1>
+                <p class="text-lg text-dark-300 mb-8">
+                    Cette page est uniquement visible en local pour sauvegarder
+                    des idées de posts LinkedIn. Elle n'est pas accessible sur
+                    le portfolio déployé.
+                </p>
+
+                <div class="space-y-8">
+                    <!-- Idée de post LinkedIn -->
+                    <div class="glass rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-primary-400 mb-3">
+                            Disponibilité post-Mastère en Martinique
+                        </h3>
+                        <p class="text-dark-300 mb-4">
+                            Après plusieurs années d'études et d'expérience professionnelle en France hexagonale, je me prépare à clôturer mon Mastère Architecte Web en alternance au sein du Département du Val-de-Marne.<br><br>
+                            À l'issue de mon contrat, je serai disponible pour rejoindre une entreprise en Martinique et mettre mes compétences au service de projets locaux : développement d'applications, architecture web, modernisation de services numériques, optimisation d'expériences utilisateurs, etc.<br><br>
+                            Mon objectif est simple : contribuer au développement numérique du territoire en apportant une expertise solide, acquise aussi bien en collectivité qu'en entreprise.<br><br>
+                            Si votre structure recherche un profil polyvalent, sérieux et orienté solution, je serais ravi d'échanger.<br><br>
+                            📍 Retour prévu : fin de contrat / fin d'études (BAC+5)<br>
+                            📫 Contact en message privé ou via mon portfolio
+                        </p>
+                        <div class="text-sm text-dark-400">
+                            <strong>Hashtags:</strong> #Emploi #Martinique #DéveloppementWeb #FullStack #Recrutement
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Section>
+    </main>
+    <Footer />
+</Layout>
