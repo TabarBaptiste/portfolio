@@ -18,19 +18,6 @@ Je suis Baptiste TABAR LABONNE, développeur Full Stack de niveau Bac+5, passion
 - **TypeScript** - JavaScript typé
 - **Tailwind CSS** - Framework CSS utilitaire
 
-## 🚀 Démarrage rapide
-
-```bash
-# Installer les dépendances
-npm install
-
-# Lancer le serveur de développement
-npm run dev
-
-# Construire pour la production
-npm run build
-```
-
 ## 📞 Contact
 
 - **Email** : [tabarbaptiste@gmail.com](tabarbaptiste@gmail.com)
