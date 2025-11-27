@@ -185,12 +185,12 @@ import Button from "./ui/Button.astro";
         radius: 150
     };
 
-    canvas.addEventListener("mousemove", (e) => {
+    document.addEventListener("mousemove", (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
 
-    canvas.addEventListener("mouseleave", () => {
+    document.addEventListener("mouseleave", () => {
         mouse.x = -1000;
         mouse.y = -1000;
     });
