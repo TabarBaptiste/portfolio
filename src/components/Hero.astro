@@ -10,7 +10,7 @@ import Button from "./ui/Button.astro";
     <canvas id="particleCanvas" class="absolute inset-0 w-full h-full"></canvas>
 
     <!-- Gradient overlay subtil -->
-    <div class="absolute inset-0 bg-gradient-to-b from-dark-900/50 via-transparent to-dark-900/80 pointer-events-none"></div>
+    <!-- <div class="absolute inset-0 bg-gradient-to-b from-dark-900/50 via-transparent to-dark-900/80 pointer-events-none"></div> -->
 
     <!-- Contenu -->
     <div
@@ -170,6 +170,9 @@ import Button from "./ui/Button.astro";
     const canvas = document.getElementById("particleCanvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d")!;
     
+    // Détection du type d'appareil
+    const isMobile = window.innerWidth < 768;
+    
     // Ajuster la taille du canvas
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -178,19 +181,43 @@ import Button from "./ui/Button.astro";
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Position de la souris
+    // Position de l'interaction (souris ou touch)
     const mouse = {
         x: -1000,
         y: -1000,
         radius: 150
     };
 
-    document.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
+    // Gestion sur desktop (souris)
+    if (!isMobile) {
+        document.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        document.addEventListener("mouseleave", () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+    }
+
+    // Gestion sur mobile (touch lors du scroll)
+    let touchTimeout: number;
+    window.addEventListener("touchmove", (e) => {
+        if (e.touches.length > 0) {
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+        }
+        
+        // Réinitialiser après un court délai
+        clearTimeout(touchTimeout);
+        touchTimeout = window.setTimeout(() => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        }, 150);
     });
 
-    document.addEventListener("mouseleave", () => {
+    window.addEventListener("touchend", () => {
         mouse.x = -1000;
         mouse.y = -1000;
     });
@@ -214,7 +241,10 @@ import Button from "./ui/Button.astro";
             this.vx = (Math.random() - 0.5) * 0.5;
             this.vy = (Math.random() - 0.5) * 0.5;
             this.size = Math.random() * 3 + 1;
-            this.opacity = Math.random() * 0.5 + 0.3;
+            // Opacité réduite sur mobile
+            this.opacity = isMobile 
+                ? Math.random() * 0.2 + 0.1 
+                : Math.random() * 0.5 + 0.3;
         }
 
         update() {
@@ -254,8 +284,8 @@ import Button from "./ui/Button.astro";
         }
     }
 
-    // Créer les particules
-    const particleCount = 150;
+    // Créer les particules (moins sur mobile)
+    const particleCount = isMobile ? 60 : 150;
     const particles: Particle[] = [];
     
     for (let i = 0; i < particleCount; i++) {
@@ -271,7 +301,9 @@ import Button from "./ui/Button.astro";
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < 100) {
-                    const opacity = (1 - distance / 100) * 0.2;
+                    // Opacité réduite sur mobile
+                    const baseOpacity = isMobile ? 0.1 : 0.2;
+                    const opacity = (1 - distance / 100) * baseOpacity;
                     ctx.strokeStyle = `rgba(26, 117, 255, ${opacity})`;
                     ctx.lineWidth = 1;
                     ctx.beginPath();
