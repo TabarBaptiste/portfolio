@@ -1,19 +1,32 @@
 ---
 import Button from "./ui/Button.astro";
+import { techIcons } from "../data/techIcons";
+
+// Extraire uniquement les noms de fichiers SVG (sans chemin ni extension)
+const techIconNames = Object.values(techIcons).map((path) =>
+    path.replace("/icon_svg/", "").replace(".svg", ""),
+);
 ---
 
 <section
     id="home"
-    class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20"
+    class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20 bg-gradient-to-b from-sky-200 via-sky-100 to-blue-50 dark:from-[#0a0a1a] dark:via-[#0d0d2b] dark:to-[#0a0a1a]"
 >
-    <!-- Canvas pour les particules interactives (desktop uniquement) -->
+    <!-- Canvas pour l'effet visuel (jour/nuit selon le thème) - Desktop uniquement -->
     <canvas
-        id="particleCanvas"
+        id="skyCanvas"
         class="absolute inset-0 w-full h-full hidden md:block"></canvas>
 
-    <!-- Gradient overlay subtil (mode sombre uniquement) -->
+    <!-- Container pour les icônes SVG flottantes - Desktop uniquement -->
     <div
-        class="dark:block hidden absolute inset-0 bg-gradient-to-b from-dark-900/50 via-transparent to-dark-900/80 pointer-events-none"
+        id="techIconsContainer"
+        class="absolute inset-0 w-full h-full hidden md:block pointer-events-none"
+    >
+    </div>
+
+    <!-- Gradient overlay pour profondeur -->
+    <div
+        class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/30 dark:to-dark-900/60 pointer-events-none"
     >
     </div>
 
@@ -39,18 +52,18 @@ import Button from "./ui/Button.astro";
         </h1>
 
         <!-- Sous-titre avec effet typing -->
-        <div class="text-xl md:text-2xl text-dark-300 mb-8 h-8">
+        <div class="text-xl md:text-2xl text-dark-500 dark:text-dark-300 mb-8 h-8">
             <span id="typing-text" class="border-r-2 border-primary-500"></span>
         </div>
 
         <!-- Description -->
         <p
-            class="text-lg md:text-xl text-dark-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+            class="text-lg md:text-xl text-dark-400 dark:text-dark-300 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
             Je suis apprenti en Mastère Architecte Web et je crée des
             applications pensées avant tout pour être agréables à utiliser.
-            J’aime rendre les choses claires, fluides et fiables, autant dans le
-            code que dans l’expérience proposée aux utilisateurs.
+            J'aime rendre les choses claires, fluides et fiables, autant dans le
+            code que dans l'expérience proposée aux utilisateurs.
         </p>
 
         <!-- CTA Buttons -->
@@ -97,29 +110,12 @@ import Button from "./ui/Button.astro";
         </div>
     </div>
 
-    <!-- Scroll indicator (positioned relative to the section, bottom center) -->
-    <!-- <div
-        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20"
-    >
-        <a
-            href="#about"
-            class="text-dark-400 hover:text-primary-400 transition-colors"
-            aria-label="Aller à la section À propos"
-        >
-            <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
-    </div> -->
+    <!-- Données des icônes passées au script -->
+    <script
+        id="techIconsData"
+        type="application/json"
+        set:html={JSON.stringify(techIconNames)}
+    />
 </section>
 
 <script>
@@ -139,16 +135,10 @@ import Button from "./ui/Button.astro";
         const currentText = texts[textIndex];
 
         if (isDeleting) {
-            typingElement!.textContent = currentText.substring(
-                0,
-                charIndex - 1,
-            );
+            typingElement!.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
         } else {
-            typingElement!.textContent = currentText.substring(
-                0,
-                charIndex + 1,
-            );
+            typingElement!.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
         }
 
@@ -166,24 +156,45 @@ import Button from "./ui/Button.astro";
         setTimeout(type, timeout);
     }
 
-    // Démarrer l'animation après un court délai
     setTimeout(() => {
         type();
     }, 500);
 
-    // Système de particules interactives avec effet liquide
-    const canvas = document.getElementById(
-        "particleCanvas",
-    ) as HTMLCanvasElement;
+    // ==========================================
+    // SYSTÈME VISUEL ADAPTATIF JOUR/NUIT
+    // ==========================================
+
+    const canvas = document.getElementById("skyCanvas") as HTMLCanvasElement;
+    const iconsContainer = document.getElementById("techIconsContainer") as HTMLDivElement;
     const isMobile = window.innerWidth < 768;
 
-    // Ne pas exécuter sur mobile
-    if (isMobile || !canvas) {
-        // Arrêter l'exécution si mobile ou canvas non disponible
-    } else {
+    // Ne rien exécuter sur mobile
+    if (!isMobile && canvas && iconsContainer) {
         const ctx = canvas.getContext("2d")!;
+        let animationId: number;
 
-        // Ajuster la taille du canvas
+        // Récupérer la liste des icônes
+        const techIconsDataElement = document.getElementById("techIconsData");
+        const techIcons: string[] = techIconsDataElement
+            ? JSON.parse(techIconsDataElement.textContent || "[]")
+            : [];
+
+        // Détection du thème
+        function isDarkMode(): boolean {
+            return document.documentElement.classList.contains("dark");
+        }
+
+        // Configuration
+        const config = {
+            starCount: 200,
+            nebulaCount: 4,
+            iconCount: Math.min(25, techIcons.length),
+            shootingStarInterval: 5000,
+            mouseRadius: 150,
+            mouseForce: 80,
+        };
+
+        // Redimensionnement
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -191,11 +202,11 @@ import Button from "./ui/Button.astro";
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
-        // Position de la souris
+        // Position souris
         const mouse = {
             x: -1000,
             y: -1000,
-            radius: 150,
+            radius: config.mouseRadius,
         };
 
         document.addEventListener("mousemove", (e) => {
@@ -208,8 +219,244 @@ import Button from "./ui/Button.astro";
             mouse.y = -1000;
         });
 
-        // Classe Particule
-        class Particle {
+        // ==========================================
+        // CLASSES MODE SOMBRE (ESPACE)
+        // ==========================================
+
+        class Star {
+            x: number;
+            y: number;
+            size: number;
+            brightness: number;
+            twinkleSpeed: number;
+            twinklePhase: number;
+            color: { r: number; g: number; b: number };
+
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.brightness = Math.random() * 0.5 + 0.3;
+                this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+                this.twinklePhase = Math.random() * Math.PI * 2;
+
+                const colorType = Math.random();
+                if (colorType < 0.7) {
+                    this.color = { r: 200 + Math.random() * 55, g: 200 + Math.random() * 55, b: 255 };
+                } else if (colorType < 0.9) {
+                    this.color = { r: 255, g: 250, b: 200 + Math.random() * 30 };
+                } else {
+                    this.color = { r: 150 + Math.random() * 50, g: 180 + Math.random() * 50, b: 255 };
+                }
+            }
+
+            update() {
+                this.twinklePhase += this.twinkleSpeed;
+            }
+
+            draw() {
+                const twinkle = Math.sin(this.twinklePhase) * 0.3 + 0.7;
+                const alpha = this.brightness * twinkle;
+                const size = this.size * (twinkle * 0.2 + 0.8);
+
+                ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class Nebula {
+            x: number;
+            y: number;
+            radius: number;
+            color: { r: number; g: number; b: number };
+            opacity: number;
+            rotation: number;
+            rotationSpeed: number;
+
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 250 + 100;
+                this.opacity = Math.random() * 0.06 + 0.02;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.0003;
+
+                const colorType = Math.random();
+                if (colorType < 0.3) {
+                    this.color = { r: 100 + Math.random() * 50, g: 40 + Math.random() * 30, b: 160 + Math.random() * 60 };
+                } else if (colorType < 0.6) {
+                    this.color = { r: 30 + Math.random() * 30, g: 70 + Math.random() * 50, b: 140 + Math.random() * 80 };
+                } else if (colorType < 0.8) {
+                    this.color = { r: 40 + Math.random() * 30, g: 130 + Math.random() * 50, b: 160 + Math.random() * 60 };
+                } else {
+                    this.color = { r: 160 + Math.random() * 60, g: 50 + Math.random() * 30, b: 120 + Math.random() * 50 };
+                }
+            }
+
+            update() {
+                this.rotation += this.rotationSpeed;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.radius);
+                gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`);
+                gradient.addColorStop(0.5, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity * 0.4})`);
+                gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.radius, this.radius * 0.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        class ShootingStar {
+            x: number;
+            y: number;
+            speed: number;
+            angle: number;
+            opacity: number;
+            trail: { x: number; y: number; opacity: number }[];
+            active: boolean;
+
+            constructor() {
+                this.x = 0;
+                this.y = 0;
+                this.speed = 0;
+                this.angle = 0;
+                this.opacity = 0;
+                this.trail = [];
+                this.active = false;
+            }
+
+            reset() {
+                const startSide = Math.random();
+                if (startSide < 0.5) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -20;
+                } else {
+                    this.x = canvas.width + 20;
+                    this.y = Math.random() * canvas.height * 0.4;
+                }
+
+                this.speed = Math.random() * 12 + 8;
+                this.angle = Math.PI * 0.75 + (Math.random() - 0.5) * 0.3;
+                this.opacity = 1;
+                this.trail = [];
+                this.active = true;
+            }
+
+            update() {
+                if (!this.active) return;
+
+                this.trail.unshift({ x: this.x, y: this.y, opacity: this.opacity });
+                if (this.trail.length > 15) this.trail.pop();
+
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (this.x < -50 || this.y > canvas.height + 50) {
+                    this.opacity -= 0.08;
+                    if (this.opacity <= 0) this.active = false;
+                }
+
+                this.trail.forEach((point, index) => {
+                    point.opacity = this.opacity * (1 - index / this.trail.length);
+                });
+            }
+
+            draw() {
+                if (!this.active || this.trail.length < 2) return;
+
+                ctx.beginPath();
+                ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                for (let i = 1; i < this.trail.length; i++) {
+                    ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                }
+
+                const gradient = ctx.createLinearGradient(
+                    this.x, this.y,
+                    this.trail[this.trail.length - 1]?.x || this.x,
+                    this.trail[this.trail.length - 1]?.y || this.y
+                );
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
+                gradient.addColorStop(0.4, `rgba(200, 220, 255, ${this.opacity * 0.6})`);
+                gradient.addColorStop(1, `rgba(100, 150, 255, 0)`);
+
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 2;
+                ctx.lineCap = "round";
+                ctx.stroke();
+
+                const headGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 5);
+                headGradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
+                headGradient.addColorStop(1, `rgba(150, 180, 255, 0)`);
+                ctx.fillStyle = headGradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // ==========================================
+        // CLASSES MODE CLAIR (JOUR)
+        // ==========================================
+
+        class SunRay {
+            angle: number;
+            length: number;
+            opacity: number;
+            pulsePhase: number;
+            pulseSpeed: number;
+
+            constructor(angle: number) {
+                this.angle = angle;
+                this.length = Math.random() * 200 + 300;
+                this.opacity = Math.random() * 0.08 + 0.03;
+                this.pulsePhase = Math.random() * Math.PI * 2;
+                this.pulseSpeed = Math.random() * 0.01 + 0.005;
+            }
+
+            update() {
+                this.pulsePhase += this.pulseSpeed;
+            }
+
+            draw(sunX: number, sunY: number) {
+                const pulse = Math.sin(this.pulsePhase) * 0.3 + 0.7;
+                const currentOpacity = this.opacity * pulse;
+                const currentLength = this.length * (pulse * 0.2 + 0.8);
+
+                const endX = sunX + Math.cos(this.angle) * currentLength;
+                const endY = sunY + Math.sin(this.angle) * currentLength;
+
+                const gradient = ctx.createLinearGradient(sunX, sunY, endX, endY);
+                gradient.addColorStop(0, `rgba(255, 230, 120, ${currentOpacity})`);
+                gradient.addColorStop(1, `rgba(255, 230, 120, 0)`);
+
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 15;
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(sunX, sunY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+            }
+        }
+
+        // ==========================================
+        // CLASSE ICÔNE TECH (commune aux deux modes)
+        // ==========================================
+
+        class TechIcon {
+            element: HTMLImageElement;
             x: number;
             y: number;
             baseX: number;
@@ -217,117 +464,353 @@ import Button from "./ui/Button.astro";
             vx: number;
             vy: number;
             size: number;
+            rotation: number;
+            rotationSpeed: number;
             opacity: number;
+            baseOpacity: number;
+            depth: number;
+            floatPhase: number;
+            floatSpeed: number;
+            floatAmplitude: number;
+            loaded: boolean;
+            failed: boolean;
 
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+            constructor(iconName: string, container: HTMLDivElement) {
+                this.loaded = false;
+                this.failed = false;
+
+                this.element = document.createElement("img");
+                this.element.src = `/icon_svg/${iconName}.svg`;
+                this.element.alt = iconName;
+                this.element.className = "tech-icon-floating";
+                this.element.draggable = false;
+
+                this.depth = Math.random();
+
+                this.size = this.depth < 0.3
+                    ? Math.random() * 20 + 24
+                    : this.depth < 0.7
+                        ? Math.random() * 25 + 32
+                        : Math.random() * 30 + 40;
+
+                this.x = this.getValidPosition("x");
+                this.y = this.getValidPosition("y");
                 this.baseX = this.x;
                 this.baseY = this.y;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 3 + 1;
-                this.opacity = Math.random() * 0.5 + 0.3;
+
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.3;
+
+                this.baseOpacity = this.depth * 0.4 + 0.3;
+                this.opacity = this.baseOpacity;
+
+                this.floatPhase = Math.random() * Math.PI * 2;
+                this.floatSpeed = Math.random() * 0.015 + 0.008;
+                this.floatAmplitude = Math.random() * 15 + 8;
+
+                // Ne pas ajouter au DOM avant que l'image soit chargée
+                this.element.onload = () => {
+                    this.loaded = true;
+                    this.updateStyles();
+                    container.appendChild(this.element);
+                };
+
+                this.element.onerror = () => {
+                    this.failed = true;
+                    // Ne jamais ajouter au DOM si le chargement échoue
+                };
+            }
+
+            updateStyles() {
+                if (this.failed || !this.loaded) return;
+
+                const dark = isDarkMode();
+                const shadowColor = dark 
+                    ? `rgba(100, 150, 255, ${this.depth * 0.3 + 0.1})`
+                    : `rgba(0, 80, 180, ${this.depth * 0.2 + 0.1})`;
+                const shadowSize = this.depth * 8 + 4;
+
+                this.element.style.cssText = `
+                    position: absolute;
+                    width: ${this.size}px;
+                    height: ${this.size}px;
+                    opacity: ${this.opacity};
+                    filter: drop-shadow(0 0 ${shadowSize}px ${shadowColor});
+                    transition: filter 0.3s ease;
+                    will-change: transform, opacity;
+                `;
+            }
+
+            getValidPosition(axis: "x" | "y"): number {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const avoidWidth = 500;
+                const avoidHeight = 400;
+
+                if (axis === "x") {
+                    let x: number;
+                    do {
+                        x = Math.random() * canvas.width;
+                    } while (x > centerX - avoidWidth / 2 && x < centerX + avoidWidth / 2 && Math.random() > 0.3);
+                    return x;
+                } else {
+                    let y: number;
+                    do {
+                        y = Math.random() * canvas.height;
+                    } while (y > centerY - avoidHeight / 2 && y < centerY + avoidHeight / 2 && Math.random() > 0.3);
+                    return y;
+                }
             }
 
             update() {
-                // Mouvement de base
+                // Ne rien faire si l'icône n'est pas chargée ou a échoué
+                if (!this.loaded || this.failed) return;
+
+                const dark = isDarkMode();
+
+                this.floatPhase += this.floatSpeed;
+                const floatOffsetX = Math.sin(this.floatPhase) * this.floatAmplitude * 0.5;
+                const floatOffsetY = Math.cos(this.floatPhase * 0.7) * this.floatAmplitude;
+
                 this.baseX += this.vx;
                 this.baseY += this.vy;
 
-                // Rebond sur les bords
-                if (this.baseX < 0 || this.baseX > canvas.width) this.vx *= -1;
-                if (this.baseY < 0 || this.baseY > canvas.height) this.vy *= -1;
+                const margin = this.size;
+                if (this.baseX < margin || this.baseX > canvas.width - margin) {
+                    this.vx *= -1;
+                    this.baseX = Math.max(margin, Math.min(canvas.width - margin, this.baseX));
+                }
+                if (this.baseY < margin || this.baseY > canvas.height - margin) {
+                    this.vy *= -1;
+                    this.baseY = Math.max(margin, Math.min(canvas.height - margin, this.baseY));
+                }
 
-                // Interaction avec la souris - effet de répulsion liquide
                 const dx = mouse.x - this.baseX;
                 const dy = mouse.y - this.baseY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
+                const depthFactor = 0.4 + this.depth * 0.6;
+                const effectiveRadius = mouse.radius * (1 + depthFactor);
+
+                let targetX = this.baseX + floatOffsetX;
+                let targetY = this.baseY + floatOffsetY;
+
+                if (distance < effectiveRadius) {
+                    const force = (effectiveRadius - distance) / effectiveRadius;
                     const angle = Math.atan2(dy, dx);
-                    const repelX = Math.cos(angle) * force * 50;
-                    const repelY = Math.sin(angle) * force * 50;
+                    const repelX = Math.cos(angle) * force * config.mouseForce * depthFactor;
+                    const repelY = Math.sin(angle) * force * config.mouseForce * depthFactor;
 
-                    this.x = this.baseX - repelX;
-                    this.y = this.baseY - repelY;
+                    targetX -= repelX;
+                    targetY -= repelY;
+
+                    this.opacity = Math.min(1, this.baseOpacity + force * 0.4);
+
+                    const hoverShadowColor = dark
+                        ? `rgba(100, 180, 255, ${force * 0.5 + 0.2})`
+                        : `rgba(0, 120, 220, ${force * 0.4 + 0.2})`;
+                    const hoverShadowSize = this.depth * 12 + 8;
+                    this.element.style.filter = `drop-shadow(0 0 ${hoverShadowSize}px ${hoverShadowColor})`;
                 } else {
-                    // Retour fluide vers la position de base
-                    this.x += (this.baseX - this.x) * 0.05;
-                    this.y += (this.baseY - this.y) * 0.05;
+                    this.opacity += (this.baseOpacity - this.opacity) * 0.1;
+
+                    const normalShadowColor = dark
+                        ? `rgba(100, 150, 255, ${this.depth * 0.3 + 0.1})`
+                        : `rgba(0, 80, 180, ${this.depth * 0.2 + 0.1})`;
+                    const normalShadowSize = this.depth * 8 + 4;
+                    this.element.style.filter = `drop-shadow(0 0 ${normalShadowSize}px ${normalShadowColor})`;
                 }
-            }
 
-            draw() {
-                ctx.fillStyle = `rgba(26, 117, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+                this.x += (targetX - this.x) * 0.08;
+                this.y += (targetY - this.y) * 0.08;
 
-        // Créer les particules
-        const particleCount = 150;
-        const particles: Particle[] = [];
+                this.rotation += this.rotationSpeed;
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        // Dessiner les connexions entre particules proches
-        function connectParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        const opacity = (1 - distance / 100) * 0.2;
-                        ctx.strokeStyle = `rgba(26, 117, 255, ${opacity})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
+                this.element.style.transform = `translate(${this.x - this.size / 2}px, ${this.y - this.size / 2}px) rotate(${this.rotation}deg)`;
+                this.element.style.opacity = `${this.opacity}`;
             }
         }
 
-        // Animation
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ==========================================
+        // INITIALISATION
+        // ==========================================
 
-            connectParticles();
+        // Éléments mode sombre
+        const nebulae: Nebula[] = [];
+        for (let i = 0; i < config.nebulaCount; i++) {
+            nebulae.push(new Nebula());
+        }
 
-            particles.forEach((particle) => {
-                particle.update();
-                particle.draw();
+        const stars: Star[] = [];
+        for (let i = 0; i < config.starCount; i++) {
+            stars.push(new Star());
+        }
+
+        const shootingStar = new ShootingStar();
+
+        // Éléments mode clair (soleil uniquement)
+        const sunRays: SunRay[] = [];
+        const rayCount = 12;
+        for (let i = 0; i < rayCount; i++) {
+            sunRays.push(new SunRay((i / rayCount) * Math.PI * 2));
+        }
+
+        // Icônes tech (commun aux deux modes)
+        const shuffledIcons = [...techIcons].sort(() => Math.random() - 0.5);
+        const techIconObjects: TechIcon[] = [];
+        for (let i = 0; i < config.iconCount; i++) {
+            const iconName = shuffledIcons[i % shuffledIcons.length];
+            techIconObjects.push(new TechIcon(iconName, iconsContainer));
+        }
+
+        // Timer pour étoiles filantes (uniquement en mode sombre)
+        setInterval(() => {
+            if (!shootingStar.active && Math.random() > 0.4 && isDarkMode()) {
+                shootingStar.reset();
+            }
+        }, config.shootingStarInterval);
+
+        // ==========================================
+        // FONCTIONS DE RENDU
+        // ==========================================
+
+        function drawDarkBackground() {
+            const bgGradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height)
+            );
+            bgGradient.addColorStop(0, "#0d0d1a");
+            bgGradient.addColorStop(0.5, "#080812");
+            bgGradient.addColorStop(1, "#050508");
+
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            nebulae.forEach((nebula) => {
+                nebula.update();
+                nebula.draw();
             });
 
-            requestAnimationFrame(animate);
+            stars.forEach((star) => {
+                star.update();
+                star.draw();
+            });
+
+            shootingStar.update();
+            shootingStar.draw();
+        }
+
+        function drawLightBackground() {
+            // Dégradé de ciel bleu lumineux
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            skyGradient.addColorStop(0, "#7EC8E3");
+            skyGradient.addColorStop(0.4, "#B8E0F0");
+            skyGradient.addColorStop(0.7, "#E3F2FD");
+            skyGradient.addColorStop(1, "#F5FAFF");
+
+            ctx.fillStyle = skyGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Soleil
+            const sunX = canvas.width * 0.85;
+            const sunY = canvas.height * 0.12;
+            const sunRadius = 50;
+
+            // Rayons du soleil
+            sunRays.forEach((ray) => {
+                ray.update();
+                ray.draw(sunX, sunY);
+            });
+
+            // Halo externe du soleil
+            const sunHalo = ctx.createRadialGradient(sunX, sunY, sunRadius, sunX, sunY, sunRadius * 4);
+            sunHalo.addColorStop(0, "rgba(255, 245, 200, 0.3)");
+            sunHalo.addColorStop(0.4, "rgba(255, 245, 200, 0.1)");
+            sunHalo.addColorStop(1, "rgba(255, 245, 200, 0)");
+
+            ctx.fillStyle = sunHalo;
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, sunRadius * 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Soleil principal avec gradient
+            const sunGradient = ctx.createRadialGradient(
+                sunX - sunRadius * 0.2, sunY - sunRadius * 0.2, 0,
+                sunX, sunY, sunRadius
+            );
+            sunGradient.addColorStop(0, "#FFFEF5");
+            sunGradient.addColorStop(0.4, "#FFF9C4");
+            sunGradient.addColorStop(1, "#FFE082");
+
+            ctx.fillStyle = sunGradient;
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, sunRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // ==========================================
+        // BOUCLE D'ANIMATION
+        // ==========================================
+
+        function animate() {
+            const dark = isDarkMode();
+
+            if (dark) {
+                drawDarkBackground();
+            } else {
+                drawLightBackground();
+            }
+
+            // Les icônes sont toujours mises à jour (visibles en light ET dark)
+            techIconObjects.forEach((icon) => {
+                icon.update();
+            });
+
+            animationId = requestAnimationFrame(animate);
         }
 
         animate();
-    } // Fin du bloc if (!isMobile)
+
+        // Redimensionnement
+        window.addEventListener("resize", () => {
+            resizeCanvas();
+            stars.forEach((star) => {
+                star.x = Math.random() * canvas.width;
+                star.y = Math.random() * canvas.height;
+            });
+            nebulae.forEach((nebula) => {
+                nebula.x = Math.random() * canvas.width;
+                nebula.y = Math.random() * canvas.height;
+            });
+        });
+
+        // Observer les changements de thème
+        const observer = new MutationObserver(() => {
+            techIconObjects.forEach((icon) => {
+                icon.updateStyles();
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+
+        // Nettoyage
+        window.addEventListener("beforeunload", () => {
+            cancelAnimationFrame(animationId);
+            observer.disconnect();
+        });
+    }
 </script>
 
 <style>
-    @keyframes float {
-        0%,
-        100% {
-            transform: translateY(0) translateX(0);
-        }
-        25% {
-            transform: translateY(-20px) translateX(10px);
-        }
-        50% {
-            transform: translateY(-40px) translateX(-10px);
-        }
-        75% {
-            transform: translateY(-20px) translateX(5px);
-        }
+    .tech-icon-floating {
+        pointer-events: none;
+        user-select: none;
+        image-rendering: crisp-edges;
     }
 </style>
