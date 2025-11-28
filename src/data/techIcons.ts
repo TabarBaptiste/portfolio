@@ -6,7 +6,7 @@ export const techIcons: Record<string, string> = {
 
     'PHP': '/icon_svg/php.svg',
 
-    'Dart': '/icon_svg/dart.svg',
+    // 'Dart': '/icon_svg/dart.svg',
 
     // Frameworks & Libraries
     'Angular': '/icon_svg/angular.svg',
@@ -34,7 +34,7 @@ export const techIcons: Record<string, string> = {
     // Tools & Services
     'Firebase': '/icon_svg/firebase.svg',
 
-    'Supabase': '/icon_svg/supabase.svg',
+    // 'Supabase': '/icon_svg/supabase.svg',
 
     'Sentry': '/icon_svg/sentry.svg',
 
@@ -44,7 +44,7 @@ export const techIcons: Record<string, string> = {
 
     'MySQL': '/icon_svg/mysql.svg',
 
-    'NeonDB': '/icon_svg/neondb.svg',
+    // 'NeonDB': '/icon_svg/neondb.svg',
 
     'CI/CD': '/icon_svg/cicd.svg',
 
@@ -58,17 +58,17 @@ export const techIcons: Record<string, string> = {
 
     'CSS': '/icon_svg/css.svg',
 
-    'HTML5 / CSS3': '/icon_svg/html5-css3.svg',
+    // 'HTML5 / CSS3': '/icon_svg/html5-css3.svg',
 
     'Node.js': '/icon_svg/nodejs.svg',
 
-    'Render': '/icon_svg/render.svg',
+    // 'Render': '/icon_svg/render.svg',
 
     'Netlify': '/icon_svg/netlify.svg',
 
     'Vercel': '/icon_svg/vercel.svg',
 
-    'Railway': '/icon_svg/railway.svg',
+    // 'Railway': '/icon_svg/railway.svg',
 
     'Git': '/icon_svg/git.svg',
 
@@ -80,15 +80,15 @@ export const techIcons: Record<string, string> = {
 
     'Figma': '/icon_svg/figma.svg',
 
-    'Base de données': '/icon_svg/database.svg',
+    // 'Base de données': '/icon_svg/database.svg',
 
     'Référencement SEO': '/icon_svg/seo.svg',
 
-    'MCP': '/icon_svg/mcp.svg',
+    // 'MCP': '/icon_svg/mcp.svg',
 
     'SVN': '/icon_svg/svn.svg',
 
-    'WAMP / PhpMyAdmin': '/icon_svg/wamp.svg',
+    // 'WAMP / PhpMyAdmin': '/icon_svg/wamp.svg',
 
     'Markdown': '/icon_svg/markdown.svg'
 };
