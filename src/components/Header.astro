@@ -31,10 +31,11 @@ const navItems = [
                         <li>
                             <a
                                 href={item.href}
-                                class="text-dark-300 hover:text-primary-400 transition-colors duration-300 relative group"
+                                class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300 relative group"
+                                data-section={item.href.split('#')[1]}
                             >
                                 {item.name}
-                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300" />
+                                <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300" />
                             </a>
                         </li>
                     ))
@@ -227,4 +228,110 @@ const navItems = [
     // Ajouter les event listeners
     themeToggle?.addEventListener("click", toggleTheme);
     themeToggleMobile?.addEventListener("click", toggleTheme);
+
+    // Navigation active - détection de section visible
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navIndicators = document.querySelectorAll('.nav-indicator');
+    let currentSection = '';
+
+    // Fonction pour mettre à jour la navigation active
+    const updateActiveNav = (sectionId: string) => {
+        if (currentSection === sectionId) return;
+        currentSection = sectionId;
+
+        navLinks.forEach((link, index) => {
+            const linkElement = link as HTMLElement;
+            const indicator = navIndicators[index] as HTMLElement;
+            const section = linkElement.getAttribute('data-section');
+
+            if (section === sectionId) {
+                linkElement.classList.add('text-primary-400');
+                linkElement.classList.remove('text-dark-300');
+                indicator.classList.add('w-full');
+                indicator.classList.remove('group-hover:w-full');
+            } else {
+                linkElement.classList.remove('text-primary-400');
+                linkElement.classList.add('text-dark-300');
+                indicator.classList.remove('w-full');
+                indicator.classList.add('group-hover:w-full');
+            }
+        });
+    };
+
+    // Observer pour détecter les sections visibles
+    const sectionObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    updateActiveNav(sectionId);
+                }
+            });
+        },
+        {
+            rootMargin: '-50% 0px -50% 0px', // Active quand la section est au centre
+            threshold: 0
+        }
+    );
+
+    // Observer toutes les sections
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => {
+        sectionObserver.observe(section);
+    });
+
+    // Gestion du clic sur les liens de navigation
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href) {
+                const targetId = href.split('#')[1];
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const headerHeight = header?.offsetHeight || 0;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+
+    // Mettre à jour la navigation au chargement de la page
+    const updateNavOnLoad = () => {
+        const hash = window.location.hash.slice(1);
+        if (hash) {
+            updateActiveNav(hash);
+        } else {
+            // Si pas de hash, vérifier quelle section est visible au chargement
+            const firstVisibleSection = Array.from(sections).find((section) => {
+                const rect = section.getBoundingClientRect();
+                return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+            });
+            if (firstVisibleSection) {
+                updateActiveNav(firstVisibleSection.id);
+            }
+        }
+    };
+
+    // Mettre à jour au chargement et au changement de hash
+    window.addEventListener('load', updateNavOnLoad);
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.slice(1);
+        updateActiveNav(hash);
+    });
 </script>
+
+<style>
+    .nav-link.active {
+        @apply text-primary-400;
+    }
+    
+    .nav-link.active .nav-indicator {
+        @apply w-full;
+    }
+</style>
