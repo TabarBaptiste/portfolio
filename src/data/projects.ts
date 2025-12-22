@@ -28,6 +28,132 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: 'alydousheure-fullstack',
+    title: 'Aly dous\'heure - Plateforme de réservation',
+    description: 'Plateforme web de réservation et de gestion pour une masseuse professionnelle. Système de prise de rendez-vous en ligne, paiement sécurisé, gestion des disponibilités, authentification utilisateur et tableau de bord statistiques pour le professionnel.',
+    image: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80',
+    technologies: ['NestJS', 'Next.js', 'Prisma', 'Supabase', 'Stripe Connect', 'Cloudinary', 'Resend', 'Vercel', 'Render', 'GitHub Actions', 'IONOS'],
+    github: 'https://github.com/TabarBaptiste/masseuse',
+    demo: 'https://alydousheure.fr/',
+    demoLabel: 'Voir le site',
+    category: 'web',
+    detailedContent: {
+      introduction: 'Plateforme web **full-stack** développée pour digitaliser l\'activité d\'une masseuse professionnelle indépendante.\n\nLe projet couvre l\'ensemble du parcours client : de la découverte des prestations à la réservation en ligne, en passant par le paiement sécurisé et la gestion post-visite (avis clients).\n\nCôté professionnel, l\'application offre un **tableau de bord complet** pour gérer les réservations, visualiser les statistiques, administrer les prestations et paramétrer le site.\n\nL\'architecture est pensée pour être **performante, maintenable et évolutive**, avec une **séparation claire entre frontend et backend**, un **déploiement automatisé** et une **gestion rigoureuse des données sensibles**.',
+      features: [
+        'Système de réservation intelligent :',
+        '  • Consultation des disponibilités en temps réel',
+        '  • Sélection de prestations et créneaux horaires',
+        '  • Gestion automatique des conflits et blocages',
+        '  • Validation et confirmation par email',
+        'Paiement sécurisé :',
+        '  • Intégration complète de Stripe Connect',
+        '  • Paiement en ligne lors de la réservation',
+        '  • Gestion des remboursements et annulations',
+        'Authentification et gestion utilisateur :',
+        '  • Inscription et connexion sécurisées',
+        '  • Vérification d\'email automatique',
+        '  • Gestion de profil et historique des réservations',
+        '  • Rôles utilisateur (client, professionnel, administrateur)',
+        'Système d\'avis clients :',
+        '  • Dépôt d\'avis après prestation',
+        '  • Affichage public des témoignages',
+        '  • Modération par le professionnel',
+        'Tableau de bord professionnel :',
+        '  • Vue d\'ensemble des réservations (passées, à venir, annulées)',
+        '  • Statistiques détaillées (revenus, prestations populaires, taux d\'occupation)',
+        '  • Gestion des créneaux et blocages de disponibilité',
+        '  • Administration des prestations et tarifs',
+        '  • Configuration des paramètres du site'
+      ],
+      technical: [
+        {
+          title: 'Frontend – Next.js',
+          items: [
+            'Framework React moderne avec **App Router** pour une navigation fluide avec **Next.js**',
+            '**Server-Side Rendering (SSR)** pour l\'optimisation SEO',
+            '**TypeScript** pour la sécurité des types',
+            '**Tailwind CSS** pour un design responsive et cohérent',
+            'Gestion d\'état avec **Zustand** pour les données globales',
+            'Composants UI réutilisables et modulaires',
+            'Optimisation des images et des performances'
+          ]
+        },
+        {
+          title: 'Backend – NestJS',
+          items: [
+            'Architecture modulaire et scalable avec **NestJS**',
+            '**TypeScript** côté serveur pour une cohérence totale',
+            'API REST sécurisée avec validation des données via **class-validator**',
+            'Authentification JWT avec système de refresh tokens',
+            'Gestion fine des rôles et permissions (Guards)',
+            'Envoi d\'emails transactionnels automatisés',
+            'Gestion des conflits de réservation en temps réel',
+            'Logs structurés et gestion centralisée des erreurs'
+          ]
+        },
+        {
+          title: 'Base de données – Prisma & Supabase',
+          items: [
+            '**Prisma** comme ORM pour une gestion type-safe de la base',
+            '**Supabase (PostgreSQL)** pour l\'hébergement de la base de données',
+            'Schéma relationnel complet (utilisateurs, réservations, prestations, avis, disponibilités)',
+            'Migrations versionnées pour la traçabilité',
+            'Indexation optimisée pour les requêtes fréquentes'
+          ]
+        },
+        {
+          title: 'Paiement – Stripe Connect',
+          items: [
+            'Intégration complète de **Stripe Connect** en mode **Standard**',
+            'Onboarding du professionnel via Stripe',
+            'Création de sessions de paiement sécurisées',
+            'Gestion des webhooks pour la synchronisation des paiements',
+            'Remboursements automatiques en cas d\'annulation',
+            'Tableau de bord Stripe pour le suivi des transactions'
+          ]
+        },
+        {
+          title: 'Services externes',
+          items: [
+            '**Cloudinary** pour l\'hébergement et l\'optimisation des images',
+            '**Resend** pour l\'envoi d\'emails transactionnels et de notifications'
+          ]
+        },
+        {
+          title: 'Déploiement et Infrastructure',
+          items: [
+            '**Vercel** pour l\'hébergement du frontend (Next.js)',
+            '**Render** pour l\'hébergement du backend (NestJS)',
+            '**IONOS** pour la gestion du nom de domaine',
+            'Configuration SSL/TLS pour la sécurité',
+            'Variables d\'environnement sécurisées sur les deux plateformes',
+            'Séparation claire entre environnements de développement et production'
+          ]
+        },
+        {
+          title: 'CI/CD – GitHub Actions',
+          items: [
+            'Pipeline automatisé pour le frontend et le backend',
+            'Tests unitaires et d\'intégration automatiques',
+            'Vérification du build avant déploiement',
+            'Déploiement automatique sur Vercel et Render',
+            'Notifications en cas d\'échec du pipeline'
+          ]
+        }
+      ],
+      workflow: 'Le projet suit un **workflow de développement moderne** :\n\n1. **Développement local** : Docker Compose pour orchestrer PostgreSQL, backend et frontend\n2. **Contrôle qualité** : GitHub Actions exécute les tests et validations à chaque push\n3. **Déploiement automatique** : merge sur `main` déclenche le déploiement sur Vercel (frontend) et Render (backend)\n4. **Monitoring** : surveillance des logs et des erreurs via les dashboards Vercel et Render\n\nCette approche garantit **fiabilité**, **traçabilité** et **déploiements rapides** tout en minimisant les risques d\'erreur.',
+      monitoring: 'Le projet intègre plusieurs couches de surveillance :\n\n• **Logs structurés** pour le débogage et l\'analyse\n• **Gestion centralisée des erreurs** côté backend\n• **Webhooks Stripe** pour tracer les événements de paiement\n• **Dashboards Vercel et Render** pour les métriques de performance\n• **Emails de notification** pour les événements critiques',
+      assets: {
+        title: 'Architecture globale',
+        items: [
+          '**Frontend (Vercel)** ↔ **API REST** ↔ **Backend (Render)** ↔ **Supabase (PostgreSQL)**',
+          '**Backend** ↔ **Stripe API** pour les paiements',
+          '**GitHub** → **Actions CI/CD** → **Déploiement automatique**'
+        ]
+      }
+    }
+  },
+  {
     slug: 'dao-generator',
     title: 'Extension VSCode - PHP DAO Generator',
     description: 'Extension VSCode permettant de générer automatiquement des fichiers DAO PHP à partir des attributs d\'une table de base de données. Connexion au serveur via formulaire intégré, génération de code optimisée et monitoring avec Sentry. Disponible sur le marketplace VSCode.',

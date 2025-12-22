@@ -90,7 +90,15 @@ export const techIcons: Record<string, string> = {
 
     // 'WAMP / PhpMyAdmin': '/icon_svg/wamp.svg',
 
-    'Markdown': '/icon_svg/markdown.svg'
+    'Markdown': '/icon_svg/markdown.svg',
+
+    'Cloudinary': '/icon_svg/cloudinary.svg',
+
+    'Resend': '/icon_svg/resend.svg',
+
+    'IONOS': '/icon_svg/ionos.svg',
+
+    'Stripe Connect': '/icon_svg/stripe.svg',
 };
 
 // Map des technologies aux icônes
