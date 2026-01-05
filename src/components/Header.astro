@@ -296,6 +296,9 @@ const navItems = [
                         top: targetPosition,
                         behavior: 'smooth'
                     });
+                } else {
+                    // Si l'élément n'existe pas (par exemple sur une page de projet), naviguer vers la page d'accueil avec l'ancre
+                    window.location.href = href;
                 }
             }
         });
