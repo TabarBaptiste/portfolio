@@ -223,6 +223,86 @@ export const projects: Project[] = [
     category: 'mobile'
   },
   {
+    slug: 'fuel',
+    title: 'Fuel',
+    description: 'Application web pour suivre les pleins d\'essence avec calculs automatiques des kilomètres parcourus, consommation et coûts. Inclut des statistiques en temps réel, visualisations graphiques, estimations de trajet, et interface moderne.',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Next.js API Routes', 'PostgreSQL', 'Prisma'],
+    github: 'https://github.com/TabarBaptiste/fuel',
+    demo: 'https://fuel-nine.vercel.app/',
+    demoLabel: 'Voir l\'application',
+    category: 'web',
+    screenshots: [
+      { name: 'Tableau de bord', path: '/projects/fuel/tableau_bord.png' },
+      { name: 'Historique', path: '/projects/fuel/historique.png' },
+      { name: 'Résumé mensuel', path: '/projects/fuel/resume_mensuel.png' },
+      { name: 'Graphiques', path: '/projects/fuel/graphiques.png' }
+    ],
+    detailedContent: {
+      introduction: 'Application web **full-stack** développée pour suivre et gérer efficacement les pleins d\'essence d\'un véhicule.\n\nPensée pour un usage personnel, elle offre une interface intuitive permettant d\'enregistrer chaque plein, de visualiser les statistiques de consommation et de coûts, avec des calculs automatiques des kilomètres parcourus et de la consommation moyenne.\n\nLe projet met l\'accent sur une **expérience utilisateur fluide**, des **visualisations graphiques claires** et une **persistance fiable des données**. L\'ensemble a été conçu pour être **performant**, **maintenable** et facilement **déployable**.',
+      features: [
+        'Gestion des pleins :',
+        '  • Ajout et suppression de pleins d\'essence',
+        '  • Saisie des données (kilométrage, litres, prix)',
+        '  • Calcul automatique des kilomètres parcourus',
+        '  • Calcul automatique de la consommation (L/100km)',
+        '  • Calcul automatique des coûts totaux',
+        'Statistiques et visualisations :',
+        '  • Graphiques en temps réel des consommations',
+        '  • Évolution des coûts sur le temps',
+        '  • Moyennes et tendances',
+        '  • Cartes visuelles interactives',
+        'Estimations de trajet :',
+        '  • Calcul des litres estimés pour un trajet donné',
+        '  • Estimation du coût basé sur la consommation moyenne',
+        '  • Planification économique des déplacements',
+        'Authentification et sécurité :',
+        '  • Connexion sécurisée via code PIN',
+        '  • Protection des données personnelles',
+      ],
+      technical: [
+        {
+          title: 'Frontend – Next.js 14',
+          items: [
+            '**Next.js** avec App Router pour une navigation moderne',
+            '**React** pour la construction d\'interfaces dynamiques',
+            '**TypeScript** pour la sécurité des types',
+            '**Tailwind CSS** pour un design responsive et cohérent',
+            'Composants réutilisables et modulaires',
+            'Optimisation des performances et du SEO'
+          ]
+        },
+        {
+          title: 'Backend – Next.js API Routes',
+          items: [
+            '**API Routes** de **Next.js** pour les endpoints backend',
+            'Architecture RESTful pour les opérations CRUD',
+            'Validation des données côté serveur',
+            'Gestion des erreurs et logging'
+          ]
+        },
+        {
+          title: 'Base de données – Neon PostgreSQL & Prisma ORM',
+          items: [
+            '**Prisma ORM** pour une gestion type-safe de la base',
+            '**Neon PostgreSQL** pour l\'hébergement cloud de la base de données',
+            'Schéma relationnel pour les pleins et véhicules',
+            'Migrations automatisées et versionnées'
+          ]
+        },
+        {
+          title: 'Déploiement – Vercel',
+          items: [
+            'Déploiement automatique avec **Vercel** pour l\'hébergement full-stack (frontend + API)',
+            'Variables d\'environnement sécurisées',
+            'Monitoring des performances intégré'
+          ]
+        }
+      ],
+      workflow: 'Le projet suit un **workflow de développement simplifié** adapté à une application personnelle :\n\n1. **Développement local** : Next.js en mode développement avec base de données Neon\n2. **Contrôle qualité** : Vérifications TypeScript et tests manuels\n3. **Déploiement automatique** : Push sur GitHub déclenche le déploiement sur Vercel\n\nCette approche garantit **rapidité de développement** et **fiabilité du déploiement** pour un projet personnel.'
+    }
+  },
+  {
     slug: 'recettes',
     title: 'Recettes - Application de recettes',
     description: 'Application web personnelle permettant de gérer, organiser et partager facilement mes recettes de cuisine.\n\n Elle centralise toutes mes préparations en un seul endroit et me permet d’ajouter, modifier ou supprimer des recettes en quelques secondes.',
