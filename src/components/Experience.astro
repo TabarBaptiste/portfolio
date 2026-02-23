@@ -1,6 +1,7 @@
 ---
 import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
+import Button from './ui/Button.astro';
 
 const experiences = [
   {
@@ -143,6 +144,14 @@ const experiences = [
                     </span>
                   ))}
                 </div>
+
+                {exp.title.includes('Licence Professionnelle') && (
+                  <div class="mt-4">
+                    <Button href="https://www.canva.com/design/DAGQdmJ6wv4/7Lu6Ywv06X51AH2pgMDwWg/view?utm_content=DAGQdmJ6wv4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=haa0fe0e684" variant="outline" size="sm">
+                      Voir ma soutenance
+                    </Button>
+                  </div>
+                )}
               </div>
             </Card>
           </div>
