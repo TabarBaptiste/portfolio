@@ -21,7 +21,7 @@ Je suis Baptiste TABAR LABONNE, développeur Full Stack de niveau Bac+5, passion
 ## 📞 Contact
 
 - **Email** : [tabarbaptiste@gmail.com](tabarbaptiste@gmail.com)
-- **LinkedIn** : [TABAR LABONNE Baptiste](https://www.linkedin.com/in/baptiste-tabar-labonne-000256229/)
+- **LinkedIn** : [TABAR LABONNE Baptiste](https://www.linkedin.com/in/baptiste-tabar-labonne/)
 - **GitHub** : [https://github.com/TabarBaptiste](https://github.com/TabarBaptiste)
 
 ---
