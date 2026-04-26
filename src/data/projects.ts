@@ -303,49 +303,6 @@ export const projects: Project[] = [
     }
   },
   {
-    slug: 'recettes',
-    title: 'Recettes - Application de recettes',
-    description: 'Application web personnelle permettant de gérer, organiser et partager facilement mes recettes de cuisine.\n\n Elle centralise toutes mes préparations en un seul endroit et me permet d’ajouter, modifier ou supprimer des recettes en quelques secondes.',
-    image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
-    technologies: ['Angular', 'Express', 'Prisma', 'PostgreSQL', 'Tailwind CSS', 'Render', 'Netlify'],
-    github: 'https://github.com/TabarBaptiste/recettePerso',
-    demo: 'https://recette-perso.netlify.app/',
-    demoLabel: 'Voir le site',
-    category: 'web',
-    screenshots: [
-      { name: 'Détails Techniques', path: '/projects/Recettes_Details_techniques.png' },
-    ],
-    detailedContent: {
-      introduction: 'Application web **full-stack** permettant de créer, organiser et consulter mes recettes de cuisine.\n\n Pensée pour un usage personnel, elle offre un parcours simple et rapide : ajout, modification, suppression et consultation des recettes (**CRUD**) grâce à un accès sécurisé par **code PIN à quatre chiffres**.\n\nLe projet met l\'accent sur une **interface épurée**, une **structure claire** et une **logique backend fiable**. L\'ensemble a été conçu pour être facilement **maintenable**, **déployable** et **évolutif**, avec une gestion propre des données et un **hébergement découplé** entre le frontend et le backend',
-      technical: [
-        {
-          title: 'Frontend',
-          items: ['Le frontend est conçu avec **Angular** pour sa structure claire et modulable, ainsi qu\'avec **Tailwind CSS**, qui facilite la création d\'une interface sobre et cohérente. L\'utilisation des **standalone components** permet une architecture plus légère et moderne.']
-        },
-        {
-          title: 'Backend',
-          items: ['Le backend repose sur **Express**, choisi pour sa simplicité, sa performance et la flexibilité qu\'il offre dans la création d\'**API REST** robustes.']
-        },
-        {
-          title: 'ORM',
-          items: ['J\'ai utilisé **Prisma** pour sa rapidité de développement et la clarté de son schéma. Il facilite la gestion des migrations et assure une bonne lisibilité du modèle de données.']
-        },
-        {
-          title: 'Base de données',
-          items: ['La base de données est hébergée sur **NeonDB**, un service **PostgreSQL** moderne offrant une intégration simple, du stockage gratuit et un environnement scalable si besoin. Grâce à **Prisma**, une éventuelle migration vers un autre service resterait simple.']
-        },
-        {
-          title: 'Web services',
-          items: ['Le backend est déployé sur **Render**, connecté directement à **NeonDB**. Render permet un déploiement automatique via **GitHub** et une gestion intuitive des services.']
-        },
-        {
-          title: 'Déploiement',
-          items: ['Le frontend est déployé sur **Netlify**, tandis que le backend est hébergé sur **Render**.\n\nCes deux solutions offrent une mise en ligne rapide, gratuite et parfaitement adaptée aux projets personnels.']
-        }
-      ]
-    }
-  },
-  {
     slug: 'alydousheure',
     title: 'Aly dous\'heure - Site vitrine',
     description: 'Site vitrine moderne pour une masseuse professionnelle. Système de réservation en ligne, catalogue complet des prestations, visualisation des disponibilités, formulaire de contact et géolocalisation. Interface responsive optimisée pour mobile et desktop.',

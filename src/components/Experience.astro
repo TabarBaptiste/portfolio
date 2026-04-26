@@ -3,13 +3,18 @@ import Section from './ui/Section.astro';
 import Card from './ui/Card.astro';
 import Button from './ui/Button.astro';
 
+// Dès le 01/10/2026, on affiche "2026" à la place de "Présent"
+const endOfContract = new Date('2026-10-01');
+const today = new Date();
+const endYear = today >= endOfContract ? '2026' : 'Présent';
+
 const experiences = [
   {
     title: 'Mastère Architecte Web',
     company: 'Digital School of Paris - Institut F2I',
-    period: 'BAC+5 : 2024 - Présent',
+    period: `BAC+5 : 2024 - ${endYear}`,
     year: 2026,
-    description: "Formation d’expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d’applications complexes, en gestion d’équipes techniques et en stratégie de transformation digitale",
+    description: "Formation d'expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d'applications complexes, en gestion d'équipes techniques et en stratégie de transformation digitale.",
     technologies: [
       "Digitalisation",
       "Full-Stack",
@@ -23,9 +28,9 @@ const experiences = [
   {
     title: 'Développeur Full-Stack - Alternance',
     company: 'Conseil Départemental du Val-de-Marne',
-    period: '2023 - Présent',
+    period: `2023 - ${endYear}`,
     year: 2023.5,
-    description: "Refonte complète d'applications web (backend et frontend), gestion et optimisation de bases de données, maintenance et évolution de solutions existantes. Conception et développement d'une extension VS Code pour améliorer la productivité de l'équipe",
+    description: "Refonte complète d'applications web (backend et frontend), gestion et optimisation de bases de données, maintenance et évolution de solutions existantes. Conception et développement d'une extension VS Code publiée sur le Marketplace pour améliorer la productivité de l'équipe.",
     technologies: [
       "Full-Stack",
       "Base de données",
@@ -41,7 +46,7 @@ const experiences = [
     company: 'Université d\'Evry Val d\'Essonne - Paris Saclay',
     period: 'BAC+4 : 2023 - 2024',
     year: 2023.2,
-    description: "Formation axée sur le développement avancé d’applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d’interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d’applications réelles",
+    description: "Formation axée sur le développement avancé d'applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d'interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d'applications réelles.",
     technologies: [
       "Full-Stack",
       "Développement mobile",
@@ -57,7 +62,7 @@ const experiences = [
     company: 'RJ Web',
     period: '2023',
     year: 2023,
-    description: "Gestion et répertoriation des activités du quartier Lavalle. Développement d'un système de facilitation des inscriptions à des évènements locaux et création d'une newsletter pour améliorer la communication avec les résidents",
+    description: "Gestion et répertoriation des activités du quartier Lavalle. Développement d'un système de facilitation des inscriptions à des évènements locaux et création d'une newsletter pour améliorer la communication avec les résidents.",
     technologies: [
       "Développement Web",
       "Gestion de contenu",
@@ -72,7 +77,7 @@ const experiences = [
     company: 'Crédit Agricole',
     period: '2022',
     year: 2022,
-    description: "Pôle Achat Technologie Service : Création d'interface web, gestion de bases de données et développement de scripts d'automatisation pour optimiser les processus internes",
+    description: "Pôle Achat Technologie Service : Création d'interface web, gestion de bases de données et développement de scripts d'automatisation pour optimiser les processus internes.",
     technologies: [
       "Développement Web",
       "Base de données",
@@ -86,15 +91,15 @@ const experiences = [
     company: 'Lycée Léonard de Vinci, Melun',
     period: '2021 - 2023',
     year: 2022.5,
-    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives',
+    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives.',
     technologies: ['Programmation', 'Base de données', 'Sécurité', 'Collaboration', 'Développement web', "UML"],
     type: 'education'
   }
 ].sort((a, b) => b.year - a.year);
 ---
 
-<Section 
-  id="experience" 
+<Section
+  id="experience"
   title="Parcours"
   subtitle="Mon parcours académique et professionnel"
 >
@@ -102,10 +107,9 @@ const experiences = [
     <!-- Timeline verticale -->
     <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary-500 to-primary-600"></div>
 
-    <!-- Expériences -->
-    <div class="space-y-12">
+    <div class="space-y-8">
       {experiences.map((exp, index) => (
-        <div 
+        <div
           class={`reveal flex flex-col md:flex-row items-center gap-8 ${
             index % 2 === 0 ? 'md:flex-row-reverse' : ''
           }`}
@@ -113,7 +117,6 @@ const experiences = [
           <!-- Carte d'expérience -->
           <div class="flex-1 w-full">
             <Card>
-              <!-- Contenu -->
               <div>
                 <div class="flex items-start justify-between mb-3">
                   <div>
@@ -136,7 +139,6 @@ const experiences = [
                   {exp.description}
                 </p>
 
-                <!-- Technologies -->
                 <div class="flex flex-wrap gap-2">
                   {exp.technologies.map((tech) => (
                     <span class="px-3 py-1 rounded-lg bg-dark-800/50 text-primary-400 text-sm border border-dark-700">
@@ -162,19 +164,18 @@ const experiences = [
             <div class="absolute inset-0 w-4 h-4 rounded-full bg-primary-500 animate-ping opacity-75"></div>
           </div>
 
-          <!-- Espace pour l'autre côté -->
           <div class="hidden md:block flex-1"></div>
         </div>
       ))}
     </div>
   </div>
 
-  <!-- CTA pour télécharger le CV -->
-  <div class="text-center mt-16 reveal">
-    <a 
-      href="Curriculum_Vitae_TABAR_LABONNE_Baptiste.pdf" 
+  <!-- CTA télécharger le CV -->
+  <div class="text-center mt-12 reveal">
+    <a
+      href="Curriculum_Vitae_TABAR_LABONNE_Baptiste.pdf"
       download
-      class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-300 hover:scale-105"
+      class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-shadow duration-300"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
