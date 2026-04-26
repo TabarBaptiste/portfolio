@@ -165,7 +165,7 @@ const categories = ['all', 'web', 'mobile'];
   allButton?.classList.add('bg-primary-500', activeTextColor);
   allButton?.classList.remove('text-dark-300');
 
-  // Rendre toute la carte cliquable (#23 — fix hit zone)
+  // Rendre toute la carte cliquable (#23 - fix hit zone)
   projectCards.forEach(card => {
     card.addEventListener('click', (e) => {
       const target = e.target as Element;
