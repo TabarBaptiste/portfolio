@@ -5,93 +5,119 @@ import Card from "./ui/Card.astro";
 const skillCategories = [
     {
         title: "Frontend",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-    </svg>`,
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        </svg>`,
         skills: [
-            { name: "HTML5 / CSS3", level: 95 },
-            { name: "JavaScript / TypeScript", level: 90 },
-            { name: "Angular / Next.js / Vue.js / Astro", level: 80 },
-            { name: "ExtJS", level: 80 },
+            "HTML5 / CSS3",
+            "JavaScript / TypeScript",
+            "Angular / Next.js / Vue.js / Astro",
+            "ExtJS",
+            "Responsive Design",
+            "Accessibilité Web",
+            "UX/UI Design & Figma",
         ],
     },
     {
         title: "Backend & API",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
-    </svg>`,
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+        </svg>`,
         skills: [
-            { name: "PHP / Symfony", level: 80 },
-            { name: "Node.js / NestJS / Express", level: 75 },
-            { name: "Architecture MVC", level: 90 },
-            { name: "API REST", level: 85 },
+            "PHP / Symfony",
+            "Node.js / NestJS / Express",
+            "Architecture MVC",
+            "API REST",
+            "Architecture Web",
+            "Maintenance & Migration",
         ],
     },
     {
-        title: "Base de données & Mobile",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
-    </svg>`,
+        title: "Bases de données",
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+        </svg>`,
         skills: [
-            { name: "MySQL / SQL", level: 90 },
-            { name: "PostgreSQL / Prisma", level: 80 },
-            { name: "NeonDB / Firebase / Supabase", level: 65 },
-            { name: "Flutter / Dart", level: 60 },
+            "MySQL / SQL",
+            "PostgreSQL / Prisma",
+            "NeonDB / Firebase / Supabase",
+            "WAMP / PhpMyAdmin",
+        ],
+    },
+    {
+        title: "Mobile",
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>`,
+        skills: [
+            "Flutter / Dart",
         ],
     },
     {
         title: "DevOps & CI/CD",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-    </svg>`,
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+        </svg>`,
         skills: [
-            { name: "Git / GitHub", level: 85 },
-            { name: "GitHub Actions / CircleCI", level: 85 },
-            { name: "Docker (bases)", level: 60 },
-            { name: "Netlify / Vercel", level: 80 },
+            "Git / GitHub / GitLab",
+            "GitHub Actions / Jenkins",
+            "Docker",
+            "SVN",
         ],
     },
     {
-        title: "Qualité & Performance",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-    </svg>`,
+        title: "Hébergement & Cloud",
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+        </svg>`,
         skills: [
-            { name: "Tests unitaires", level: 60 },
-            { name: "Sentry (monitoring)", level: 65 },
-            { name: "SEO / Référencement", level: 65 },
-            { name: "Optimisation performances", level: 75 },
+            "Netlify / Vercel",
+            "Railway / Render",
+        ],
+    },
+    {
+        title: "Qualité & Tests",
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>`,
+        skills: [
+            "Tests unitaires / fonctionnels / e2e",
+            "Sentry (monitoring)",
+            "SEO / Référencement",
+            "Optimisation des performances",
+            "Sécurité Web",
         ],
     },
     {
         title: "Gestion de projet",
-        icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-    </svg>`,
+        icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>`,
         skills: [
-            { name: "Méthodes Agiles / Scrum", level: 85 },
-            { name: "Jira / Trello", level: 75 },
-            { name: "GitHub Projects", level: 80 },
-            { name: "Diagrammes Gantt", level: 50 },
+            "Agile / Scrum",
+            "Kanban / Notion",
+            "GitHub Projects",
+            "Diagrammes Gantt",
+            "Modélisation UML",
         ],
     },
 ];
 
-const otherSkills = [
-    "Responsive Design",
-    "Accessibilité Web",
-    "UX/UI Design",
-    "Markdown",
-    "Sécurité Web",
-    "Architecture Web",
-    "Modélisation UML",
-    "Maintenance & Migration",
-    "Veille technologique",
-    "WAMP / PhpMyAdmin",
-    "Render / Railway",
-    "SVN",
-    "Figma",
-];
+/*
+  OPTION : afficher des niveaux texte par compétence
+  Pour activer, passer les skills en tableau d'objets { name: string; level: 'Avancé' | 'Intermédiaire' | 'Notions' }
+  et utiliser ce template à la place du badge simple ci-dessous :
+
+  <span class="px-3 py-1.5 rounded-lg bg-dark-800/50 text-sm border border-dark-700
+               flex items-center justify-between gap-2">
+    <span class="text-dark-200">{skill.name}</span>
+    <span class={`text-xs px-2 py-0.5 rounded whitespace-nowrap ${
+      skill.level === 'Avancé' ? 'text-green-400 bg-green-400/10' :
+      skill.level === 'Intermédiaire' ? 'text-yellow-400 bg-yellow-400/10' :
+      'text-dark-400 bg-dark-700/50'
+    }`}>{skill.level}</span>
+  </span>
+*/
 ---
 
 <Section
@@ -99,182 +125,31 @@ const otherSkills = [
     title="Compétences"
     subtitle="Technologies et outils que je maîtrise"
 >
-    <!-- Catégories principales -->
-    <div class="grid md:grid-cols-2 gap-8 mb-16">
-        {
-            skillCategories.map((category, catIndex) => (
-                <div
-                    class="reveal"
-                    style={`animation-delay: ${catIndex * 0.1}s`}
-                >
-                    <Card>
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white">
-                                <Fragment set:html={category.icon} />
-                            </div>
-                            <h3 class="text-2xl font-bold text-dark-100">
-                                {category.title}
-                            </h3>
+    <div class="grid md:grid-cols-2 gap-6">
+        {skillCategories.map((category, catIndex) => (
+            <div
+                class="reveal"
+                style={`animation-delay: ${catIndex * 0.08}s`}
+            >
+                <Card hover={false}>
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white flex-shrink-0">
+                            <Fragment set:html={category.icon} />
                         </div>
+                        <h3 class="text-xl font-bold text-dark-100">
+                            {category.title}
+                        </h3>
+                    </div>
 
-                        <div class="space-y-4">
-                            {category.skills.map((skill) => (
-                                <div class="skill-item">
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-dark-200 font-medium">
-                                            {skill.name}
-                                        </span>
-                                        <span class="text-primary-400 font-semibold">
-                                            {skill.level}%
-                                        </span>
-                                    </div>
-                                    <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
-                                        <div
-                                            class="skill-bar h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-1000 ease-out"
-                                            data-width={skill.level}
-                                            style="width: 0%"
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </Card>
-                </div>
-            ))
-        }
+                    <div class="flex flex-wrap gap-2">
+                        {category.skills.map((skill) => (
+                            <span class="px-3 py-1.5 rounded-lg bg-dark-800/50 text-dark-200 text-sm border border-dark-700">
+                                {skill}
+                            </span>
+                        ))}
+                    </div>
+                </Card>
+            </div>
+        ))}
     </div>
-
-    <!-- Compétences supplémentaires -->
-    <div class="reveal">
-        <h3 class="text-2xl font-bold text-center mb-8 text-dark-100">
-            Compétences complémentaires
-        </h3>
-        <div class="flex flex-wrap justify-center gap-3">
-            {
-                otherSkills.map((skill, index) => (
-                    <span
-                        class="skill-tag px-5 py-3 rounded-xl glass text-dark-200 hover:text-primary-400 hover:scale-110 transition-all duration-300 cursor-default border border-dark-700/50"
-                        style={`animation-delay: ${index * 0.05}s`}
-                    >
-                        {skill}
-                    </span>
-                ))
-            }
-        </div>
-    </div>
-
-    <!-- Certifications (optionnel) -->
-    <!-- <div class="mt-16 reveal">
-        <h3 class="text-2xl font-bold text-center mb-8 text-dark-100">
-            Certifications
-        </h3>
-        <div class="grid md:grid-cols-3 gap-6">
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">
-                    Certification React
-                </h4>
-                <p class="text-sm text-dark-400">2023</p>
-            </Card>
-
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">
-                    Node.js Developer
-                </h4>
-                <p class="text-sm text-dark-400">2023</p>
-            </Card>
-
-            <Card
-                className="text-center hover:border-primary-500/50 border border-transparent transition-colors"
-            >
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        ></path>
-                    </svg>
-                </div>
-                <h4 class="font-semibold text-dark-100 mb-1">AWS Cloud</h4>
-                <p class="text-sm text-dark-400">2024</p>
-            </Card>
-        </div>
-    </div> -->
 </Section>
-
-<script>
-    // Animation des barres de progression au scroll
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const bars =
-                        entry.target.querySelectorAll<HTMLElement>(
-                            ".skill-bar",
-                        );
-                    bars.forEach((bar) => {
-                        const width = bar.getAttribute("data-width");
-                        setTimeout(() => {
-                            bar.style.width = width + "%";
-                        }, 100);
-                    });
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.5 },
-    );
-
-    document.querySelectorAll(".skill-item").forEach((item) => {
-        const parent = item.parentElement;
-        if (parent) {
-            observer.observe(parent);
-        }
-    });
-</script>

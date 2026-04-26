@@ -6,17 +6,17 @@ import { projects } from '../data/projects';
 const categories = ['all', 'web', 'mobile'];
 ---
 
-<Section 
-  id="projects" 
+<Section
+  id="projects"
   title="Mes projets"
   subtitle="Une sélection de mes réalisations récentes"
   className="bg-dark-800/30"
 >
   <!-- Filtres -->
-  <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+  <div class="flex flex-wrap justify-center gap-3 mb-10 reveal">
     {categories.map((category) => (
       <button
-        class="filter-btn px-6 py-2 rounded-xl glass text-dark-300 hover:text-primary-400 transition-all duration-300 hover:scale-105"
+        class="filter-btn px-6 py-2 rounded-xl glass text-dark-300 hover:text-primary-400 transition-colors duration-300"
         data-filter={category}
       >
         {category === 'all' ? 'Tous' : category.charAt(0).toUpperCase() + category.slice(1)}
@@ -25,52 +25,55 @@ const categories = ['all', 'web', 'mobile'];
   </div>
 
   <!-- Grille de projets -->
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
     {projects.map((project) => (
-      <div 
+      <div
         id={project.slug}
-        class="reveal project-card" 
+        class="reveal project-card relative cursor-pointer"
         data-category={project.category}
+        data-href={`/projects/${project.slug}`}
       >
         <Card className="h-full flex flex-col overflow-hidden group" hover={false}>
           <!-- Image -->
           <div class="relative overflow-hidden rounded-xl mb-4 aspect-video">
-            <img 
-              src={project.image} 
-              alt={project.title}
+            <img
+              src={project.image}
+              alt={`Capture d'écran du projet ${project.title}`}
               data-image={project.image}
               data-image-light={project.imageLight}
-              class={project.image && project.image.includes('logo') ? 'w-full h-full object-contain p-6 bg-white' : 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'}
+              class={project.image && project.image.includes('logo') ? 'w-full h-full object-contain p-6 bg-white' : 'w-full h-full object-cover md:transition-transform md:duration-500 md:group-hover:scale-110'}
               loading="lazy"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-transparent opacity-60"></div>
-            
-            <!-- Overlay avec liens -->
-            <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+
+            <!-- Overlay avec liens (desktop uniquement via hover) -->
+            <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
               {project.demo && (
-                <a 
-                  href={project.demo} 
+                <a
+                  href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center hover:bg-primary-600 transition-colors shadow-lg"
                   aria-label={project.demoLabel || "Voir la démo"}
                   title={project.demoLabel || "Voir la démo"}
+                  onclick="event.stopPropagation()"
                 >
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                   </svg>
                 </a>
               )}
               {project.github && (
-                <a 
-                  href={project.github} 
+                <a
+                  href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="w-12 h-12 rounded-full bg-dark-700 flex items-center justify-center hover:bg-dark-600 transition-colors shadow-lg"
-                  aria-label="Voir le code source"
+                  aria-label="Voir le code source sur GitHub"
                   title="Voir le code sur GitHub"
+                  onclick="event.stopPropagation()"
                 >
-                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                 </a>
@@ -83,7 +86,7 @@ const categories = ['all', 'web', 'mobile'];
             <h3 class="text-xl font-bold text-dark-100 mb-2 group-hover:text-primary-400 transition-colors">
               {project.title}
             </h3>
-            <p class="text-dark-300 mb-4 flex-1">
+            <p class="text-dark-300 mb-4 flex-1 text-sm leading-relaxed">
               {project.description}
             </p>
 
@@ -96,13 +99,14 @@ const categories = ['all', 'web', 'mobile'];
               ))}
             </div>
 
-            <!-- Voir le projet button -->
-            <a 
+            <!-- CTA -->
+            <a
               href={`/projects/${project.slug}`}
               class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-primary-500/10 text-primary-400 border border-primary-500/30 hover:bg-primary-500 hover:text-white transition-all duration-300 group/btn touch-manipulation"
+              aria-label={`Voir le projet ${project.title}`}
             >
               <span>Voir le projet</span>
-              <svg class="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </a>
@@ -112,14 +116,13 @@ const categories = ['all', 'web', 'mobile'];
     ))}
   </div>
 
-  <!-- Message si aucun projet -->
   <div id="no-projects" class="hidden text-center py-12">
     <p class="text-dark-400 text-lg">Aucun projet trouvé dans cette catégorie</p>
   </div>
 </Section>
 
 <script>
-  // Système de filtrage
+  // Filtrage des projets
   const filterButtons = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll<HTMLElement>('.project-card');
   const noProjectsMessage = document.getElementById('no-projects');
@@ -127,8 +130,6 @@ const categories = ['all', 'web', 'mobile'];
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
       const filter = button.getAttribute('data-filter');
-      
-      // Mettre à jour l'état actif des boutons
       const isDark = document.documentElement.classList.contains('dark');
       const activeTextColor = isDark ? 'text-white' : 'text-primary-600';
 
@@ -139,11 +140,9 @@ const categories = ['all', 'web', 'mobile'];
       button.classList.add('bg-primary-500', activeTextColor);
       button.classList.remove('text-dark-300');
 
-      // Filtrer les projets
       let visibleCount = 0;
       projectCards.forEach((card) => {
         const category = card.getAttribute('data-category');
-        
         if (filter === 'all' || category === filter) {
           card.style.display = 'block';
           card.style.animationDelay = `${visibleCount * 0.1}s`;
@@ -155,12 +154,7 @@ const categories = ['all', 'web', 'mobile'];
         }
       });
 
-      // Afficher le message si aucun projet
-      if (visibleCount === 0) {
-        noProjectsMessage?.classList.remove('hidden');
-      } else {
-        noProjectsMessage?.classList.add('hidden');
-      }
+      noProjectsMessage?.classList.toggle('hidden', visibleCount > 0);
     });
   });
 
@@ -171,35 +165,34 @@ const categories = ['all', 'web', 'mobile'];
   allButton?.classList.add('bg-primary-500', activeTextColor);
   allButton?.classList.remove('text-dark-300');
 
-  // Fonction pour mettre à jour les images selon le thème
+  // Rendre toute la carte cliquable (#23 — fix hit zone)
+  projectCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const target = e.target as Element;
+      if (target.closest('a')) return;
+      const href = card.getAttribute('data-href');
+      if (href) window.location.href = href;
+    });
+  });
+
+  // Mise à jour des images selon le thème
   const updateProjectImages = () => {
     const isDark = document.documentElement.classList.contains('dark');
     const projectImages = document.querySelectorAll('img[data-image][data-image-light]');
-    
     projectImages.forEach(img => {
       const imageElement = img as HTMLImageElement;
       const darkImage = imageElement.getAttribute('data-image');
       const lightImage = imageElement.getAttribute('data-image-light');
-      
       if (lightImage) {
         imageElement.src = isDark ? darkImage || '' : lightImage;
       }
     });
   };
 
-  // Mettre à jour les images au chargement initial
   updateProjectImages();
 
-  // Écouter les changements de thème
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-        updateProjectImages();
-      }
-    });
-  });
-
-  observer.observe(document.documentElement, {
+  const themeObserver = new MutationObserver(() => updateProjectImages());
+  themeObserver.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['class']
   });

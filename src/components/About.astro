@@ -1,268 +1,145 @@
 ---
 import Section from "./ui/Section.astro";
 import Card from "./ui/Card.astro";
-
-// Calcul de l'âge automatiquement
-const birthDate = new Date('2003-12-16');
-const today = new Date();
-let age = today.getFullYear() - birthDate.getFullYear();
-const monthDiff = today.getMonth() - birthDate.getMonth();
-if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-}
 ---
 
 <Section
     id="about"
     title="À propos de moi"
-    subtitle="Découvrez mon parcours et mes passions"
+    subtitle="Mon parcours, ma vision, mes disponibilités"
     className="bg-dark-800/30"
 >
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- TODO : Mettre une vraie image -->
-        <!-- Image / Avatar -->
-        <div class="reveal order-1 md:order-1">
-            <Card className="overflow-hidden">
-                <div class="aspect-square relative group">
-                    <!-- Placeholder pour l'image - à remplacer par votre vraie photo -->
-                    <div
-                        class="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center"
-                    >
-                        <svg
-                            class="w-32 h-32 text-white opacity-50"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                            ></path>
-                        </svg>
-                    </div>
-                    <!-- Overlay avec effet au hover -->
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                    </div>
-                </div>
-            </Card>
-        </div>
+    <!-- Texte de présentation -->
+    <div class="reveal max-w-3xl mx-auto space-y-5 mb-10">
+        <p class="text-dark-200 text-lg leading-relaxed">
+            Je m'appelle Baptiste — développeur Full-Stack en fin de Mastère Architecte Web à la Digital School of Paris.
+        </p>
+        <p class="text-dark-300 leading-relaxed">
+            Trois ans d'alternance au Conseil Départemental du Val-de-Marne m'ont formé à la réalité du terrain :
+            refondre des applications legacy sans tout casser, maintenir du code qui tourne depuis des années,
+            et livrer des outils qui servent vraiment. Parmi les projets dont je suis le plus fier : une
+            extension VSCode publiée sur le Marketplace pour automatiser la génération de DAO PHP, et une
+            plateforme de réservation full-stack développée en autonomie pour une cliente professionnelle
+            (NestJS, Next.js, Stripe, Supabase).
+        </p>
+        <p class="text-dark-300 leading-relaxed">
+            Ce qui me motive : concevoir du code lisible autant que fonctionnel. J'ai une vraie appétence
+            pour les architectures bien pensées — celles qu'on peut faire évoluer six mois après sans souffrir.
+            Que ce soit côté frontend ou backend, j'aime quand les deux se parlent bien.
+        </p>
+    </div>
 
-        <!-- Texte de présentation -->
-        <div class="reveal order-2 md:order-2 space-y-6">
-            <div class="space-y-4">
-                <p class="text-dark-200 text-lg leading-relaxed">
-                    Je m'appelle Baptiste TABAR LABONNE, j'ai {age} ans. Ayant
-                    obtenu mon BTS Services Informatiques aux Organisations et
-                    ma Licence Professionnelle, je poursuis mon évolution en
-                    tant qu'apprenti en Mastère Architecte Web (BAC+5) au
-                    sein du Département du Val-de-Marne.
-                </p>
-                <p class="text-dark-300 leading-relaxed">
-                    Depuis toujours passionné par l'informatique et les
-                    nouvelles technologies, je me suis orienté vers le
-                    développement web et logiciel. Je privilégie un code
-                    structuré, pensé pour anticipater les erreurs et à la
-                    qualité de l’expérience utilisateur. Mon objectif : créer
-                    des solutions fiables, simples à maintenir et réellement
-                    adaptées aux besoins des utilisateurs.
-                </p>
+    <!-- Disponibilités -->
+    <div class="reveal mb-10">
+        <div class="max-w-3xl mx-auto glass rounded-2xl p-5 border border-primary-500/20 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
             </div>
-
-            <!-- Qualités / Soft Skills -->
-            <div class="flex flex-wrap gap-3 pt-6">
-                {
-                    [
-                        "Résolution de problèmes",
-                        "Adaptabilité",
-                        "Conception d'interfaces",
-                        "Architecture logicielle",
-                    ].map((skill) => (
-                        <span class="px-4 py-2 rounded-full glass text-primary-400 text-sm font-medium hover:scale-105 transition-transform">
-                            {skill}
-                        </span>
-                    ))
-                }
-            </div>
+            <p class="text-dark-200">
+                <span class="font-semibold text-primary-400">Disponible à partir d'octobre 2026</span> — ouvert aux opportunités en CDI/CDD ou télétravail, en Île-de-France comme en Martinique.
+            </p>
         </div>
     </div>
 
+    <!-- Soft Skills -->
+    <div class="flex flex-wrap gap-3 justify-center mb-12 reveal">
+        {[
+            "Résolution de problèmes",
+            "Adaptabilité",
+            "Conception d'interfaces",
+            "Architecture logicielle",
+        ].map((skill) => (
+            <span class="px-4 py-2 rounded-full glass text-primary-400 text-sm font-medium">
+                {skill}
+            </span>
+        ))}
+    </div>
+
     <!-- Domaines d'expertise -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="reveal">
             <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        ></path>
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">
-                    Frontend
-                </h3>
-                <p class="text-dark-300 text-sm">
-                    Conception d’interfaces web dynamiques et performantes, alliant ergonomie, accessibilité et
-                    design moderne
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">Frontend</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Interfaces web dynamiques et performantes, alliant ergonomie, accessibilité et design moderne.
                 </p>
             </Card>
         </div>
 
         <div class="reveal" style="animation-delay: 0.1s">
             <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
-                        ></path>
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">
-                    Backend
-                </h3>
-                <p class="text-dark-300 text-sm">
-                    Développement d’applications scalables et sécurisées dans
-                    une architecture claire et maintenable
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.3s">
-            <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
-                        ></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">
-                    Base de données
-                </h3>
-                <p class="text-dark-300 text-sm">
-                    Conception et administration de bases de données
-                    relationnelles et non relationnelles, optimisation des
-                    requêtes et modélisation efficace
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">Backend</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Applications scalables et sécurisées dans une architecture claire et maintenable.
                 </p>
             </Card>
         </div>
 
         <div class="reveal" style="animation-delay: 0.2s">
             <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                        ></path>
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">Mobile</h3>
-                <p class="text-dark-300 text-sm">
-                    Création d’applications cross-platform, intégration fluide
-                    d’API et gestion optimisée des performances <br /><br />
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">Base de données</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Conception et administration de BDD relationnelles et non relationnelles, optimisation des requêtes.
+                </p>
+            </Card>
+        </div>
+
+        <div class="reveal" style="animation-delay: 0.3s">
+            <Card className="text-center">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">Mobile</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Création d'applications cross-platform, intégration d'API et gestion optimisée des performances.
                 </p>
             </Card>
         </div>
 
         <div class="reveal" style="animation-delay: 0.4s">
             <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                        ></path>
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">
-                    Environnement
-                </h3>
-                <p class="text-dark-300 text-sm">
-                    Maîtrise des environnements de développement, intégration et
-                    déploiement continus, débogage et collaboration en équipe
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">DevOps & CI/CD</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Environnements de développement, intégration et déploiement continus, collaboration en équipe.
                 </p>
             </Card>
         </div>
 
         <div class="reveal" style="animation-delay: 0.5s">
             <Card className="text-center">
-                <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center"
-                >
-                    <svg
-                        class="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        ></path>
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-dark-100">
-                    Migration
-                </h3>
-                <p class="text-dark-300 text-sm">
-                    Refonte et modernisation d’applications legacy, amélioration
-                    de la sécurité, des performances et de la maintenabilité du
-                    code
+                <h3 class="text-lg font-semibold mb-2 text-dark-100">Migration & Refonte</h3>
+                <p class="text-dark-300 text-sm leading-relaxed">
+                    Modernisation d'applications legacy, amélioration de la sécurité, des performances et de la maintenabilité.
                 </p>
             </Card>
         </div>
