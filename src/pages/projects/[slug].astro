@@ -2,11 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import Section from "../../components/ui/Section.astro";
 import Button from "../../components/ui/Button.astro";
 import { Icon } from "astro-icon/components";
 import { projects, type Project } from "../../data/projects";
-import { extractTechnologiesFromText, getTechIcon, iconExists } from "../../data/techIcons"
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,6 +18,15 @@ interface Props {
 }
 
 const { project } = Astro.props;
+
+// Mise en forme légère : **gras** et `code`
+const formatText = (text: string) =>
+  text
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(
+      /`([^`]+)`/g,
+      '<code class="px-1.5 py-0.5 rounded bg-ink-100 dark:bg-night-border text-accent-700 dark:text-accent-200 text-sm font-mono">$1</code>',
+    );
 ---
 
 <Layout
@@ -28,80 +35,72 @@ const { project } = Astro.props;
 >
   <Header />
   <main class="min-h-screen">
-    <!-- Hero Section -->
-    <Section className="bg-dark-800/30 pt-32">
-      <div class="max-w-4xl mx-auto">
-        <!-- Breadcrumb -->
+    <!-- En-tête de l'étude de cas -->
+    <section class="px-4 md:px-8 pt-36 pb-12">
+      <div class="max-w-3xl mx-auto">
+        <!-- Fil d'Ariane -->
         <nav class="mb-8 reveal">
-          <ol class="flex items-center space-x-2 text-sm text-dark-400">
-            <li>
-              <a href={`/#${project.slug}`} class="hover:text-primary-400 transition-colors">
-                Projets
-              </a>
-            </li>
-            <li>
-              <Icon name="heroicons:chevron-right" class="w-4 h-4" aria-hidden="true" />
-            </li>
-            <li class="text-dark-200">{project.title}</li>
-          </ol>
+          <a
+            href={`/#${project.slug}`}
+            class="inline-flex items-center gap-1.5 font-mono text-sm text-ink-400 dark:text-ink-300 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
+          >
+            <Icon name="heroicons:arrow-left" class="w-3.5 h-3.5" aria-hidden="true" />
+            Projets
+          </a>
         </nav>
 
-        <!-- Title -->
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text reveal">
+        <h1 class="font-display text-4xl md:text-6xl leading-[1.1] text-ink-900 dark:text-ink-50 mb-6 reveal">
           {project.title}
         </h1>
 
-        <!-- Description -->
-        <p class="text-lg text-dark-300 mb-8 reveal">
+        <p class="text-lg text-ink-500 dark:text-ink-300 leading-relaxed mb-6 reveal">
           {project.description}
         </p>
 
+        <!-- Stack -->
+        <div class="flex flex-wrap gap-2 mb-8 reveal">
+          {project.technologies.map((tech) => (
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md bg-ink-50 text-ink-600 border border-ink-200 dark:bg-night-card dark:text-ink-200 dark:border-night-border">
+              {tech}
+            </span>
+          ))}
+        </div>
+
         <!-- Actions -->
-        <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-12 reveal">
+        <div class="flex flex-wrap gap-3 reveal">
           {project.demo && (
-            <Button href={project.demo} variant="primary">
-              <Icon name="heroicons:arrow-top-right-on-square" class="w-5 h-5 mr-2" aria-hidden="true" />
+            <Button href={project.demo} variant="primary" size="sm">
+              <Icon name="heroicons:arrow-top-right-on-square" class="w-4 h-4 mr-2" aria-hidden="true" />
               {project.demoLabel || 'Voir la démo'}
             </Button>
           )}
           {project.github && (
-            <Button href={project.github} variant="outline">
-              <Icon name="simple-icons:github" class="w-5 h-5 mr-2" aria-hidden="true" />
+            <Button href={project.github} variant="outline" size="sm">
+              <Icon name="simple-icons:github" class="w-4 h-4 mr-2" aria-hidden="true" />
               Code source
             </Button>
           )}
         </div>
 
-        <!-- Main Image -->
-        <div class="rounded-2xl overflow-hidden shadow-lg mb-12 reveal max-w-2xl mx-auto">
-          <img 
-            src={project.image} 
-            alt={project.title}
-            class={project.image.includes('logo') ? 'w-full h-48 object-contain bg-white p-6' : 'w-full h-64 object-cover'}
-            loading="eager"
-          />
-        </div>
-
-        <!-- Technologies -->
-        <!-- <div class="mb-12 reveal">
-          <h2 class="text-2xl font-bold text-dark-100 mb-4">Technologies utilisées</h2>
-          <div class="flex flex-wrap gap-3">
-            {project.technologies.map((tech) => (
-              <span class="px-4 py-2 rounded-xl glass text-primary-400 border border-dark-700 hover:border-primary-500 transition-colors">
-                {tech}
-              </span>
-            ))}
+        {project.image && (
+          <div class="mt-12 reveal card p-0 overflow-hidden">
+            <img
+              src={project.image}
+              alt={`Aperçu du projet ${project.title}`}
+              class={project.image.includes('logo') ? 'w-full h-48 object-contain bg-white p-6' : 'w-full object-cover'}
+              loading="eager"
+            />
           </div>
-        </div> -->
+        )}
       </div>
-    </Section>
+    </section>
 
-    <!-- Canva Presentation for Beroli -->
+    <!-- Présentation Canva pour Beroli -->
     {project.slug === 'beroli' && (
-      <Section className="bg-dark-800/30">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-3xl font-bold text-dark-100 mb-8 text-center reveal">Présentation complète de l'application</h2>
-          <div class="glass rounded-2xl p-4 reveal">
+      <section class="px-4 md:px-8 py-12">
+        <div class="max-w-content mx-auto">
+          <h2 class="font-display text-3xl text-ink-900 dark:text-ink-50 mb-6 reveal">Présentation complète</h2>
+          <div class="card p-3 reveal">
             <iframe
               src="https://www.canva.com/design/DAF-QIOEFEw/H_RNdqkVg2smDcXOgbXX9w/view?embed"
               class="w-full h-[600px] md:h-[800px] rounded-xl border-0"
@@ -111,109 +110,107 @@ const { project } = Astro.props;
             ></iframe>
           </div>
         </div>
-      </Section>
+      </section>
     )}
 
-    <!-- Detailed Content -->
+    <!-- Contenu détaillé -->
     {project.detailedContent && (
-      <Section>
-        <div class="max-w-4xl mx-auto">
-          <!-- Introduction -->
+      <section class="px-4 md:px-8 py-12">
+        <div class="max-w-3xl mx-auto space-y-16">
+          <!-- Contexte -->
           {project.detailedContent.introduction && (
-            <div class="mb-12 reveal">
-              <h2 class="text-3xl font-bold text-dark-100 mb-6">À propos du projet</h2>
-              <div class="glass rounded-2xl p-8">
-                {project.detailedContent.introduction.split('\n\n').map(paragraph => (
-                  <p class="text-dark-300 text-lg leading-relaxed mb-4 last:mb-0" set:html={paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code class="px-2 py-1 rounded bg-dark-800 text-primary-400 text-sm font-mono">$1</code>')}>
-                  </p>
+            <div class="reveal">
+              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Contexte</p>
+              {project.detailedContent.introduction.split('\n\n').map(paragraph => (
+                <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0" set:html={formatText(paragraph)} />
+              ))}
+            </div>
+          )}
+
+          <!-- Fonctionnalités -->
+          {project.detailedContent.features && (
+            <div class="reveal">
+              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Ce que fait l'application</p>
+              <ul class="space-y-2.5">
+                {project.detailedContent.features.map((feature) => (
+                  feature.startsWith('  •') ? (
+                    <li class="ml-8 text-ink-500 dark:text-ink-300 text-sm leading-relaxed">
+                      {feature.replace('  • ', '')}
+                    </li>
+                  ) : (
+                    <li class="flex items-start gap-3 text-ink-600 dark:text-ink-200 leading-relaxed">
+                      <Icon name="heroicons:check" class="w-4 h-4 text-accent-500 dark:text-accent-300 flex-shrink-0 mt-1.5" aria-hidden="true" />
+                      <span>{feature}</span>
+                    </li>
+                  )
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Décisions techniques -->
+          {project.detailedContent.technical && (
+            <div class="reveal">
+              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-6">Décisions techniques</p>
+              <div class="space-y-4">
+                {project.detailedContent.technical.map((section) => (
+                  <details class="card p-0 overflow-hidden group" open>
+                    <summary class="cursor-pointer px-6 py-4 font-semibold text-ink-900 dark:text-ink-50 flex items-center justify-between hover:bg-ink-50 dark:hover:bg-night-bg transition-colors">
+                      {section.title}
+                      <Icon name="heroicons:chevron-down" class="w-4 h-4 text-ink-400 transition-transform group-open:rotate-180" aria-hidden="true" />
+                    </summary>
+                    <ul class="px-6 pb-5 pt-1 space-y-2.5">
+                      {section.items.map((item) => (
+                        <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-ink-200 leading-relaxed">
+                          <span class="w-1 h-1 rounded-full bg-ink-300 dark:bg-ink-500 flex-shrink-0 mt-2" aria-hidden="true"></span>
+                          <div>
+                            {item.split('\n').map((paragraph, i) => (
+                              <Fragment>
+                                {i > 0 && <br />}
+                                <span set:html={formatText(paragraph)} />
+                              </Fragment>
+                            ))}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 ))}
               </div>
             </div>
           )}
 
-          <!-- Features -->
-          {project.detailedContent.features && (
-            <div class="mb-12 reveal">
-              <h2 class="text-3xl font-bold text-dark-100 mb-6">Fonctionnalités principales</h2>
-              <div class="glass rounded-2xl p-8">
-                <ul class="space-y-3">
-                  {project.detailedContent.features.map((feature) => (
-                    <li class="flex items-start text-dark-300 text-lg">
-                      {feature.startsWith('  •') ? (
-                        <span class="ml-8">{feature}</span>
-                      ) : (
-                        <>
-                          <Icon name="heroicons:check-badge" class="w-6 h-6 text-primary-500 mr-3 flex-shrink-0 mt-1" aria-hidden="true" />
-                          <span>{feature}</span>
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <!-- Workflow -->
+          {project.detailedContent.workflow && (
+            <div class="reveal">
+              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Workflow</p>
+              {project.detailedContent.workflow.split('\n\n').map(paragraph => (
+                <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0 whitespace-pre-line" set:html={formatText(paragraph)} />
+              ))}
             </div>
           )}
 
-          <!-- Technical Details -->
-          {project.detailedContent.technical && (
-            <div class="mb-12 reveal">
-              <h2 class="text-3xl font-bold text-dark-100 mb-6">Détails techniques</h2>
-              <div class="space-y-6">
-                {project.detailedContent.technical.map((section) => {
-                  const technologies = extractTechnologiesFromText(section.items.join(' ')).filter(tech => getTechIcon(tech));
-                  return (
-                    <div class="glass rounded-2xl p-8">
-                      <div class="flex items-center gap-3 mb-4">
-                        <h3 class="text-xl font-bold text-primary-400">{section.title}</h3>
-                        {technologies.length > 0 && (
-                          <div class="flex items-center gap-2 ml-2">
-                            {technologies.map((tech) => {
-                              const iconPath = getTechIcon(tech);
-                              return iconPath && iconExists(iconPath) ? (
-                                <img 
-                                  src={iconPath}
-                                  alt={tech}
-                                  title={tech}
-                                  class="w-5 h-5 inline-block"
-                                />
-                              ) : null;
-                            })}
-                          </div>
-                        )}
-                      </div>
-                      <ul class="space-y-3">
-                        {section.items.map((item) => (
-                          <li class="flex items-start text-dark-300">
-                            <Icon name="heroicons:arrow-right" class="w-5 h-5 text-primary-500 mr-3 flex-shrink-0 mt-1" aria-hidden="true" />
-                            <div>
-                              {item.split('\n').map((paragraph, i) => (
-                                <Fragment>
-                                  {i > 0 && <><br /></>}
-                                  <span set:html={paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code class="px-2 py-1 rounded bg-dark-800 text-primary-400 text-sm font-mono">$1</code>')} />
-                                </Fragment>
-                              ))}
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
+          <!-- Monitoring -->
+          {project.detailedContent.monitoring && (
+            <div class="reveal">
+              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Monitoring</p>
+              {project.detailedContent.monitoring.split('\n\n').map(paragraph => (
+                <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0 whitespace-pre-line" set:html={formatText(paragraph)} />
+              ))}
             </div>
           )}
         </div>
-      </Section>
+      </section>
     )}
 
-    <!-- Screenshots Gallery -->
+    <!-- Captures d'écran -->
     {project.screenshots && project.screenshots.length > 0 && (
-      <Section className="bg-dark-800/30">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-3xl font-bold text-dark-100 mb-8 text-center reveal">Galerie d'images</h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section class="px-4 md:px-8 py-12">
+        <div class="max-w-content mx-auto">
+          <h2 class="font-display text-3xl text-ink-900 dark:text-ink-50 mb-8 reveal">Captures d'écran</h2>
+          <div class="grid md:grid-cols-2 gap-5">
             {(() => {
-              // Grouper les screenshots par nom pour gérer les versions light/dark
+              // Regrouper les versions light/dark d'une même capture
               const screenshotGroups = new Map();
               project.screenshots.forEach(screenshot => {
                 if (!screenshotGroups.has(screenshot.name)) {
@@ -222,113 +219,75 @@ const { project } = Astro.props;
                 screenshotGroups.get(screenshot.name).push(screenshot);
               });
 
-                const uniqueScreenshots: {
+              const uniqueScreenshots: {
                 name: string;
                 path?: string;
                 darkPath?: string;
                 lightPath?: string;
-                }[] = [];
+              }[] = [];
               screenshotGroups.forEach((group, name) => {
                 if (group.length === 2) {
-                  // Deux versions : light et dark
                   const darkImg = group.find((s: { path: string }) => s.path.includes('black') || s.path.includes('dark'));
                   const lightImg = group.find((s: { path: string }) => s.path.includes('white') || s.path.includes('light'));
-                  uniqueScreenshots.push({
-                    name,
-                    darkPath: darkImg?.path,
-                    lightPath: lightImg?.path
-                  });
+                  uniqueScreenshots.push({ name, darkPath: darkImg?.path, lightPath: lightImg?.path });
                 } else {
-                  // Une seule version
-                  uniqueScreenshots.push({
-                    name,
-                    path: group[0].path
-                  });
+                  uniqueScreenshots.push({ name, path: group[0].path });
                 }
               });
 
-              return uniqueScreenshots.map((screenshot, index) => (
-                <div class="reveal glass rounded-2xl overflow-hidden group cursor-pointer" style={`animation-delay: ${index * 0.1}s`}>
-                  <div class="relative overflow-hidden">
-                    <img 
-                      src={screenshot.path || screenshot.darkPath}
-                      data-image-dark={screenshot.darkPath}
-                      data-image-light={screenshot.lightPath}
-                      alt={screenshot.name}
-                      class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-60"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4">
-                      <p class="text-white font-semibold">{screenshot.name}</p>
-                    </div>
-                  </div>
-                </div>
+              return uniqueScreenshots.map((screenshot) => (
+                <figure class="reveal card p-0 overflow-hidden">
+                  <img
+                    src={screenshot.path || screenshot.darkPath}
+                    data-image-dark={screenshot.darkPath}
+                    data-image-light={screenshot.lightPath}
+                    alt={screenshot.name}
+                    class="w-full h-64 object-cover object-top border-b border-ink-200 dark:border-night-border"
+                    loading="lazy"
+                  />
+                  <figcaption class="px-5 py-3 text-sm text-ink-500 dark:text-ink-300">
+                    {screenshot.name}
+                  </figcaption>
+                </figure>
               ));
             })()}
           </div>
         </div>
-      </Section>
+      </section>
     )}
 
-    <!-- Back to Projects -->
-    <Section>
-      <div class="text-center reveal">
-        <Button href={`/#${project.slug}`} variant="outline">
-          <Icon name="heroicons:arrow-left" class="w-5 h-5 mr-2" aria-hidden="true" />
+    <!-- Retour -->
+    <section class="px-4 md:px-8 py-12">
+      <div class="max-w-3xl mx-auto reveal">
+        <Button href={`/#${project.slug}`} variant="outline" size="sm">
+          <Icon name="heroicons:arrow-left" class="w-4 h-4 mr-2" aria-hidden="true" />
           Retour aux projets
         </Button>
       </div>
-    </Section>
+    </section>
   </main>
   <Footer />
 </Layout>
 
 <script>
-  // Fonction pour mettre à jour les images des screenshots selon le thème
+  // Bascule light/dark des captures qui ont deux versions
   const updateScreenshotImages = () => {
     const isDark = document.documentElement.classList.contains('dark');
-    const screenshotImages = document.querySelectorAll('img[data-image-dark][data-image-light]');
-    
-    screenshotImages.forEach(img => {
+    document.querySelectorAll('img[data-image-dark][data-image-light]').forEach(img => {
       const imageElement = img as HTMLImageElement;
       const darkImage = imageElement.getAttribute('data-image-dark');
       const lightImage = imageElement.getAttribute('data-image-light');
-      
       if (darkImage && lightImage) {
         imageElement.src = isDark ? darkImage : lightImage;
       }
     });
   };
 
-  // Mettre à jour les images au chargement initial
   updateScreenshotImages();
 
-  // Écouter les changements de thème
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-        updateScreenshotImages();
-      }
-    });
-  });
-
+  const observer = new MutationObserver(updateScreenshotImages);
   observer.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['class']
   });
 </script>
-
-<style>
-  /* Animation pour les éléments reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>

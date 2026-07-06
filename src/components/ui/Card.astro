@@ -9,8 +9,8 @@ const { className = "", hover = true } = Astro.props;
 
 <div
     class={`
-    glass rounded-2xl p-6 card-shine
-    ${hover ? "transition-shadow duration-300" : ""}
+    card p-6
+    ${hover ? "transition-colors duration-200 hover:border-ink-300 dark:hover:border-ink-600" : ""}
     ${className}
     `}
 >

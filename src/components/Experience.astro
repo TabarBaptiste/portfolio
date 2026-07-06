@@ -1,76 +1,48 @@
 ---
 import Section from './ui/Section.astro';
-import Card from './ui/Card.astro';
 import Button from './ui/Button.astro';
 import { Icon } from 'astro-icon/components';
 
-// Dès le 01/10/2026, on affiche "2026" à la place de "Présent"
+// Dès le 01/10/2026, on affiche "2026" à la place de "présent"
 const endOfContract = new Date('2026-10-01');
 const today = new Date();
-const endYear = today >= endOfContract ? '2026' : 'Présent';
+const endYear = today >= endOfContract ? '2026' : 'présent';
 
 const experiences = [
   {
     title: 'Mastère Architecte Web',
     company: 'Digital School of Paris - Institut F2I',
-    period: `BAC+5 : 2024 - ${endYear}`,
+    period: `2024 — ${endYear}`,
     year: 2026,
-    description: "Formation d'expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux. Acquisition de compétences en conception et déploiement d'applications complexes, en gestion d'équipes techniques et en stratégie de transformation digitale.",
-    technologies: [
-      "Digitalisation",
-      "Full-Stack",
-      "Gestion de projet",
-      "DevOps",
-      "Leadership",
-      "UX/UI Design"
-    ],
+    description: "Formation d'expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux.",
     type: 'education'
   },
   {
-    title: 'Développeur Full-Stack - Alternance',
+    title: 'Développeur Full-Stack en alternance',
     company: 'Conseil Départemental du Val-de-Marne',
-    period: `2023 - ${endYear}`,
+    period: `2023 — ${endYear}`,
     year: 2023.5,
-    description: "Refonte complète d'applications web (backend et frontend), gestion et optimisation de bases de données, maintenance et évolution de solutions existantes. Conception et développement d'une extension VS Code publiée sur le Marketplace pour améliorer la productivité de l'équipe.",
-    technologies: [
-      "Full-Stack",
-      "Base de données",
-      "Refonte",
-      "Maintenance",
-      "Mise en production",
-      "VS Code Extension",
-    ],
+    description: "Refonte complète d'applications web, optimisation de bases de données, maintenance de solutions existantes. Conception d'une extension VSCode publiée sur le Marketplace pour améliorer la productivité de l'équipe.",
     type: 'work'
   },
   {
-    title: 'Licence Professionnelle - Métiers de l\'Informatique: Applications Web (Parcours DAW2I)',
-    company: 'Université d\'Evry Val d\'Essonne - Paris Saclay',
-    period: 'BAC+4 : 2023 - 2024',
+    title: "Licence Professionnelle - Applications Web (DAW2I)",
+    company: "Université d'Evry Val d'Essonne - Paris Saclay",
+    period: '2023 — 2024',
     year: 2023.2,
-    description: "Formation axée sur le développement avancé d'applications web et mobiles. Acquisition de compétences solides en modélisation de données, conception d'interfaces, développement client/serveur et intégration de services web. Mise en pratique à travers des projets tutorés orientés production et déploiement d'applications réelles.",
-    technologies: [
-      "Full-Stack",
-      "Développement mobile",
-      "Modélisation",
-      "Intégration",
-      "CMS",
-      "SEO",
-    ],
-    type: 'education'
+    description: "Développement avancé d'applications web et mobiles : modélisation de données, conception d'interfaces, intégration de services web.",
+    type: 'education',
+    link: {
+      label: 'Voir ma soutenance',
+      url: 'https://www.canva.com/design/DAGQdmJ6wv4/7Lu6Ywv06X51AH2pgMDwWg/view?utm_content=DAGQdmJ6wv4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=haa0fe0e684'
+    }
   },
   {
     title: 'Développeur Web - Stage',
     company: 'RJ Web',
     period: '2023',
     year: 2023,
-    description: "Gestion et répertoriation des activités du quartier Lavalle. Développement d'un système de facilitation des inscriptions à des évènements locaux et création d'une newsletter pour améliorer la communication avec les résidents.",
-    technologies: [
-      "Développement Web",
-      "Gestion de contenu",
-      "Newsletter",
-      "Base de données",
-      "Authentification",
-    ],
+    description: "Développement d'une plateforme communautaire : inscriptions aux évènements du quartier, newsletter automatisée, espace administrateur.",
     type: 'work'
   },
   {
@@ -78,22 +50,15 @@ const experiences = [
     company: 'Crédit Agricole',
     period: '2022',
     year: 2022,
-    description: "Pôle Achat Technologie Service : Création d'interface web, gestion de bases de données et développement de scripts d'automatisation pour optimiser les processus internes.",
-    technologies: [
-      "Développement Web",
-      "Base de données",
-      "Scripting",
-      "Automatisation"
-    ],
+    description: "Pôle Achat Technologie Service : interfaces web, gestion de bases de données et scripts d'automatisation des processus internes.",
     type: 'work'
   },
   {
-    title: 'BTS Services Informatiques aux Organisations - Option SLAM',
+    title: 'BTS SIO - Option SLAM',
     company: 'Lycée Léonard de Vinci, Melun',
-    period: '2021 - 2023',
+    period: '2021 — 2023',
     year: 2022.5,
-    description: 'Solutions Logicielles et Applications Métiers. Formation aux compétences en programmation, gestion de projet, sécurité informatique, gestion de données et cybersécurisation des solutions applicatives.',
-    technologies: ['Programmation', 'Base de données', 'Sécurité', 'Collaboration', 'Développement web', "UML"],
+    description: 'Solutions Logicielles et Applications Métiers : programmation, gestion de projet, sécurité informatique.',
     type: 'education'
   }
 ].sort((a, b) => b.year - a.year);
@@ -102,84 +67,52 @@ const experiences = [
 <Section
   id="experience"
   title="Parcours"
-  subtitle="Mon parcours académique et professionnel"
+  subtitle="Alternance et formations, en parallèle depuis 2021."
 >
-  <div class="relative">
-    <!-- Timeline verticale -->
-    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary-500 to-primary-600"></div>
-
-    <div class="space-y-8">
-      {experiences.map((exp, index) => (
-        <div
-          class={`reveal flex flex-col md:flex-row items-center gap-8 ${
-            index % 2 === 0 ? 'md:flex-row-reverse' : ''
-          }`}
-        >
-          <!-- Carte d'expérience -->
-          <div class="flex-1 w-full">
-            <Card>
-              <div>
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <div class="mb-2">
-                      <span class={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                        exp.type === 'work'
-                          ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white'
-                          : 'bg-gradient-to-r from-dark-700 to-dark-600 text-primary-400'
-                      }`}>
-                        {exp.type === 'work' ? '💼 Expérience' : '🎓 Formation'}
-                      </span>
-                    </div>
-                    <h3 class="text-xl font-bold text-dark-100 mb-1">{exp.title}</h3>
-                    <p class="text-primary-400 font-medium">{exp.company}</p>
-                  </div>
-                  <span class="text-sm text-dark-400 whitespace-nowrap ml-4">{exp.period}</span>
-                </div>
-
-                <p class="text-dark-200 mb-4 leading-relaxed">
-                  {exp.description}
-                </p>
-
-                <div class="flex flex-wrap gap-2">
-                  {exp.technologies.map((tech) => (
-                    <span class="px-3 py-1 rounded-lg bg-dark-800/50 text-primary-400 text-sm border border-dark-700">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {exp.title.includes('Licence Professionnelle') && (
-                  <div class="mt-4">
-                    <Button href="https://www.canva.com/design/DAGQdmJ6wv4/7Lu6Ywv06X51AH2pgMDwWg/view?utm_content=DAGQdmJ6wv4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=haa0fe0e684" variant="outline" size="sm">
-                      Voir ma soutenance
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </Card>
+  <div class="max-w-3xl">
+    {experiences.map((exp) => (
+      <div class="reveal grid grid-cols-[7rem_1fr] md:grid-cols-[9rem_1fr] gap-4 md:gap-8 py-6 border-b border-ink-200 dark:border-night-border last:border-b-0">
+        <p class="font-mono text-sm text-ink-400 dark:text-ink-300 pt-0.5">
+          {exp.period}
+        </p>
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <h3 class="font-semibold text-ink-900 dark:text-ink-50">
+              {exp.title}
+            </h3>
+            <span class={`font-mono text-[11px] uppercase tracking-wider px-2 py-0.5 rounded ${
+              exp.type === 'work'
+                ? 'bg-accent-50 text-accent-600 dark:bg-accent-900 dark:text-accent-200'
+                : 'bg-ink-100 text-ink-500 dark:bg-night-border dark:text-ink-300'
+            }`}>
+              {exp.type === 'work' ? 'Expérience' : 'Formation'}
+            </span>
           </div>
-
-          <!-- Point sur la timeline (desktop uniquement) -->
-          <div class="hidden md:block relative flex-shrink-0">
-            <div class="w-4 h-4 rounded-full bg-primary-500 border-4 border-dark-900 shadow-lg shadow-primary-500/50"></div>
-            <div class="absolute inset-0 w-4 h-4 rounded-full bg-primary-500 animate-ping opacity-75"></div>
-          </div>
-
-          <div class="hidden md:block flex-1"></div>
+          <p class="text-sm text-accent-600 dark:text-accent-300 mb-2">{exp.company}</p>
+          <p class="text-sm text-ink-500 dark:text-ink-300 leading-relaxed">
+            {exp.description}
+          </p>
+          {exp.link && (
+            <a
+              href={exp.link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-underline inline-flex items-center gap-1 text-sm mt-2"
+            >
+              {exp.link.label}
+              <Icon name="heroicons:arrow-top-right-on-square" class="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
+          )}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
 
-  <!-- CTA télécharger le CV -->
-  <div class="text-center mt-12 reveal">
-    <a
-      href="Curriculum_Vitae_TABAR_LABONNE_Baptiste.pdf"
-      download
-      class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-shadow duration-300"
-    >
-      <Icon name="heroicons:document-arrow-down" class="w-5 h-5" aria-hidden="true" />
+  <!-- CV -->
+  <div class="mt-10 reveal">
+    <Button href="Curriculum_Vitae_TABAR_LABONNE_Baptiste.pdf" variant="outline">
+      <Icon name="heroicons:document-arrow-down" class="w-5 h-5 mr-2" aria-hidden="true" />
       Télécharger mon CV
-    </a>
+    </Button>
   </div>
 </Section>

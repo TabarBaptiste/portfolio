@@ -2,12 +2,9 @@
 import { Icon } from "astro-icon/components";
 
 const navItems = [
-    { name: "Accueil", href: "/#home" },
-    { name: "À propos", href: "/#about" },
-    { name: "Expérience", href: "/#experience" },
     { name: "Projets", href: "/#projects" },
+    { name: "Parcours", href: "/#experience" },
     { name: "Compétences", href: "/#skills" },
-    // { name: "Veille Tech", href: "/#tech-watch" },
     { name: "Contact", href: "/#contact" },
 ];
 ---
@@ -16,79 +13,77 @@ const navItems = [
     id="header"
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
 >
-    <nav class="max-w-7xl mx-auto px-4 md:px-8 py-4">
+    <nav class="max-w-content mx-auto px-4 md:px-8 py-4">
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <a
                 href="/"
-                class="text-2xl font-bold gradient-text transition-colors duration-300"
+                class="font-mono text-sm font-medium text-ink-800 dark:text-ink-100 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
             >
-                Baptiste
+                baptiste.tabar-labonne
             </a>
 
-            <!-- Navigation Desktop -->
-            <ul class="hidden md:flex items-center space-x-8">
+            <!-- Navigation desktop -->
+            <ul class="hidden md:flex items-center gap-8">
                 {
                     navItems.map((item) => (
                         <li>
                             <a
                                 href={item.href}
-                                class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300 relative group"
-                                data-section={item.href.split('#')[1]}
+                                class="text-sm text-ink-500 dark:text-ink-300 hover:text-ink-900 dark:hover:text-ink-50 transition-colors"
                             >
                                 {item.name}
-                                <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300" />
                             </a>
                         </li>
                     ))
                 }
             </ul>
 
-            <div class="flex items-center space-x-3">
-                <!-- Bouton Toggle Dark/Light Mode -->
+            <div class="flex items-center gap-2">
+                <!-- Toggle thème -->
                 <button
-                    id="theme-toggle-mobile"
-                    class="p-2 rounded-xl glass transition-colors duration-300"
+                    id="theme-toggle"
+                    class="p-2 rounded-lg border border-transparent hover:border-ink-200 dark:hover:border-night-border text-ink-500 dark:text-ink-300 transition-colors"
                     aria-label="Basculer le thème clair/sombre"
                 >
                     <Icon
-                        name="heroicons:sun"
-                        id="theme-icon-sun-mobile"
-                        class="w-5 h-5 hidden"
+                        name="heroicons:moon"
+                        id="theme-icon-moon"
+                        class="w-4 h-4"
                         aria-hidden="true"
                     />
                     <Icon
-                        name="heroicons:moon"
-                        id="theme-icon-moon-mobile"
-                        class="w-5 h-5"
+                        name="heroicons:sun"
+                        id="theme-icon-sun"
+                        class="w-4 h-4 hidden"
                         aria-hidden="true"
                     />
                 </button>
 
-                <!-- Bouton Menu Mobile -->
+                <!-- Menu mobile -->
                 <button
                     id="mobile-menu-button"
-                    class="md:hidden text-dark-100 focus:outline-none"
+                    class="md:hidden p-2 text-ink-700 dark:text-ink-100"
                     aria-label="Menu"
                 >
-                    <Icon id="menu-icon-open" name="heroicons:bars-3" class="w-6 h-6" aria-hidden="true" />
-                    <Icon id="menu-icon-close" name="heroicons:x-mark" class="w-6 h-6 hidden" aria-hidden="true" />
+                    <Icon id="menu-icon-open" name="heroicons:bars-3" class="w-5 h-5" aria-hidden="true" />
+                    <Icon id="menu-icon-close" name="heroicons:x-mark" class="w-5 h-5 hidden" aria-hidden="true" />
                 </button>
             </div>
         </div>
 
-        <!-- Menu Mobile -->
+        <!-- Menu mobile -->
         <div
             id="mobile-menu"
-            class="md:hidden hidden mt-4 glass rounded-2xl p-4 animate-fade-down"
+            class="md:hidden hidden mt-3 card p-3 shadow-lg"
         >
-            <ul class="space-y-3">
+            <ul class="space-y-1">
                 {
                     navItems.map((item) => (
                         <li>
                             <a
                                 href={item.href}
-                                class="block text-dark-200 hover:text-primary-400 transition-colors duration-300 py-2 px-4 rounded-xl hover:bg-dark-800/50"
+                                class="block py-2 px-3 rounded-lg text-ink-600 dark:text-ink-200 hover:bg-ink-50 dark:hover:bg-night-border transition-colors"
                             >
                                 {item.name}
                             </a>
@@ -101,23 +96,19 @@ const navItems = [
 </header>
 
 <script>
-    // Effet de transparence au scroll
+    // Fond du header au scroll
     const header = document.getElementById("header");
-    // let lastScroll = 0;
-
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 100) {
-            header?.classList.add("glass", "shadow-lg");
+    const onScroll = () => {
+        if (window.scrollY > 40) {
+            header?.classList.add("header-scrolled");
         } else {
-            header?.classList.remove("glass", "shadow-lg");
+            header?.classList.remove("header-scrolled");
         }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-        // lastScroll = currentScroll;
-    });
-
-    // Toggle menu mobile
+    // Menu mobile
     const mobileMenuButton = document.getElementById("mobile-menu-button");
     const mobileMenu = document.getElementById("mobile-menu");
     const menuIconOpen = document.getElementById("menu-icon-open");
@@ -129,184 +120,37 @@ const navItems = [
         menuIconClose?.classList.toggle("hidden");
     });
 
-    // Fermer le menu mobile au clic sur un lien
-    const mobileLinks = mobileMenu?.querySelectorAll("a");
-    mobileLinks?.forEach((link) => {
+    mobileMenu?.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", () => {
-            mobileMenu?.classList.add("hidden");
+            mobileMenu.classList.add("hidden");
             menuIconOpen?.classList.remove("hidden");
             menuIconClose?.classList.add("hidden");
         });
     });
 
-    // Gestion du thème (dark/light mode)
-    const themeToggle = document.getElementById("theme-toggle");
-    const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+    // Thème : les icônes reflètent l'état, l'init est faite dans Layout
     const sunIcon = document.getElementById("theme-icon-sun");
     const moonIcon = document.getElementById("theme-icon-moon");
-    const sunIconMobile = document.getElementById("theme-icon-sun-mobile");
-    const moonIconMobile = document.getElementById("theme-icon-moon-mobile");
 
-    // Fonction pour mettre à jour les icônes
-    const updateThemeIcons = (isDark: boolean) => {
-        if (isDark) {
-            sunIcon?.classList.add("hidden");
-            moonIcon?.classList.remove("hidden");
-            sunIconMobile?.classList.add("hidden");
-            moonIconMobile?.classList.remove("hidden");
-        } else {
-            sunIcon?.classList.remove("hidden");
-            moonIcon?.classList.add("hidden");
-            sunIconMobile?.classList.remove("hidden");
-            moonIconMobile?.classList.add("hidden");
-        }
+    const updateThemeIcons = () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        sunIcon?.classList.toggle("hidden", !isDark);
+        moonIcon?.classList.toggle("hidden", isDark);
     };
+    updateThemeIcons();
 
-    // Fonction pour basculer le thème
-    const toggleTheme = () => {
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
         const html = document.documentElement;
-        const isDark = html.classList.contains("dark");
-
-        if (isDark) {
-            html.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-            updateThemeIcons(false);
-        } else {
-            html.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-            updateThemeIcons(true);
-        }
-    };
-
-    // Initialiser le thème au chargement
-    const initTheme = () => {
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-        ).matches;
-        const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-
-        if (isDark) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
-        updateThemeIcons(isDark);
-    };
-
-    // Initialiser au chargement
-    initTheme();
-
-    // Ajouter les event listeners
-    themeToggle?.addEventListener("click", toggleTheme);
-    themeToggleMobile?.addEventListener("click", toggleTheme);
-
-    // Navigation active - détection de section visible
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navIndicators = document.querySelectorAll('.nav-indicator');
-    let currentSection = '';
-
-    // Fonction pour mettre à jour la navigation active
-    const updateActiveNav = (sectionId: string) => {
-        if (currentSection === sectionId) return;
-        currentSection = sectionId;
-
-        navLinks.forEach((link, index) => {
-            const linkElement = link as HTMLElement;
-            const indicator = navIndicators[index] as HTMLElement;
-            const section = linkElement.getAttribute('data-section');
-
-            if (section === sectionId) {
-                linkElement.classList.add('text-primary-400');
-                linkElement.classList.remove('text-dark-300');
-                indicator.classList.add('w-full');
-                indicator.classList.remove('group-hover:w-full');
-            } else {
-                linkElement.classList.remove('text-primary-400');
-                linkElement.classList.add('text-dark-300');
-                indicator.classList.remove('w-full');
-                indicator.classList.add('group-hover:w-full');
-            }
-        });
-    };
-
-    // Observer pour détecter les sections visibles
-    const sectionObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    updateActiveNav(sectionId);
-                }
-            });
-        },
-        {
-            rootMargin: '-50% 0px -50% 0px', // Active quand la section est au centre
-            threshold: 0
-        }
-    );
-
-    // Observer toutes les sections
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => {
-        sectionObserver.observe(section);
-    });
-
-    // Gestion du clic sur les liens de navigation
-    navLinks.forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-            if (href) {
-                const targetId = href.split('#')[1];
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    const headerHeight = header?.offsetHeight || 0;
-                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    // Si l'élément n'existe pas (par exemple sur une page de projet), naviguer vers la page d'accueil avec l'ancre
-                    window.location.href = href;
-                }
-            }
-        });
-    });
-
-    // Mettre à jour la navigation au chargement de la page
-    const updateNavOnLoad = () => {
-        const hash = window.location.hash.slice(1);
-        if (hash) {
-            updateActiveNav(hash);
-        } else {
-            // Si pas de hash, vérifier quelle section est visible au chargement
-            const firstVisibleSection = Array.from(sections).find((section) => {
-                const rect = section.getBoundingClientRect();
-                return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-            });
-            if (firstVisibleSection) {
-                updateActiveNav(firstVisibleSection.id);
-            }
-        }
-    };
-
-    // Mettre à jour au chargement et au changement de hash
-    window.addEventListener('load', updateNavOnLoad);
-    window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.slice(1);
-        updateActiveNav(hash);
+        const isDark = html.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        updateThemeIcons();
     });
 </script>
 
 <style>
-    .nav-link.active {
-        @apply text-primary-400;
-    }
-    
-    .nav-link.active .nav-indicator {
-        @apply w-full;
+    .header-scrolled {
+        @apply bg-paper/85 dark:bg-night-bg/85 border-b border-ink-200/60 dark:border-night-border;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 </style>

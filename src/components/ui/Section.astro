@@ -9,19 +9,18 @@ interface Props {
 const { id, title, subtitle, className = "" } = Astro.props;
 ---
 
-<section id={id} class={`py-4 px-4 md:px-8 ${className}`}>
-    <div class="max-w-6xl mx-auto">
+<section id={id} class={`py-16 md:py-24 px-4 md:px-8 ${className}`}>
+    <div class="max-w-content mx-auto">
         {title && (
-            <div class="text-center mb-10 reveal">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+            <div class="mb-12 reveal">
+                <h2 class="font-display text-4xl md:text-5xl text-ink-900 dark:text-ink-50 mb-3">
                     {title}
                 </h2>
                 {subtitle && (
-                    <p class="text-dark-200 text-lg md:text-xl max-w-2xl mx-auto">
+                    <p class="text-ink-500 dark:text-ink-300 text-lg max-w-2xl">
                         {subtitle}
                     </p>
                 )}
-                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-primary-600 mx-auto mt-6 rounded-full" />
             </div>
         )}
         <slot />
