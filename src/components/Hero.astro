@@ -1,6 +1,7 @@
 ---
 import Button from "./ui/Button.astro";
 import { techIcons } from "../data/techIcons";
+import { Icon } from "astro-icon/components";
 
 // Extraire uniquement les noms de fichiers SVG (sans chemin ni extension)
 const techIconNames = Object.values(techIcons).map((path) =>
@@ -52,18 +53,17 @@ const techIconNames = Object.values(techIcons).map((path) =>
         </h1>
 
         <!-- Sous-titre avec effet typing -->
-        <div class="text-xl md:text-2xl text-dark-500 dark:text-dark-300 mb-8 h-8">
+        <div class="text-xl md:text-2xl text-dark-500 dark:text-dark-200 mb-8 h-8">
             <span id="typing-text" class="border-r-2 border-primary-500"></span>
         </div>
 
         <!-- Description -->
         <p
-            class="text-lg md:text-xl text-dark-400 dark:text-dark-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+            class="text-lg md:text-xl text-dark-500 dark:text-dark-200 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-            Je suis apprenti en Mastère Architecte Web et je crée des
-            applications pensées avant tout pour être agréables à utiliser.
-            J'aime rendre les choses claires, fluides et fiables, autant dans le
-            code que dans l'expérience proposée aux utilisateurs.
+            Développeur Full-Stack passionné par la conception d'applications modernes,
+            du backend à l'interface. J'aime les architectures propres, le code
+            maintenable, et les produits qui servent vraiment leurs utilisateurs.
         </p>
 
         <!-- CTA Buttons -->
@@ -71,40 +71,11 @@ const techIconNames = Object.values(techIcons).map((path) =>
             class="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
             <Button href="#projects" variant="primary" size="lg">
-                <svg
-                    class="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    ></path>
-                </svg>
+                <Icon name="heroicons:eye" class="w-5 h-5 mr-2" aria-hidden="true" />
                 Voir mes projets
             </Button>
             <Button href="#contact" variant="outline" size="lg">
-                <svg
-                    class="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    ></path>
-                </svg>
+                <Icon name="heroicons:envelope" class="w-5 h-5 mr-2" aria-hidden="true" />
                 Me contacter
             </Button>
         </div>
@@ -121,7 +92,7 @@ const techIconNames = Object.values(techIcons).map((path) =>
 <script>
     // Effet de typing
     const texts = [
-        "Développeur Fullstack",
+        "Développeur Full-Stack",
         "Architecte Web",
         "Ingénieur développement",
         "Consultant informatique",
