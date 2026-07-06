@@ -1,133 +1,48 @@
 ---
 import Section from "./ui/Section.astro";
-import Card from "./ui/Card.astro";
-import { Icon } from "astro-icon/components";
+
+const principles = [
+    {
+        title: "Refondre sans tout casser",
+        description:
+            "Trois ans sur des applications legacy au Conseil Départemental du Val-de-Marne : moderniser un code qui tourne depuis des années demande de la méthode, pas de la table rase.",
+    },
+    {
+        title: "Du code qui se relit dans six mois",
+        description:
+            "Je privilégie les architectures qu'on peut faire évoluer sans souffrir : séparation claire des responsabilités, typage strict, conventions cohérentes.",
+    },
+    {
+        title: "Livrer, monitorer, corriger",
+        description:
+            "Un projet n'est pas fini au merge : CI/CD systématique, monitoring Sentry en production, et correction rapide quand un utilisateur rencontre un problème.",
+    },
+    {
+        title: "Full-stack pour de vrai",
+        description:
+            "Du schéma de base de données à l'interface, en passant par l'API et le déploiement. J'aime quand le frontend et le backend se parlent bien.",
+    },
+];
 ---
 
 <Section
     id="about"
-    title="À propos de moi"
-    subtitle="Mon parcours, ma vision, mes disponibilités"
-    className="bg-dark-800/30"
+    title="Comment je travaille"
+    subtitle="Développeur full-stack en fin de Mastère Architecte Web à la Digital School of Paris."
 >
-    <!-- Texte de présentation -->
-    <div class="reveal max-w-3xl mx-auto space-y-5 mb-10">
-        <p class="text-dark-100 text-lg leading-relaxed">
-            Développeur Full-Stack en fin de Mastère Architecte Web à la Digital School of Paris.
-        </p>
-        <p class="text-dark-200 leading-relaxed">
-            Trois ans d'alternance au Conseil Départemental du Val-de-Marne m'ont formé à la réalité du terrain :
-            refondre des applications legacy sans tout casser, maintenir du code qui tourne depuis des années,
-            et livrer des outils qui servent vraiment. Parmi les projets dont je suis le plus fier : une
-            extension VSCode publiée sur le Marketplace pour automatiser la génération de DAO PHP, et une
-            plateforme de réservation full-stack développée en autonomie pour une cliente professionnelle
-            (NestJS, Next.js, Stripe, Supabase).
-        </p>
-        <p class="text-dark-200 leading-relaxed">
-            Ce qui me motive : concevoir du code lisible autant que fonctionnel. J'ai une vraie appétence
-            pour les architectures bien pensées, celles qu'on peut faire évoluer six mois après sans souffrir.
-            Que ce soit côté frontend ou backend, j'aime quand les deux se parlent bien.
-        </p>
-    </div>
-
-    <!-- Disponibilités -->
-    <div class="reveal mb-10">
-        <div class="max-w-3xl mx-auto glass rounded-2xl p-5 border border-primary-500/20 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center flex-shrink-0">
-                <Icon name="heroicons:calendar-days" class="w-5 h-5 text-white" aria-hidden="true" />
+    <div class="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
+        {principles.map((principle, index) => (
+            <div class="reveal" style={`transition-delay: ${index * 0.06}s`}>
+                <p class="font-mono text-xs text-accent-600 dark:text-accent-300 mb-2">
+                    0{index + 1}
+                </p>
+                <h3 class="text-lg font-semibold text-ink-900 dark:text-ink-50 mb-2">
+                    {principle.title}
+                </h3>
+                <p class="text-ink-500 dark:text-ink-300 leading-relaxed text-sm">
+                    {principle.description}
+                </p>
             </div>
-            <p class="text-dark-100">
-                <span class="font-semibold text-primary-400">Disponible à partir d'octobre 2026</span> - ouvert aux opportunités en CDI/CDD ou télétravail, en Île-de-France comme en Martinique.
-            </p>
-        </div>
-    </div>
-
-    <!-- Soft Skills -->
-    <div class="flex flex-wrap gap-3 justify-center mb-12 reveal">
-        {[
-            "Résolution de problèmes",
-            "Adaptabilité",
-            "Conception d'interfaces",
-            "Architecture logicielle",
-        ].map((skill) => (
-            <span class="px-4 py-2 rounded-full glass text-primary-400 text-sm font-medium">
-                {skill}
-            </span>
         ))}
-    </div>
-
-    <!-- Domaines d'expertise -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="reveal">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:computer-desktop" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">Frontend</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Interfaces web dynamiques et performantes, alliant ergonomie, accessibilité et design moderne.
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.1s">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:server-stack" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">Backend</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Applications scalables et sécurisées dans une architecture claire et maintenable.
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.2s">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:circle-stack" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">Base de données</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Conception et administration de BDD relationnelles et non relationnelles, optimisation des requêtes.
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.3s">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:device-phone-mobile" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">Mobile</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Création d'applications cross-platform, intégration d'API et gestion optimisée des performances.
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.4s">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:cog-6-tooth" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">DevOps & CI/CD</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Environnements de développement, intégration et déploiement continus, collaboration en équipe.
-                </p>
-            </Card>
-        </div>
-
-        <div class="reveal" style="animation-delay: 0.5s">
-            <Card className="text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                    <Icon name="heroicons:arrow-path" class="w-7 h-7 text-white" aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold mb-2 text-dark-100">Migration & Refonte</h3>
-                <p class="text-dark-200 text-sm leading-relaxed">
-                    Modernisation d'applications legacy, amélioration de la sécurité, des performances et de la maintenabilité.
-                </p>
-            </Card>
-        </div>
     </div>
 </Section>

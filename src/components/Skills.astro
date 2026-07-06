@@ -1,160 +1,86 @@
 ---
 import Section from "./ui/Section.astro";
-import Card from "./ui/Card.astro";
-import { Icon } from "astro-icon/components";
 
-const skillCategories = [
+const tiers = [
     {
-        title: "Frontend",
-        icon: "heroicons:computer-desktop",
+        label: "Au quotidien",
+        description: "Mon socle de travail, celui de mes projets en production.",
+        highlight: true,
         skills: [
-            "HTML5",
-            "CSS3",
-            "JavaScript",
             "TypeScript",
-            "Angular",
-            "Next.js",
-            "Vue.js",
-            "Astro",
-            "React",
-            "ExtJS",
-            "Responsive Design",
-            "Accessibilité Web",
-            "UX/UI Design & Figma",
-        ],
-    },
-    {
-        title: "Backend & API",
-        icon: "heroicons:server-stack",
-        skills: [
-            "PHP",
-            "Symfony",
-            "Node.js",
-            "NestJS",
-            "Express",
-            "Architecture MVC",
-            "API REST",
-            "Architecture Web",
-            "Maintenance & Migration",
-        ],
-    },
-    {
-        title: "Bases de données",
-        icon: "heroicons:circle-stack",
-        skills: [
-            "SQL",
-            "MySQL",
+            "Next.js / React",
+            "NestJS / Node.js",
             "PostgreSQL",
             "Prisma",
-            "WAMP / PhpMyAdmin",
-            "Firebase",
-            "Supabase",
-            "NeonDB",
+            "Tailwind CSS",
+            "Git / GitHub",
         ],
     },
     {
-        title: "Mobile",
-        icon: "heroicons:device-phone-mobile",
+        label: "Opérationnel",
+        description: "Utilisé régulièrement en entreprise ou sur des projets livrés.",
+        highlight: false,
         skills: [
-            "Flutter / Dart",
-        ],
-    },
-    {
-        title: "DevOps & CI/CD",
-        icon: "heroicons:cog-6-tooth",
-        skills: [
-            "Git",
-            "GitHub",
-            "GitLab",
-            "GitHub Actions",
-            "Jenkins",
+            "PHP / Symfony",
+            "Astro",
             "Docker",
-            "SVN",
-        ],
-    },
-    {
-        title: "Hébergement & Cloud",
-        icon: "heroicons:cloud",
-        skills: [
-            "Netlify",
-            "Vercel",
-            "Railway",
-            "Render",
-        ],
-    },
-    {
-        title: "Qualité & Tests",
-        icon: "heroicons:shield-check",
-        skills: [
-            "Tests unitaires / fonctionnels / e2e",
-            "Sentry (monitoring)",
+            "GitHub Actions / Jenkins",
+            "MySQL",
+            "Supabase / Firebase",
+            "Flutter / Dart",
+            "Sentry",
+            "Stripe",
             "SEO",
-            "Référencement",
-            "Optimisation des performances",
-            "Sécurité Web",
-            "Sonarqube",
         ],
     },
     {
-        title: "Gestion de projet",
-        icon: "heroicons:clipboard-document-list",
+        label: "Déjà pratiqué",
+        description: "Abordé en formation ou sur des projets ponctuels.",
+        highlight: false,
         skills: [
-            "Agile / Scrum",
-            "Kanban",
-            "Notion",
-            "GitHub Projects",
-            "Diagrammes Gantt",
-            "Modélisation UML",
+            "Angular",
+            "Vue.js",
+            "ExtJS",
+            "Express",
+            "SonarQube",
+            "Vercel / Netlify / Render / Railway",
+            "UML",
+            "Scrum / Kanban",
+            "Figma",
         ],
     },
 ];
-
-/*
-  OPTION : afficher des niveaux texte par compétence
-  Pour activer, passer les skills en tableau d'objets { name: string; level: 'Avancé' | 'Intermédiaire' | 'Notions' }
-  et utiliser ce template à la place du badge simple ci-dessous :
-
-  <span class="px-3 py-1.5 rounded-lg bg-dark-800/50 text-sm border border-dark-700
-               flex items-center justify-between gap-2">
-    <span class="text-dark-200">{skill.name}</span>
-    <span class={`text-xs px-2 py-0.5 rounded whitespace-nowrap ${
-      skill.level === 'Avancé' ? 'text-green-400 bg-green-400/10' :
-      skill.level === 'Intermédiaire' ? 'text-yellow-400 bg-yellow-400/10' :
-      'text-dark-400 bg-dark-700/50'
-    }`}>{skill.level}</span>
-  </span>
-*/
 ---
 
 <Section
     id="skills"
     title="Compétences"
-    subtitle="Technologies et outils que je maîtrise"
+    subtitle="Classées honnêtement : ce que je pratique tous les jours d'abord."
 >
-    <div class="grid md:grid-cols-2 gap-6">
-        {skillCategories.map((category, catIndex) => (
-            <div
-                class="reveal h-full"
-                style={`animation-delay: ${catIndex * 0.08}s`}
-            >
-                <Card hover={false} className="h-full flex flex-col">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white flex-shrink-0">
-                            <Icon name={category.icon} class="w-7 h-7" aria-hidden="true" />
-                        </div>
-                        <h3 class="text-xl font-bold text-dark-100">
-                            {category.title}
+    <div class="space-y-6 max-w-4xl">
+        {tiers.map((tier, index) => (
+            <div class="reveal card p-6 md:p-8" style={`transition-delay: ${index * 0.06}s`}>
+                <div class="md:flex md:items-start md:gap-10">
+                    <div class="md:w-56 flex-shrink-0 mb-4 md:mb-0">
+                        <h3 class={`font-semibold mb-1 ${tier.highlight ? "text-accent-600 dark:text-accent-300" : "text-ink-900 dark:text-ink-50"}`}>
+                            {tier.label}
                         </h3>
+                        <p class="text-sm text-ink-400 dark:text-ink-300 leading-relaxed">
+                            {tier.description}
+                        </p>
                     </div>
-
                     <div class="flex flex-wrap gap-2">
-                        {category.skills.map((skill) => (
-                            <span class="skill-badge">
+                        {tier.skills.map((skill) => (
+                            <span class={`font-mono text-sm px-3 py-1.5 rounded-lg border ${
+                                tier.highlight
+                                    ? "bg-accent-50 text-accent-700 border-accent-200 dark:bg-accent-900/40 dark:text-accent-200 dark:border-accent-800"
+                                    : "bg-ink-50 text-ink-600 border-ink-200 dark:bg-night-bg dark:text-ink-200 dark:border-night-border"
+                            }`}>
                                 {skill}
                             </span>
                         ))}
                     </div>
-                </Card>
+                </div>
             </div>
         ))}
     </div>

@@ -3,128 +3,42 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --color-primary: #0066e6;
-        --color-primary-dark: #0052b3;
-        --color-dark: #0a0e13;
-        --color-dark-light: #212529;
-        --color-gray: #6c757d;
-        --color-gray-light: #f8f9fa;
-    }
-
-    * {
-        @apply scroll-smooth;
-    }
-
-    body {
-        @apply bg-dark-900 text-dark-100 font-sans antialiased;
-    }
-
-    /* Mode clair */
-    html:not(.dark) body {
-        @apply bg-gray-50 text-gray-900;
-    }
-
-    html:not(.dark) .glass {
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    html:not(.dark) .text-dark-100 {
-        @apply text-gray-900;
-    }
-
-    html:not(.dark) .text-dark-200 {
-        @apply text-gray-800;
-    }
-
-    html:not(.dark) .text-dark-300 {
-        @apply text-gray-700;
-    }
-
-    html:not(.dark) .text-dark-400 {
-        @apply text-gray-600;
-    }
-
-    html:not(.dark) .bg-dark-800 {
-        @apply bg-white;
-    }
-
-    html:not(.dark) .bg-dark-900 {
-        @apply bg-gray-50;
-    }
-
-    html:not(.dark) .border-dark-700 {
-        @apply border-gray-300;
-    }
-
-    html:not(.dark) .bg-dark-800\/30 {
-        @apply bg-gray-100;
-    }
-
     html {
         scroll-behavior: smooth;
     }
 
-    /* Mode clair - Hero section */
-    html:not(.dark) .bg-gradient-to-b.from-dark-900.via-dark-900\/95.to-dark-900 {
-        background: linear-gradient(to bottom, #f9fafb, #f3f4f6, #e5e7eb);
+    body {
+        @apply bg-paper text-ink-800 font-sans antialiased;
     }
 
-    /* Mode clair - Textes */
-    html:not(.dark) .text-dark-300 {
-        @apply text-gray-600;
+    .dark body {
+        @apply bg-night-bg text-ink-100;
     }
 
-    html:not(.dark) .text-dark-400 {
-        @apply text-gray-500;
+    ::selection {
+        @apply bg-accent-200 text-accent-900;
     }
 
-    /* Mode clair - Technologies et badges */
-    html:not(.dark) .bg-dark-800\/50 {
-        @apply bg-gray-100;
+    .dark ::selection {
+        @apply bg-accent-700 text-accent-50;
     }
 
-    html:not(.dark) .border-dark-700 {
-        @apply border-gray-200;
+    :focus-visible {
+        @apply outline-none ring-2 ring-accent-400 ring-offset-2 ring-offset-paper;
     }
 
-    /* Mode clair - Gradients pour les types d'expérience */
-    html:not(.dark) .bg-gradient-to-r.from-primary-500.to-primary-600 {
-        background: linear-gradient(to right, #3b82f6, #2563eb);
-    }
-
-    html:not(.dark) .bg-gradient-to-r.from-dark-700.to-dark-600 {
-        background: linear-gradient(to right, #e5e7eb, #d1d5db);
-    }
-
-    /* Mode clair - Scrollbar */
-    html:not(.dark) ::-webkit-scrollbar-track {
-        background: #f9fafb;
-    }
-
-    html:not(.dark) ::-webkit-scrollbar-thumb {
-        background: #3b82f6;
-    }
-
-    html:not(.dark) ::-webkit-scrollbar-thumb:hover {
-        background: #2563eb;
-    }
-
-    /* Mode clair - Selection */
-    html:not(.dark) ::selection {
-        background-color: rgba(59, 130, 246, 0.3);
-        color: #1f2937;
+    .dark :focus-visible {
+        @apply ring-offset-night-bg;
     }
 }
 
 @layer components {
 
-    /* Animation d'apparition au scroll */
+    /* Apparition au scroll */
     .reveal {
         opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease-out;
+        transform: translateY(24px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
     .reveal.active {
@@ -132,122 +46,67 @@
         transform: translateY(0);
     }
 
-    /* Effet de brillance sur les cartes */
-    .card-shine {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .card-shine::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent);
-        transition: left 0.5s ease;
-    }
-
-    .card-shine:hover::before {
-        left: 100%;
-    }
-
-    /* Effet de glassmorphism */
-    .glass {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    /* Gradient animé pour les titres */
-    .gradient-text {
-        @apply bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent;
-        background-size: 200% auto;
-        animation: gradient 3s linear infinite;
-        line-height: 1.5 !important;
-    }
-
-    @keyframes gradient {
-        0% {
-            background-position: 0% center;
-        }
-
-        100% {
-            background-position: 200% center;
+    @media (prefers-reduced-motion: reduce) {
+        .reveal {
+            opacity: 1;
+            transform: none;
+            transition: none;
         }
     }
 
-    /* Bouton avec effet de ripple */
-    .btn-ripple {
-        position: relative;
-        overflow: hidden;
+    /* Carte standard */
+    .card {
+        @apply bg-paper-card border border-ink-200 rounded-2xl;
+        @apply dark:bg-night-card dark:border-night-border;
     }
 
-    .btn-ripple::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
+    /* Étiquette technique en monospace */
+    .tech-label {
+        @apply font-mono text-xs text-ink-500 dark:text-ink-300;
     }
 
-    .btn-ripple:active::after {
-        width: 300px;
-        height: 300px;
+    /* Badge de statut (en production, publié…) */
+    .status-badge {
+        @apply inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md;
+        @apply bg-accent-50 text-accent-600 dark:bg-accent-900 dark:text-accent-200;
+    }
+
+    /* Lien texte avec soulignement animé */
+    .link-underline {
+        @apply relative text-accent-600 dark:text-accent-300;
+        background-image: linear-gradient(currentColor, currentColor);
+        background-size: 0% 1px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease;
+    }
+
+    .link-underline:hover {
+        background-size: 100% 1px;
     }
 }
 
-/* Barre de défilement personnalisée */
+/* Barre de défilement discrète */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0a0e13;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #0066e6;
-    border-radius: 4px;
+    @apply bg-ink-300 dark:bg-ink-600;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0052b3;
+    @apply bg-ink-400 dark:bg-ink-500;
 }
 
-/* Selection de texte */
-::selection {
-    background-color: rgba(0, 102, 230, 0.3);
-    color: #ffffff;
-}
-
-/* Fix pour les interactions tactiles */
-.touch-manipulation {
+/* Interactions tactiles */
+a,
+button {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-}
-
-/* Empêcher le double-tap zoom sur les éléments interactifs */
-a, button {
-    touch-action: manipulation;
-}
-/* Badge de compétence - Optimisé pour l'accessibilité Web */
-.skill-badge {
-    @apply px-3 py-1.5 rounded-lg text-sm border transition-colors duration-200;
-    /* Mode sombre */
-    @apply bg-dark-600 text-dark-100 border-dark-500;
-}
-
-html:not(.dark) .skill-badge {
-    @apply bg-primary-50 text-primary-700 border-primary-200;
 }

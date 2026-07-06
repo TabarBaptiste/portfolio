@@ -44,6 +44,25 @@ const jsonLd = JSON.stringify([
         <link rel="canonical" href={siteUrl} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+        <!-- Fonts : Inter (texte), Instrument Serif (titres), JetBrains Mono (accents techniques) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Initialisation du thème avant le premier rendu (évite le flash) -->
+        <script is:inline>
+            (function () {
+                const saved = localStorage.getItem("theme");
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                if (saved === "dark" || (!saved && prefersDark)) {
+                    document.documentElement.classList.add("dark");
+                }
+            })();
+        </script>
+
         <!-- Open Graph -->
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteUrl} />
