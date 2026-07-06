@@ -24,48 +24,164 @@ const links = [
         icon: "heroicons:phone",
     },
 ];
+
+const inputClasses =
+    "w-full px-4 py-3 rounded-xl bg-paper-card dark:bg-night-card border border-ink-200 dark:border-night-border text-ink-800 dark:text-ink-100 placeholder:text-ink-300 dark:placeholder:text-ink-500 focus:border-accent-400 focus:outline-none focus:ring-2 focus:ring-accent-200 dark:focus:ring-accent-800 transition-colors";
 ---
 
 <Section id="contact" title="Contact">
-    <div class="max-w-3xl reveal">
-        <p class="text-xl md:text-2xl text-ink-700 dark:text-ink-100 leading-relaxed mb-2">
-            Un poste, un projet, une question ?
-        </p>
-        <p class="text-ink-500 dark:text-ink-300 mb-8">
-            Je réponds vite. Disponible dès octobre 2026, en Île-de-France
-            comme en Martinique, sur site ou en télétravail.
-        </p>
+    <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Coordonnées directes -->
+        <div class="reveal">
+            <p class="text-xl md:text-2xl text-ink-700 dark:text-ink-100 leading-relaxed mb-2">
+                Un poste, un projet, une question ?
+            </p>
+            <p class="text-ink-500 dark:text-ink-300 mb-8">
+                Je réponds vite. Disponible dès octobre 2026, en Île-de-France
+                comme en Martinique, sur site ou en télétravail.
+            </p>
 
-        <!-- Email en évidence -->
-        <a
-            href={`mailto:${email}`}
-            class="group inline-flex items-center gap-3 font-mono text-xl md:text-3xl text-ink-900 dark:text-ink-50 hover:text-accent-600 dark:hover:text-accent-300 transition-colors mb-10 break-all"
-        >
-            {email}
-            <Icon
-                name="heroicons:arrow-up-right"
-                class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-accent-600 dark:text-accent-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                aria-hidden="true"
-            />
-        </a>
+            <a
+                href={`mailto:${email}`}
+                class="group inline-flex items-center gap-3 font-mono text-lg md:text-2xl text-ink-900 dark:text-ink-50 hover:text-accent-600 dark:hover:text-accent-300 transition-colors mb-10 break-all"
+            >
+                {email}
+                <Icon
+                    name="heroicons:arrow-up-right"
+                    class="w-5 h-5 flex-shrink-0 text-accent-600 dark:text-accent-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                />
+            </a>
 
-        <!-- Autres canaux -->
-        <div class="flex flex-wrap gap-3">
-            {links.map((link) => (
-                <a
-                    href={link.url}
-                    target={link.url.startsWith("http") ? "_blank" : undefined}
-                    rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                    class="card px-4 py-3 flex items-center gap-3 hover:border-ink-300 dark:hover:border-ink-600 transition-colors group"
-                >
-                    <Icon
-                        name={link.icon}
-                        class="w-4 h-4 text-ink-400 dark:text-ink-300 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors"
-                        aria-hidden="true"
+            <div class="flex flex-wrap gap-3">
+                {links.map((link) => (
+                    <a
+                        href={link.url}
+                        target={link.url.startsWith("http") ? "_blank" : undefined}
+                        rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                        class="card px-4 py-3 flex items-center gap-3 hover:border-ink-300 dark:hover:border-ink-600 transition-colors group"
+                    >
+                        <Icon
+                            name={link.icon}
+                            class="w-4 h-4 text-ink-400 dark:text-ink-300 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors"
+                            aria-hidden="true"
+                        />
+                        <span class="text-sm text-ink-700 dark:text-ink-100">{link.value}</span>
+                    </a>
+                ))}
+            </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="reveal">
+            <form id="contact-form" class="card p-6 md:p-8 space-y-5">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">
+                        Nom complet
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        class={inputClasses}
+                        placeholder="NOM Prénom"
                     />
-                    <span class="text-sm text-ink-700 dark:text-ink-100">{link.value}</span>
-                </a>
-            ))}
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        class={inputClasses}
+                        placeholder="vous@exemple.com"
+                    />
+                </div>
+
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">
+                        Sujet
+                    </label>
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        class={inputClasses}
+                        placeholder="Proposition de poste, mission, question..."
+                    />
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">
+                        Message
+                    </label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows="5"
+                        class={`${inputClasses} resize-none`}
+                        placeholder="Votre message..."></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-ink-900 text-paper dark:bg-ink-50 dark:text-night-bg font-medium hover:bg-ink-700 dark:hover:bg-ink-200 transition-colors"
+                >
+                    <Icon name="heroicons:paper-airplane" class="w-4 h-4" aria-hidden="true" />
+                    Envoyer
+                </button>
+
+                <div id="form-message" class="hidden p-4 rounded-xl text-sm"></div>
+            </form>
         </div>
     </div>
 </Section>
+
+<script>
+    import emailjs from "@emailjs/browser";
+
+    const SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || "service_qmcctz5";
+    const TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || "template_3bkfest";
+    const PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || "xc-3KcPBpzxEGWRUn";
+
+    emailjs.init(PUBLIC_KEY);
+
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const messageDiv = document.getElementById("form-message");
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        try {
+            await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
+
+            if (messageDiv) {
+                messageDiv.className =
+                    "p-4 rounded-xl text-sm bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/30 dark:border-green-800 dark:text-green-200";
+                messageDiv.textContent = "Message envoyé ! Je vous réponds au plus vite.";
+                messageDiv.classList.remove("hidden");
+            }
+
+            form.reset();
+
+            setTimeout(() => {
+                messageDiv?.classList.add("hidden");
+            }, 5000);
+        } catch (error) {
+            console.error("Erreur EmailJS:", error);
+            if (messageDiv) {
+                messageDiv.className =
+                    "p-4 rounded-xl text-sm bg-red-50 border border-red-200 text-red-800 dark:bg-red-900/30 dark:border-red-800 dark:text-red-200";
+                messageDiv.textContent = "L'envoi a échoué. Vous pouvez m'écrire directement par email.";
+                messageDiv.classList.remove("hidden");
+            }
+        }
+    });
+</script>

@@ -23,18 +23,18 @@ export default {
                     800: '#23211B',
                     900: '#1A1813',
                 },
-                // Accent unique : vert profond "encre"
+                // Accent unique : bleu encre
                 accent: {
-                    50: '#E9F4EF',
-                    100: '#C9E5D9',
-                    200: '#93CBB4',
-                    300: '#57A98A',
-                    400: '#2E8A68',
-                    500: '#146C4E',
-                    600: '#0E5840',
-                    700: '#0A4533',
-                    800: '#073527',
-                    900: '#04251B',
+                    50: '#EDF2FB',
+                    100: '#D3DFF5',
+                    200: '#A9C0EA',
+                    300: '#7A9CDB',
+                    400: '#4F7AC8',
+                    500: '#2E62B8',
+                    600: '#254D92',
+                    700: '#1C3B72',
+                    800: '#142B54',
+                    900: '#0C1C39',
                 },
                 // Surfaces du mode sombre (chaud, pas noir bleuté)
                 night: {

@@ -1,52 +1,77 @@
 ---
 import Section from "./ui/Section.astro";
+import { Icon } from "astro-icon/components";
 
-const tiers = [
+// key: true = techno très demandée sur le marché et que je pratique le plus
+const categories = [
     {
-        label: "Au quotidien",
-        description: "Mon socle de travail, celui de mes projets en production.",
-        highlight: true,
+        title: "Langages",
+        icon: "heroicons:code-bracket",
         skills: [
-            "TypeScript",
-            "Next.js / React",
-            "NestJS / Node.js",
-            "PostgreSQL",
-            "Prisma",
-            "Tailwind CSS",
-            "Git / GitHub",
+            { name: "TypeScript", key: true },
+            { name: "JavaScript", key: true },
+            { name: "PHP", key: true },
+            { name: "SQL", key: true },
+            { name: "HTML / CSS", key: false },
+            { name: "Dart", key: false },
         ],
     },
     {
-        label: "Opérationnel",
-        description: "Utilisé régulièrement en entreprise ou sur des projets livrés.",
-        highlight: false,
+        title: "Frontend",
+        icon: "heroicons:computer-desktop",
         skills: [
-            "PHP / Symfony",
-            "Astro",
-            "Docker",
-            "GitHub Actions / Jenkins",
-            "MySQL",
-            "Supabase / Firebase",
-            "Flutter / Dart",
-            "Sentry",
-            "Stripe",
-            "SEO",
+            { name: "React / Next.js", key: true },
+            { name: "Tailwind CSS", key: true },
+            { name: "Astro", key: false },
+            { name: "Angular", key: false },
+            { name: "Vue.js", key: false },
+            { name: "Accessibilité web", key: false },
         ],
     },
     {
-        label: "Déjà pratiqué",
-        description: "Abordé en formation ou sur des projets ponctuels.",
-        highlight: false,
+        title: "Backend & API",
+        icon: "heroicons:server-stack",
         skills: [
-            "Angular",
-            "Vue.js",
-            "ExtJS",
-            "Express",
-            "SonarQube",
-            "Vercel / Netlify / Render / Railway",
-            "UML",
-            "Scrum / Kanban",
-            "Figma",
+            { name: "Node.js / NestJS", key: true },
+            { name: "API REST", key: true },
+            { name: "Symfony", key: false },
+            { name: "Express", key: false },
+            { name: "Stripe", key: false },
+        ],
+    },
+    {
+        title: "Bases de données",
+        icon: "heroicons:circle-stack",
+        skills: [
+            { name: "PostgreSQL", key: true },
+            { name: "Prisma", key: true },
+            { name: "MySQL", key: false },
+            { name: "Supabase", key: false },
+            { name: "Firebase", key: false },
+        ],
+    },
+    {
+        title: "DevOps & CI/CD",
+        icon: "heroicons:cog-6-tooth",
+        skills: [
+            { name: "Docker", key: true },
+            { name: "GitHub Actions", key: true },
+            { name: "Git", key: true },
+            { name: "Jenkins", key: false },
+            { name: "Sentry", key: false },
+            { name: "Vercel / Netlify / Render", key: false },
+        ],
+    },
+    {
+        title: "Méthodes & outils",
+        icon: "heroicons:clipboard-document-list",
+        skills: [
+            { name: "Scrum / Kanban", key: false },
+            { name: "Tests (unitaires, e2e)", key: false },
+            { name: "SEO", key: false },
+            { name: "UML", key: false },
+            { name: "Figma", key: false },
+            { name: "Flutter (mobile)", key: false },
         ],
     },
 ];
@@ -55,31 +80,31 @@ const tiers = [
 <Section
     id="skills"
     title="Compétences"
-    subtitle="Classées honnêtement : ce que je pratique tous les jours d'abord."
+    subtitle="Regroupées par domaine. Les badges bleus sont les technologies que je pratique le plus."
 >
-    <div class="space-y-6 max-w-4xl">
-        {tiers.map((tier, index) => (
-            <div class="reveal card p-6 md:p-8" style={`transition-delay: ${index * 0.06}s`}>
-                <div class="md:flex md:items-start md:gap-10">
-                    <div class="md:w-56 flex-shrink-0 mb-4 md:mb-0">
-                        <h3 class={`font-semibold mb-1 ${tier.highlight ? "text-accent-600 dark:text-accent-300" : "text-ink-900 dark:text-ink-50"}`}>
-                            {tier.label}
-                        </h3>
-                        <p class="text-sm text-ink-400 dark:text-ink-300 leading-relaxed">
-                            {tier.description}
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        {tier.skills.map((skill) => (
-                            <span class={`font-mono text-sm px-3 py-1.5 rounded-lg border ${
-                                tier.highlight
-                                    ? "bg-accent-50 text-accent-700 border-accent-200 dark:bg-accent-900/40 dark:text-accent-200 dark:border-accent-800"
-                                    : "bg-ink-50 text-ink-600 border-ink-200 dark:bg-night-bg dark:text-ink-200 dark:border-night-border"
-                            }`}>
-                                {skill}
-                            </span>
-                        ))}
-                    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {categories.map((category, index) => (
+            <div class="reveal card p-6" style={`transition-delay: ${index * 0.05}s`}>
+                <div class="flex items-center gap-3 mb-5">
+                    <Icon
+                        name={category.icon}
+                        class="w-5 h-5 text-accent-600 dark:text-accent-300"
+                        aria-hidden="true"
+                    />
+                    <h3 class="font-semibold text-ink-900 dark:text-ink-50">
+                        {category.title}
+                    </h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                        <span class={`font-mono text-sm px-3 py-1.5 rounded-lg border ${
+                            skill.key
+                                ? "bg-accent-50 text-accent-700 border-accent-200 dark:bg-accent-900/40 dark:text-accent-200 dark:border-accent-800"
+                                : "bg-ink-50 text-ink-600 border-ink-200 dark:bg-night-bg dark:text-ink-200 dark:border-night-border"
+                        }`}>
+                            {skill.name}
+                        </span>
+                    ))}
                 </div>
             </div>
         ))}
