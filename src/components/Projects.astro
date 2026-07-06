@@ -53,13 +53,14 @@ try {
 <Section
     id="projects"
     title="Projets"
-    subtitle="Des études de cas, pas des vitrines : le contexte, les décisions techniques et ce que ça a donné."
+    subtitle="Pour chaque projet, j'explique le besoin de départ, mes choix techniques et le résultat."
 >
     <div class="grid md:grid-cols-3 gap-5">
         <!-- Projet phare : plateforme en production -->
         <a
+            id={alydousheure.slug}
             href={`/projects/${alydousheure.slug}`}
-            class="reveal md:col-span-2 card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
+            class="reveal scroll-mt-28 md:col-span-2 card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
         >
             <!-- Mockup navigateur en attendant les vraies captures -->
             <div class="border-b border-ink-200 dark:border-night-border">
@@ -88,8 +89,8 @@ try {
             <div class="p-6">
                 <div class="flex flex-wrap items-center gap-3 mb-4">
                     <span class="status-badge">
-                        <span class="w-1.5 h-1.5 rounded-full bg-accent-500 dark:bg-accent-300" aria-hidden="true"></span>
-                        En production — vrais clients
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" aria-hidden="true"></span>
+                        En production
                     </span>
                     <span class="tech-label">NestJS · Next.js · Prisma · Stripe Connect</span>
                 </div>
@@ -102,7 +103,7 @@ try {
                     déploiement automatisé. La cliente gère aujourd'hui son activité seule.
                 </p>
                 <span class="inline-flex items-center gap-1.5 text-sm font-medium text-accent-600 dark:text-accent-300">
-                    Lire l'étude de cas
+                    Voir le projet en détail
                     <Icon name="heroicons:arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </span>
             </div>
@@ -110,8 +111,9 @@ try {
 
         <!-- Extension VSCode publiée -->
         <a
+            id={daoGenerator.slug}
             href={`/projects/${daoGenerator.slug}`}
-            class="reveal card p-6 flex flex-col group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
+            class="reveal scroll-mt-28 card p-6 flex flex-col group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
         >
             <div class="flex items-center justify-between mb-5">
                 <Icon name="heroicons:puzzle-piece" class="w-8 h-8 text-accent-600 dark:text-accent-300" aria-hidden="true" />
@@ -139,8 +141,9 @@ try {
 
         <!-- Fuel : démo live avec capture réelle -->
         <a
+            id={fuel.slug}
             href={`/projects/${fuel.slug}`}
-            class="reveal card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
+            class="reveal scroll-mt-28 card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
         >
             <div class="aspect-video overflow-hidden border-b border-ink-200 dark:border-night-border">
                 <img
@@ -156,7 +159,7 @@ try {
                     <span class="tech-label">Next.js · Prisma</span>
                 </div>
                 <h3 class="text-lg font-semibold text-ink-900 dark:text-ink-50 mb-1 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors">
-                    Fuel — suivi de consommation
+                    Fuel, suivi de consommation
                 </h3>
                 <p class="text-ink-500 dark:text-ink-300 text-sm leading-relaxed">
                     Suivi des pleins d'essence : statistiques, graphiques et
@@ -169,8 +172,9 @@ try {
         <div class="reveal md:col-span-2 card divide-y divide-ink-200 dark:divide-night-border">
             {compactProjects.map((project) => (
                 <a
+                    id={project.slug}
                     href={`/projects/${project.slug}`}
-                    class="flex items-center gap-4 px-6 py-4 group hover:bg-ink-50 dark:hover:bg-night-bg first:rounded-t-2xl last:rounded-b-2xl transition-colors"
+                    class="flex items-center gap-4 px-6 py-4 group scroll-mt-28 hover:bg-ink-50 dark:hover:bg-night-bg first:rounded-t-2xl last:rounded-b-2xl transition-colors"
                 >
                     <div class="flex-1 min-w-0">
                         <h3 class="font-medium text-ink-900 dark:text-ink-50 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors truncate">
