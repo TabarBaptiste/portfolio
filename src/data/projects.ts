@@ -212,6 +212,44 @@ export const projects: Project[] = [
     }
   },
   {
+    slug: 'interface-svn',
+    title: 'Interface web de gestion SVN',
+    description: 'Interface web développée pour le Conseil Départemental du Val-de-Marne afin de centraliser la gestion des dépôts SVN (création, branches, tags, sauvegardes) directement depuis le navigateur, sans ligne de commande. Un script wrapper sécurisé, déclenché par Apache, exécute les opérations serveur sans exposer les scripts sensibles ni ouvrir les droits du groupe Apache.',
+    image: '',
+    technologies: ['PHP', 'Bash', 'Apache', 'Linux', 'SVN'],
+    category: 'web',
+    // TODO : ajouter les 3 images explicatives (lecture des droits d'un fichier, chmod, permissions en production)
+    // une fois disponibles, ex. : screenshots: [{ name: '...', path: '/projects/interface-svn/....png' }]
+    detailedContent: {
+      introduction: 'Ce projet a été développé dans le cadre de mon alternance au Conseil Départemental du Val-de-Marne. Toutes les opérations SVN (création de dépôt, gestion des branches et tags, sauvegardes) passaient jusqu\'ici uniquement par la ligne de commande sur le serveur Linux, une barrière inutile pour les collègues qui ne maîtrisaient pas le terminal.\n\nJ\'ai donc développé une interface web pour centraliser ces opérations directement depuis le navigateur, sans ligne de commande.\n\nCe qui semblait au départ être un détail d\'implémentation, faire communiquer cette interface avec le serveur Linux, s\'est transformé en un vrai travail sur les droits Unix (utilisateur, groupe, other) et sur `chmod`. La solution la plus rapide aurait été d\'ouvrir les droits du groupe Apache directement sur les scripts SVN, mais c\'était une mauvaise idée côté sécurité. J\'ai préféré mettre en place un **script wrapper** : un intermédiaire contrôlé, appelé par Apache, qui exécute les opérations nécessaires sans jamais exposer directement les scripts sensibles.',
+      features: [
+        'Lister et supprimer des repositories',
+        'Créer un nouveau repository',
+        'Visualiser les branches et tags d\'un dépôt',
+        'Créer une branche ou un tag',
+        'Sauvegarder un ou tous les repositories'
+      ],
+      technical: [
+        {
+          title: 'Sécurité & droits Linux',
+          items: [
+            'Apache devait déclencher des opérations serveur (SVN, scripts) sans disposer d\'un accès direct trop permissif.',
+            'Plutôt que d\'ouvrir les droits du groupe Apache sur les scripts sensibles (rapide mais risqué), mise en place d\'un **script wrapper** exécuté par Apache qui centralise et contrôle les opérations autorisées.',
+            'Manipulation concrète des droits **utilisateur / groupe / other** et de `chmod` pour restreindre les accès au strict nécessaire.'
+          ]
+        },
+        {
+          title: 'Architecture - PHP & scripts Bash',
+          items: [
+            'Interface développée en **PHP**, qui appelle le script wrapper plutôt que les scripts SVN directement.',
+            'Le wrapper, en **Bash**, exécute les commandes SVN (création, branches, tags, sauvegarde) et renvoie le résultat à l\'interface.',
+            'Cette séparation isole les scripts sensibles et limite la surface d\'attaque exposée à Apache.'
+          ]
+        }
+      ]
+    }
+  },
+  {
     slug: 'beroli',
     title: 'Beroli - Application mobile',
     description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',

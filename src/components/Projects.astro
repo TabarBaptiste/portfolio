@@ -7,8 +7,8 @@ const bySlug = (slug: string) => projects.find((p) => p.slug === slug)!;
 
 const alydousheure = bySlug("alydousheure-fullstack");
 const daoGenerator = bySlug("dao-generator");
-const fuel = bySlug("fuel");
-const compactProjects = [bySlug("alydousheure"), bySlug("beroli"), bySlug("rjweb")];
+const interfaceSvn = bySlug("interface-svn");
+const compactProjects = [bySlug("alydousheure"), bySlug("beroli"), bySlug("rjweb"), bySlug("fuel")];
 
 // Nombre d'installations de l'extension VSCode, récupéré au build (fallback silencieux)
 let marketplaceInstalls: number | null = null;
@@ -126,32 +126,27 @@ try {
             </div>
         </a>
 
-        <!-- Fuel : démo live avec capture réelle -->
+        <!-- Interface web SVN + wrapper sécurisé (Conseil Départemental du Val-de-Marne) -->
         <a
-            id={fuel.slug}
-            href={`/projects/${fuel.slug}`}
-            class="reveal scroll-mt-28 card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
+            id={interfaceSvn.slug}
+            href={`/projects/${interfaceSvn.slug}`}
+            class="reveal scroll-mt-28 card p-6 flex flex-col group hover:border-ink-300 dark:hover:border-ink-600 transition-colors"
         >
-            <div class="aspect-video overflow-hidden border-b border-ink-200 dark:border-night-border">
-                <img
-                    src="/projects/fuel/tableau_bord.png"
-                    alt="Tableau de bord de l'application Fuel"
-                    class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                />
+            <div class="flex items-center justify-between mb-5">
+                <Icon name="heroicons:shield-check" class="w-8 h-8 text-accent-600 dark:text-accent-300" aria-hidden="true" />
+                <span class="status-badge">Outil interne</span>
             </div>
-            <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="status-badge">Démo live</span>
-                    <span class="tech-label">Next.js · Prisma</span>
-                </div>
-                <h3 class="text-lg font-semibold text-ink-900 dark:text-ink-50 mb-1 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors">
-                    Fuel, suivi de consommation
-                </h3>
-                <p class="text-ink-500 dark:text-ink-300 text-sm leading-relaxed">
-                    Suivi des pleins d'essence : statistiques, graphiques et
-                    estimations de trajet calculées automatiquement.
-                </p>
+            <h3 class="text-xl font-semibold text-ink-900 dark:text-ink-50 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors">
+                Interface web de gestion SVN
+            </h3>
+            <p class="text-ink-500 dark:text-ink-300 text-sm leading-relaxed mb-4 flex-1">
+                Centralise la gestion des dépôts SVN depuis le navigateur pour toute
+                l'équipe, avec un script wrapper sécurisé côté serveur pour éviter
+                d'ouvrir les droits Apache sur les scripts sensibles.
+            </p>
+            <div class="flex items-center justify-between">
+                <span class="tech-label">PHP · Bash · Apache · Linux</span>
+                <Icon name="heroicons:arrow-right" class="w-4 h-4 text-accent-600 dark:text-accent-300 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </div>
         </a>
 
