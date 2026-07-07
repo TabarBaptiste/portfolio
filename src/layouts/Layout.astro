@@ -1,5 +1,120 @@
 ---
 import "../styles/global.css";
+import { FONT_PAIR } from "../config/fonts";
+
+// Paires de polices :
+// 1 → ITC Avant Garde Gothic + Cooper BT  (les vraies polices de l'image 1)
+// 2 → Space Grotesk + Recoleta            (image 2, Space Grotesk en substitut de Berthold)
+// 3 → Open Sauce One + Peace Sans         (les vraies polices de l'image 3)
+
+const localFontFaces = `
+@font-face {
+    font-family: 'ITC Avant Garde';
+    src: url('/fonts/AvantGarde-Book.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'ITC Avant Garde';
+    src: url('/fonts/AvantGarde-Medium.woff2') format('woff2');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'ITC Avant Garde';
+    src: url('/fonts/AvantGarde-Demi.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'ITC Avant Garde';
+    src: url('/fonts/AvantGarde-Bold.woff2') format('woff2');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Cooper BT';
+    src: url('/fonts/CooperBT-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Cooper BT';
+    src: url('/fonts/CooperBT-Medium.ttf') format('truetype');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Cooper BT';
+    src: url('/fonts/CooperBT-Bold.ttf') format('truetype');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Cooper BT';
+    src: url('/fonts/CooperBT-Black.ttf') format('truetype');
+    font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/fonts/Recoleta-Regular.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/fonts/Recoleta-SemiBold.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/fonts/Recoleta-Bold.woff2') format('woff2');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/fonts/Recoleta-Black.woff2') format('woff2');
+    font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sauce One';
+    src: url('/fonts/OpenSauceOne-Regular.otf') format('opentype');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sauce One';
+    src: url('/fonts/OpenSauceOne-Medium.otf') format('opentype');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sauce One';
+    src: url('/fonts/OpenSauceOne-SemiBold.otf') format('opentype');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sauce One';
+    src: url('/fonts/OpenSauceOne-Bold.otf') format('opentype');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Peace Sans';
+    src: url('/fonts/PeaceSans.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+`;
+
+const fontConfigs = {
+    1: {
+        googleUrl: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap",
+        vars: "--font-sans: 'ITC Avant Garde', system-ui, sans-serif; --font-display: 'Cooper BT', Georgia, serif;",
+    },
+    2: {
+        googleUrl: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        vars: "--font-sans: 'Space Grotesk', system-ui, sans-serif; --font-display: 'Recoleta', Georgia, serif;",
+    },
+    3: {
+        googleUrl: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap",
+        vars: "--font-sans: 'Open Sauce One', system-ui, sans-serif; --font-display: 'Peace Sans', system-ui, sans-serif;",
+    },
+    4: {
+        googleUrl: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        vars: "--font-sans: 'Space Grotesk', system-ui, sans-serif; --font-display: 'Cooper BT', Georgia, serif;",
+    },
+} as const;
+
+const { googleUrl, vars: fontVars } = fontConfigs[FONT_PAIR];
 
 interface Props {
     title?: string;
@@ -46,13 +161,11 @@ const jsonLd = JSON.stringify([
         <link rel="canonical" href={canonicalUrl} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        <!-- Fonts : Inter (texte), Instrument Serif (titres), JetBrains Mono (accents techniques) -->
+        <!-- Fonts : paire {FONT_PAIR} -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
-            rel="stylesheet"
-        />
+        <link href={googleUrl} rel="stylesheet" />
+        <style set:html={`${localFontFaces}\n:root { ${fontVars} }`} />
 
         <!-- Initialisation du thème avant le premier rendu (évite le flash) -->
         <script is:inline>

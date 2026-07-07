@@ -44,16 +44,8 @@ export default {
                 },
             },
             fontFamily: {
-                sans: [
-                    'Inter',
-                    'system-ui',
-                    '-apple-system',
-                    'BlinkMacSystemFont',
-                    'Segoe UI',
-                    'Roboto',
-                    'sans-serif',
-                ],
-                display: ['"Instrument Serif"', 'Georgia', 'serif'],
+                sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+                display: ['var(--font-display)', 'Georgia', 'serif'],
                 mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             maxWidth: {
