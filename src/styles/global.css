@@ -5,6 +5,14 @@
 @layer base {
     html {
         scroll-behavior: smooth;
+        /* Les ancres s'arrêtent sous le header fixe */
+        scroll-padding-top: 6rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
     }
 
     body {

@@ -34,7 +34,7 @@ const formatText = (text: string) =>
   description={project.description}
 >
   <Header />
-  <main class="min-h-screen">
+  <main id="main" class="min-h-[100dvh]">
     <!-- En-tête de l'étude de cas -->
     <section class="px-4 md:px-8 pt-36 pb-12">
       <div class="max-w-3xl mx-auto">
@@ -42,7 +42,7 @@ const formatText = (text: string) =>
         <nav class="mb-8 reveal">
           <a
             href={`/#${project.slug}`}
-            class="inline-flex items-center gap-1.5 font-mono text-sm text-ink-400 dark:text-ink-300 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
+            class="inline-flex items-center gap-1.5 font-mono text-sm text-ink-500 dark:text-ink-300 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
           >
             <Icon name="heroicons:arrow-left" class="w-3.5 h-3.5" aria-hidden="true" />
             Projets
@@ -120,7 +120,7 @@ const formatText = (text: string) =>
           <!-- Contexte -->
           {project.detailedContent.introduction && (
             <div class="reveal">
-              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Contexte</p>
+              <h2 class="font-display text-2xl md:text-3xl text-ink-900 dark:text-ink-50 mb-6">Contexte</h2>
               {project.detailedContent.introduction.split('\n\n').map(paragraph => (
                 <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0" set:html={formatText(paragraph)} />
               ))}
@@ -130,7 +130,7 @@ const formatText = (text: string) =>
           <!-- Fonctionnalités -->
           {project.detailedContent.features && (
             <div class="reveal">
-              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Ce que fait l'application</p>
+              <h2 class="font-display text-2xl md:text-3xl text-ink-900 dark:text-ink-50 mb-6">Ce que fait l'application</h2>
               <ul class="space-y-2.5">
                 {project.detailedContent.features.map((feature) => (
                   feature.startsWith('  •') ? (
@@ -151,13 +151,13 @@ const formatText = (text: string) =>
           <!-- Décisions techniques -->
           {project.detailedContent.technical && (
             <div class="reveal">
-              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-6">Décisions techniques</p>
+              <h2 class="font-display text-2xl md:text-3xl text-ink-900 dark:text-ink-50 mb-6">Décisions techniques</h2>
               <div class="space-y-4">
                 {project.detailedContent.technical.map((section) => (
                   <details class="card p-0 overflow-hidden group" open>
                     <summary class="cursor-pointer px-6 py-4 font-semibold text-ink-900 dark:text-ink-50 flex items-center justify-between hover:bg-ink-50 dark:hover:bg-night-bg transition-colors">
                       {section.title}
-                      <Icon name="heroicons:chevron-down" class="w-4 h-4 text-ink-400 transition-transform group-open:rotate-180" aria-hidden="true" />
+                      <Icon name="heroicons:chevron-down" class="w-4 h-4 text-ink-500 transition-transform group-open:rotate-180" aria-hidden="true" />
                     </summary>
                     <ul class="px-6 pb-5 pt-1 space-y-2.5">
                       {section.items.map((item) => (
@@ -183,7 +183,7 @@ const formatText = (text: string) =>
           <!-- Workflow -->
           {project.detailedContent.workflow && (
             <div class="reveal">
-              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Workflow</p>
+              <h2 class="font-display text-2xl md:text-3xl text-ink-900 dark:text-ink-50 mb-6">Workflow</h2>
               {project.detailedContent.workflow.split('\n\n').map(paragraph => (
                 <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0 whitespace-pre-line" set:html={formatText(paragraph)} />
               ))}
@@ -193,7 +193,7 @@ const formatText = (text: string) =>
           <!-- Monitoring -->
           {project.detailedContent.monitoring && (
             <div class="reveal">
-              <p class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">Monitoring</p>
+              <h2 class="font-display text-2xl md:text-3xl text-ink-900 dark:text-ink-50 mb-6">Monitoring</h2>
               {project.detailedContent.monitoring.split('\n\n').map(paragraph => (
                 <p class="text-ink-600 dark:text-ink-200 leading-relaxed mb-4 last:mb-0 whitespace-pre-line" set:html={formatText(paragraph)} />
               ))}
@@ -244,6 +244,7 @@ const formatText = (text: string) =>
                     alt={screenshot.name}
                     class="w-full h-64 object-cover object-top border-b border-ink-200 dark:border-night-border"
                     loading="lazy"
+                    decoding="async"
                   />
                   <figcaption class="px-5 py-3 text-sm text-ink-500 dark:text-ink-300">
                     {screenshot.name}

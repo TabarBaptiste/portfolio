@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout
+    title="Page introuvable - Baptiste TABAR LABONNE"
+    description="Cette page n'existe pas ou a été déplacée."
+>
+    <Header />
+    <main id="main" class="min-h-[100dvh] flex items-center px-4 md:px-8">
+        <div class="max-w-content mx-auto w-full py-32">
+            <p class="font-mono text-sm text-ink-500 dark:text-ink-300 mb-4">
+                Erreur 404
+            </p>
+            <h1 class="font-display text-5xl md:text-7xl leading-[1.08] text-ink-900 dark:text-ink-50 max-w-3xl mb-6">
+                Cette page n'existe pas.
+            </h1>
+            <p class="text-lg text-ink-500 dark:text-ink-300 leading-relaxed max-w-xl mb-10">
+                L'adresse est peut-être erronée, ou la page a été déplacée
+                lors de la refonte du portfolio.
+            </p>
+            <div class="flex flex-wrap items-center gap-4">
+                <a
+                    href="/"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-ink-900 text-paper dark:bg-ink-50 dark:text-night-bg font-medium hover:bg-ink-700 dark:hover:bg-ink-200 transition-colors"
+                >
+                    <Icon name="heroicons:arrow-left" class="w-4 h-4" aria-hidden="true" />
+                    Retour à l'accueil
+                </a>
+                <a href="/#projects" class="link-underline text-sm font-medium">
+                    Voir mes projets
+                </a>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
