@@ -165,3 +165,4 @@ vite.config.ts.timestamp-*
 node_modules
 
 src/components/hero/*
+police

@@ -46,7 +46,7 @@ export default {
             fontFamily: {
                 sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
                 display: ['var(--font-display)', 'Georgia', 'serif'],
-                mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                mono: ['"OCR-B"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             maxWidth: {
                 content: '68rem',
