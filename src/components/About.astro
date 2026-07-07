@@ -30,12 +30,9 @@ const principles = [
     title="Comment je travaille"
     subtitle="Développeur full-stack en fin de Mastère Architecte Web à la Digital School of Paris."
 >
-    <div class="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
         {principles.map((principle, index) => (
             <div class="reveal" style={`transition-delay: ${index * 0.06}s`}>
-                <p class="font-mono text-xs text-accent-600 dark:text-accent-300 mb-2">
-                    0{index + 1}
-                </p>
                 <h3 class="text-lg font-semibold text-ink-900 dark:text-ink-50 mb-2">
                     {principle.title}
                 </h3>
