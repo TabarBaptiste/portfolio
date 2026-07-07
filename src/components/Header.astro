@@ -65,6 +65,8 @@ const navItems = [
                     id="mobile-menu-button"
                     class="md:hidden p-2 text-ink-700 dark:text-ink-100"
                     aria-label="Menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
                 >
                     <Icon id="menu-icon-open" name="heroicons:bars-3" class="w-5 h-5" aria-hidden="true" />
                     <Icon id="menu-icon-close" name="heroicons:x-mark" class="w-5 h-5 hidden" aria-hidden="true" />
@@ -96,17 +98,15 @@ const navItems = [
 </header>
 
 <script>
-    // Fond du header au scroll
+    // Fond du header au scroll : sentinel observé plutôt qu'un listener scroll
     const header = document.getElementById("header");
-    const onScroll = () => {
-        if (window.scrollY > 40) {
-            header?.classList.add("header-scrolled");
-        } else {
-            header?.classList.remove("header-scrolled");
-        }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    const sentinel = document.createElement("div");
+    sentinel.style.cssText = "position:absolute;top:0;left:0;height:40px;width:1px;pointer-events:none;";
+    sentinel.setAttribute("aria-hidden", "true");
+    document.body.prepend(sentinel);
+    new IntersectionObserver(([entry]) => {
+        header?.classList.toggle("header-scrolled", !entry.isIntersecting);
+    }).observe(sentinel);
 
     // Menu mobile
     const mobileMenuButton = document.getElementById("mobile-menu-button");
@@ -114,18 +114,19 @@ const navItems = [
     const menuIconOpen = document.getElementById("menu-icon-open");
     const menuIconClose = document.getElementById("menu-icon-close");
 
+    const setMenuOpen = (open: boolean) => {
+        mobileMenu?.classList.toggle("hidden", !open);
+        menuIconOpen?.classList.toggle("hidden", open);
+        menuIconClose?.classList.toggle("hidden", !open);
+        mobileMenuButton?.setAttribute("aria-expanded", String(open));
+    };
+
     mobileMenuButton?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
-        menuIconOpen?.classList.toggle("hidden");
-        menuIconClose?.classList.toggle("hidden");
+        setMenuOpen(mobileMenu?.classList.contains("hidden") ?? false);
     });
 
     mobileMenu?.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-            mobileMenu.classList.add("hidden");
-            menuIconOpen?.classList.remove("hidden");
-            menuIconClose?.classList.add("hidden");
-        });
+        link.addEventListener("click", () => setMenuOpen(false));
     });
 
     // Thème : les icônes reflètent l'état, l'init est faite dans Layout
@@ -136,6 +137,9 @@ const navItems = [
         const isDark = document.documentElement.classList.contains("dark");
         sunIcon?.classList.toggle("hidden", !isDark);
         moonIcon?.classList.toggle("hidden", isDark);
+        document
+            .getElementById("theme-toggle")
+            ?.setAttribute("aria-pressed", String(isDark));
     };
     updateThemeIcons();
 

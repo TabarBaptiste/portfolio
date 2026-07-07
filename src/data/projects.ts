@@ -67,7 +67,7 @@ export const projects: Project[] = [
       ],
       technical: [
         {
-          title: 'Frontend – Next.js',
+          title: 'Frontend - Next.js',
           items: [
             'Framework React moderne avec **App Router** pour une navigation fluide avec **Next.js**',
             '**Server-Side Rendering (SSR)** pour l\'optimisation SEO',
@@ -79,7 +79,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Backend – NestJS',
+          title: 'Backend - NestJS',
           items: [
             'Architecture modulaire et scalable avec **NestJS**',
             '**TypeScript** côté serveur pour une cohérence totale',
@@ -92,7 +92,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Base de données – Prisma & Supabase',
+          title: 'Base de données - Prisma & Supabase',
           items: [
             '**Prisma** comme ORM pour une gestion type-safe de la base',
             '**Supabase (PostgreSQL)** pour l\'hébergement de la base de données',
@@ -102,7 +102,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Paiement – Stripe Connect',
+          title: 'Paiement - Stripe Connect',
           items: [
             'Intégration complète de **Stripe Connect** en mode **Standard**',
             'Onboarding du professionnel via Stripe',
@@ -131,7 +131,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'CI/CD – GitHub Actions',
+          title: 'CI/CD - GitHub Actions',
           items: [
             'Pipeline automatisé pour le frontend et le backend',
             'Tests unitaires et d\'intégration automatiques',
@@ -189,7 +189,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'CI/CD – Workflows GitHub Actions',
+          title: 'CI/CD - Workflows GitHub Actions',
           items: [
             'Trois workflows assurent le contrôle qualité, la cohérence et la publication automatisée de l\'extension.',
             '**1. Copilot Code Review** : Analyse automatique des fichiers modifiés dans une PR, résumé des changements (lignes ajoutées/supprimées), détection des `console.log` indésirables et publication d\'un commentaire automatique sur la PR avec les recommandations d\'amélioration. \n **But** : assurer une première passe de revue de code automatisée et pédagogique.',
@@ -262,7 +262,7 @@ export const projects: Project[] = [
       ],
       technical: [
         {
-          title: 'Frontend – Next.js 14',
+          title: 'Frontend - Next.js 14',
           items: [
             '**Next.js** avec App Router pour une navigation moderne',
             '**React** pour la construction d\'interfaces dynamiques',
@@ -273,7 +273,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Backend – Next.js API Routes',
+          title: 'Backend - Next.js API Routes',
           items: [
             '**API Routes** de **Next.js** pour les endpoints backend',
             'Architecture RESTful pour les opérations CRUD',
@@ -282,7 +282,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Base de données – Neon PostgreSQL & Prisma ORM',
+          title: 'Base de données - Neon PostgreSQL & Prisma ORM',
           items: [
             '**Prisma ORM** pour une gestion type-safe de la base',
             '**Neon PostgreSQL** pour l\'hébergement cloud de la base de données',
@@ -291,7 +291,7 @@ export const projects: Project[] = [
           ]
         },
         {
-          title: 'Déploiement – Vercel',
+          title: 'Déploiement - Vercel',
           items: [
             'Déploiement automatique avec **Vercel** pour l\'hébergement full-stack (frontend + API)',
             'Variables d\'environnement sécurisées',

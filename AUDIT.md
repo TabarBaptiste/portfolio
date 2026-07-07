@@ -113,3 +113,18 @@ Les captures sont servies en `<img>` brut (PNG pleine taille). Astro fournit `as
 5. **Finitions** : tirets, numéros `01-04`, scroll listener, code mort, skip-link + ARIA, consentement analytics, `astro:assets`.
 
 Chaque lot est indépendant et peut être validé séparément.
+
+---
+
+## État d'implémentation (2026-07-07)
+
+Tous les lots ont été implémentés dans le commit qui suit ce rapport, avec les ajustements suivants découverts en cours de route :
+
+- **`/linkedin`** : page marquée « usage local uniquement » dans son propre code → sortie du build via le préfixe `_` d'Astro (`_linkedin.astro`), contenu conservé dans le repo. `_redirects` supprimé (il ne servait qu'à cette règle cassée).
+- **Projet phare** : `preview.png` / `preview_white.png` appartiennent en réalité à RjWeb, et alydousheure.fr n'est pas accessible depuis l'environnement de build (politique réseau). Le faux chrome de navigateur a été retiré ; la carte garde une couverture typographique propre avec un TODO pour la vraie capture (~1600x760) à déposer dans `public/projects/`.
+- **Débordement horizontal mobile** : cause racine identifiée (grilles sans `grid-cols-1` de base → colonnes dimensionnées en min-content). Corrigé sur les 4 grilles ; `overflow-x-hidden` retiré du body, 0 px de débordement vérifié à 320/390/768/1440 px.
+- **Contraste** : `text-ink-400` (3,42:1 sur papier) remplacé par `text-ink-500` (5,31:1) sur tous les textes.
+- **EmailJS** : les clés fallback ont été conservées volontairement (clés publiques par design, et impossible de vérifier la configuration des variables d'environnement Netlify depuis ici : les retirer aurait pu casser le formulaire en production).
+- **Cooper BT** : conservée (déjà présente en woff2). Penser à vérifier la licence avant une mise en avant commerciale du site.
+
+Vérifications effectuées : `astro check` (0 erreur), build 8 pages, captures Playwright light/dark/mobile, bannière de consentement, menu mobile (`aria-expanded`), page 404 servie avec le bon statut, **Lighthouse 100/100/100/100** (performance, accessibilité, bonnes pratiques, SEO) sur la home et 100 partout sur une page projet.
