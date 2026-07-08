@@ -212,6 +212,79 @@ export const projects: Project[] = [
     }
   },
   {
+    slug: 'interface-svn',
+    title: 'Interface web de gestion SVN',
+    description: 'Interface web développée pour le Conseil Départemental du Val-de-Marne afin de centraliser la gestion des dépôts SVN (création, branches, tags, migration de trunk, sauvegardes, utilisateurs) directement depuis le navigateur, sans ligne de commande. Un script wrapper sécurisé, appelé via sudo par Apache, exécute une liste strictement définie d\'opérations serveur sans exposer les scripts sensibles ni ouvrir les droits du groupe Apache.',
+    image: '',
+    technologies: ['PHP', 'Bash', 'Apache', 'Linux', 'SVN', 'Ext JS'],
+    category: 'web',
+    screenshots: [
+      { name: 'Gestion des dépôts SVN', path: '/projects/interface-svn/accueil.png' },
+      { name: 'Migration du trunk vers une branche ou un tag', path: '/projects/interface-svn/branches.png' },
+      { name: 'Historique d\'un dépôt', path: '/projects/interface-svn/historique.png' },
+      { name: 'Lecture des droits d\'un fichier', path: '/projects/interface-svn/lecture-droits.png' },
+      { name: 'Comprendre chmod', path: '/projects/interface-svn/chmod.png' },
+      { name: 'Permissions en production', path: '/projects/interface-svn/permissions-production.png' }
+    ],
+    detailedContent: {
+      introduction: 'Ce projet a été développé dans le cadre de mon alternance au Conseil Départemental du Val-de-Marne, où il est utilisé en production par l\'équipe. Toutes les opérations SVN (création de dépôt, gestion des branches et tags, sauvegardes, gestion des comptes) passaient jusqu\'ici uniquement par la ligne de commande sur le serveur Linux, une barrière inutile pour les collègues qui ne maîtrisaient pas le terminal et une perte de temps pour tout le monde.\n\nJ\'ai donc développé une interface web pour centraliser ces opérations directement depuis le navigateur, sans ligne de commande, intégrée à l\'application interne existante ("liste_serveur").\n\nCe qui semblait au départ être un détail d\'implémentation, faire communiquer cette interface avec le serveur Linux, s\'est transformé en un vrai travail sur les droits Unix et sur la sécurisation d\'exécution de commandes shell depuis du PHP. La solution la plus rapide aurait été d\'ouvrir les droits du groupe Apache directement sur les scripts SVN, mais c\'était une mauvaise idée côté sécurité : n\'importe quel code exécuté sous l\'utilisateur Apache aurait alors pu manipuler les dépôts. J\'ai préféré mettre en place un **script wrapper root**, autorisé via `sudoers` en `NOPASSWD` sur ce seul binaire, qui n\'accepte qu\'une liste fermée d\'actions codées en dur. Apache ne peut jamais exécuter de commande arbitraire, seulement demander une des opérations prévues.',
+      features: [
+        'Gestion des dépôts :',
+        '  • Lister, créer, renommer et supprimer un dépôt',
+        '  • Initialisation optionnelle avec le moteur applicatif interne (belight_v7)',
+        'Branches et tags :',
+        '  • Lister les branches/tags d\'un dépôt',
+        '  • Supprimer une référence (branche ou tag)',
+        '  • Migrer le trunk vers une nouvelle branche ou un tag, avec 3 modes (copie complète, migration, ou création vide)',
+        'Sauvegardes :',
+        '  • Sauvegarde globale (tous les dépôts ou une sélection), lancée en arrière-plan',
+        '  • Suivi de progression en temps réel par polling (dépôt en cours, avancement, étape de compression)',
+        '  • Sauvegarde unitaire d\'un seul dépôt, téléchargement du ZIP, nettoyage automatique des fichiers temporaires',
+        'Gestion des utilisateurs SVN :',
+        '  • Lister, créer et supprimer un compte directement dans le fichier d\'authentification',
+        '  • Détection des utilisateurs ayant déjà commité pour éviter une suppression accidentelle (sauf suppression forcée assumée)',
+        'Historique :',
+        '  • Historique complet d\'un dépôt (auteur, date, message, fichiers modifiés)',
+        '  • Filtrage par plage de révisions et par auteur'
+      ],
+      technical: [
+        {
+          title: 'Sécurité & droits Linux',
+          items: [
+            'Apache devait déclencher des opérations serveur (SVN, gestion des utilisateurs, fichiers) sans disposer d\'un accès direct trop permissif.',
+            'Mise en place d\'un **script wrapper exécuté en root via `sudo`**, autorisé de façon strictement ciblée dans `sudoers` (`NOPASSWD` sur ce seul binaire).',
+            'Le wrapper n\'expose qu\'une **liste fermée d\'actions** (`create-repo`, `delete-repo`, `rename-repo`, `backup-all`, `add-user`, `migrate-trunk`...) via un `case` bash : toute action non reconnue est rejetée, aucune commande arbitraire n\'est possible.',
+            'Chaque action **revalide ses propres paramètres côté bash** (regex sur les noms, vérification d\'existence des chemins) sans jamais faire confiance aux données reçues, même si elles ont déjà été validées côté PHP.'
+          ]
+        },
+        {
+          title: 'Architecture - PHP & scripts Bash',
+          items: [
+            'Un endpoint PHP par fonctionnalité (`create_depot.php`, `backup.php`, `show_history.php`...) qui construit la commande et appelle exclusivement le wrapper, jamais les scripts SVN directement.',
+            'Toutes les commandes shell passent par `escapeshellarg()` et la sortie est inspectée pour détecter des motifs d\'erreur (`svn: E`, `Permission denied`...), car `sudo` peut renvoyer un code 0 même en cas d\'échec partiel.',
+            'Le téléchargement des sauvegardes utilise `realpath()` et une vérification de préfixe de dossier pour empêcher toute tentative de path traversal.',
+            'Les scripts Bash métier (`initDepotSVN`, `deleteDepotSVN`, `migrateTrunk`, `backupToDiskSVNZip`...) restent isolés dans un dossier dédié, uniquement accessibles via le wrapper.'
+          ]
+        },
+        {
+          title: 'Sauvegarde asynchrone',
+          items: [
+            'La sauvegarde globale peut prendre du temps (plusieurs dépôts) : elle est lancée en arrière-plan avec `nohup`, détachée du process Apache, et retourne immédiatement son PID.',
+            'L\'avancement est écrit dans un **fichier de statut JSON** (dépôt en cours, nombre traité/total, étape de compression) lu par le frontend via un polling régulier.',
+            'Le frontend affiche une barre de progression en temps réel jusqu\'à la génération du ZIP final, prêt au téléchargement.'
+          ]
+        },
+        {
+          title: 'Frontend - Ext JS (Sencha)',
+          items: [
+            'Interface intégrée à l\'application interne existante, développée avec le framework **Ext JS** en suivant le pattern **MVVM** (View / ViewModel / ViewController) déjà en place dans le projet.',
+            'Suivi de la sauvegarde via `PollingProvider` et une barre de progression native Ext JS.'
+          ]
+        }
+      ]
+    }
+  },
+  {
     slug: 'beroli',
     title: 'Beroli - Application mobile',
     description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',
