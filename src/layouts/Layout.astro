@@ -40,6 +40,7 @@ const {
     description = "Portfolio de Baptiste TABAR LABONNE, développeur Full-Stack spécialisé en architectures web modernes, Next.js, NestJS et TypeScript.",
 } = Astro.props;
 
+const gaId = import.meta.env.ID_GOOGLE_ANALYTICS ?? "";
 const siteUrl = "https://portfolio-tabarlabonne.netlify.app";
 // URL canonique propre à chaque page (home, projets, etc.)
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -155,40 +156,42 @@ const jsonLd = JSON.stringify([
             </div>
         </div>
 
-        <script is:inline>
+        <script set:html={`
             // Google Analytics, chargé uniquement après consentement explicite
             (function () {
-                const CONSENT_KEY = "analytics-consent";
-                const banner = document.getElementById("consent-banner");
+                var GA_ID = ${JSON.stringify(gaId)};
+                var CONSENT_KEY = "analytics-consent";
+                var banner = document.getElementById("consent-banner");
 
-                const loadAnalytics = () => {
-                    const s = document.createElement("script");
+                var loadAnalytics = function () {
+                    if (!GA_ID) return;
+                    var s = document.createElement("script");
                     s.async = true;
-                    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NCC3V49NHS";
+                    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
                     document.head.appendChild(s);
                     window.dataLayer = window.dataLayer || [];
                     function gtag() { dataLayer.push(arguments); }
                     gtag("js", new Date());
-                    gtag("config", "G-NCC3V49NHS", { anonymize_ip: true });
+                    gtag("config", GA_ID, { anonymize_ip: true });
                 };
 
-                const choice = localStorage.getItem(CONSENT_KEY);
+                var choice = localStorage.getItem(CONSENT_KEY);
                 if (choice === "granted") {
                     loadAnalytics();
                 } else if (choice === null && banner) {
                     banner.classList.remove("hidden");
-                    document.getElementById("consent-accept")?.addEventListener("click", () => {
+                    document.getElementById("consent-accept").addEventListener("click", function () {
                         localStorage.setItem(CONSENT_KEY, "granted");
                         banner.classList.add("hidden");
                         loadAnalytics();
                     });
-                    document.getElementById("consent-decline")?.addEventListener("click", () => {
+                    document.getElementById("consent-decline").addEventListener("click", function () {
                         localStorage.setItem(CONSENT_KEY, "denied");
                         banner.classList.add("hidden");
                     });
                 }
             })();
-        </script>
+        `} />
 
         <script>
             // Animations au scroll (Intersection Observer)
