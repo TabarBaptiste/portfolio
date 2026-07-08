@@ -1,4 +1,4 @@
-# Audit de la refonte v2 — Portfolio Baptiste Tabar Labonne
+# Audit de la refonte v2 — Portfolio Baptiste TABAR LABONNE
 
 Date : 2026-07-07
 Périmètre : branche courante (refonte « éditoriale claire, la preuve par le concret »)
