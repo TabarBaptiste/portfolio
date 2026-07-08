@@ -40,6 +40,7 @@ const {
     description = "Portfolio de Baptiste TABAR LABONNE, développeur Full-Stack spécialisé en architectures web modernes, Next.js, NestJS et TypeScript.",
 } = Astro.props;
 
+const gaId = import.meta.env.ID_GOOGLE_ANALYTICS ?? "";
 const siteUrl = "https://portfolio-tabarlabonne.netlify.app";
 // URL canonique propre à chaque page (home, projets, etc.)
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -103,7 +104,7 @@ const jsonLd = JSON.stringify([
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Baptiste Tabar Labonne, développeur full-stack" />
+        <meta property="og:image:alt" content="Baptiste TABAR LABONNE, développeur full-stack" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="Baptiste TABAR LABONNE" />
 
@@ -141,54 +142,56 @@ const jsonLd = JSON.stringify([
             </p>
             <div class="flex gap-3">
                 <button
-                    id="consent-accept"
-                    class="flex-1 px-4 py-2 rounded-lg bg-ink-900 text-paper dark:bg-ink-50 dark:text-night-bg text-sm font-medium hover:bg-ink-700 dark:hover:bg-ink-200 transition-colors"
-                >
-                    Accepter
-                </button>
-                <button
                     id="consent-decline"
                     class="flex-1 px-4 py-2 rounded-lg border border-ink-300 dark:border-night-border text-ink-700 dark:text-ink-100 text-sm font-medium hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
                 >
                     Refuser
                 </button>
+                <button
+                    id="consent-accept"
+                    class="flex-1 px-4 py-2 rounded-lg bg-ink-900 text-paper dark:bg-ink-50 dark:text-night-bg text-sm font-medium hover:bg-ink-700 dark:hover:bg-ink-200 transition-colors"
+                >
+                    Accepter
+                </button>
             </div>
         </div>
 
-        <script is:inline>
+        <script set:html={`
             // Google Analytics, chargé uniquement après consentement explicite
             (function () {
-                const CONSENT_KEY = "analytics-consent";
-                const banner = document.getElementById("consent-banner");
+                var GA_ID = ${JSON.stringify(gaId)};
+                var CONSENT_KEY = "analytics-consent";
+                var banner = document.getElementById("consent-banner");
 
-                const loadAnalytics = () => {
-                    const s = document.createElement("script");
+                var loadAnalytics = function () {
+                    if (!GA_ID) return;
+                    var s = document.createElement("script");
                     s.async = true;
-                    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NCC3V49NHS";
+                    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
                     document.head.appendChild(s);
                     window.dataLayer = window.dataLayer || [];
                     function gtag() { dataLayer.push(arguments); }
                     gtag("js", new Date());
-                    gtag("config", "G-NCC3V49NHS", { anonymize_ip: true });
+                    gtag("config", GA_ID, { anonymize_ip: true });
                 };
 
-                const choice = localStorage.getItem(CONSENT_KEY);
+                var choice = localStorage.getItem(CONSENT_KEY);
                 if (choice === "granted") {
                     loadAnalytics();
                 } else if (choice === null && banner) {
                     banner.classList.remove("hidden");
-                    document.getElementById("consent-accept")?.addEventListener("click", () => {
+                    document.getElementById("consent-accept").addEventListener("click", function () {
                         localStorage.setItem(CONSENT_KEY, "granted");
                         banner.classList.add("hidden");
                         loadAnalytics();
                     });
-                    document.getElementById("consent-decline")?.addEventListener("click", () => {
+                    document.getElementById("consent-decline").addEventListener("click", function () {
                         localStorage.setItem(CONSENT_KEY, "denied");
                         banner.classList.add("hidden");
                     });
                 }
             })();
-        </script>
+        `} />
 
         <script>
             // Animations au scroll (Intersection Observer)
@@ -198,7 +201,7 @@ const jsonLd = JSON.stringify([
                         entry.target.classList.add("active");
                     }
                 });
-            }, { threshold: 0.1, rootMargin: "0px 0px -100px 0px" });
+            }, { threshold: 0.05, rootMargin: "0px 0px 40px 0px" });
 
             document.addEventListener("DOMContentLoaded", () => {
                 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
