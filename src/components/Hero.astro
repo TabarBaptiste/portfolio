@@ -1,5 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
+
+// Dès le 01/10/2026, on affiche "immédiatement" à la place de "octobre 2026"
+const availabilityDate = new Date('2026-10-01');
+const today = new Date();
+const availability = today >= availabilityDate ? 'immédiatement' : 'octobre 2026';
 ---
 
 <section
@@ -8,26 +13,26 @@ import { Icon } from "astro-icon/components";
 >
     <div class="max-w-content mx-auto">
         <!-- Disponibilité -->
-        <!-- <p class="font-mono text-sm text-ink-500 dark:text-ink-300 mb-8">
+        <p class="font-mono text-sm text-ink-500 dark:text-ink-300 mb-8">
             <span class="text-green-500 dark:text-green-400" aria-hidden="true">●</span>
-            Disponible octobre 2026 · Île-de-France & Martinique
-        </p> -->
+            Disponible {availability} · Île-de-France & Martinique
+        </p>
 
         <!-- Titre -->
         <h1
-            class="font-display text-5xl md:text-7xl leading-[1.08] text-ink-900 dark:text-ink-50 max-w-4xl mb-8"
+            class="font-display text-5xl md:text-7xl leading-[1.08] text-ink-900 dark:text-ink-50 max-w-5xl mb-8"
         >
-            Je conçois des applications web
-            <em class="text-accent-600 dark:text-accent-300">complètes</em>,
-            du schéma de base de données au pixel.
+            Baptiste TABAR LABONNE<br>
+            <em class="text-accent-600 dark:text-accent-300">Développeur Full-Stack</em>
+            <!-- du schéma de base de données au pixel. -->
         </h1>
 
         <!-- Présentation -->
         <p class="text-lg md:text-xl text-ink-500 dark:text-ink-300 leading-relaxed max-w-2xl mb-10">
-            Je m'appelle Baptiste TABAR LABONNE. Après trois ans d'alternance au
-            Conseil Départemental du Val-de-Marne, j'ai mis en production une
-            plateforme de réservation pour une vraie cliente et publié une
-            extension sur le Marketplace VSCode.
+            Après trois ans d'alternance au Conseil Départemental du Val-de-Marne,
+            diplômé Architecte Web à la Digital School of Paris, je conçois des
+            applications robustes du premier schéma de base de données jusqu'à la mise
+            en production.
         </p>
 
         <!-- CTA -->
