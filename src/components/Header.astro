@@ -13,37 +13,37 @@ const navItems = [
     id="header"
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
 >
-    <nav class="max-w-content mx-auto px-4 md:px-8 py-4">
-        <div class="flex items-center justify-between">
-            <!-- Logo -->
-            <a
-                href="/"
-                class="font-mono text-sm font-medium text-ink-800 dark:text-ink-100 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
-            >
-                baptiste.tabar-labonne
-            </a>
+    <nav class="max-w-content mx-auto px-4 md:px-8 py-4 flex items-center justify-between gap-4">
+        <!-- Logo -->
+        <a
+            href="/"
+            class="nav-pill font-mono text-sm font-medium text-ink-800 dark:text-ink-100 hover:text-accent-600 dark:hover:text-accent-300 transition-colors md:px-5 md:py-2.5 md:rounded-full"
+        >
+            baptiste.tabar-labonne
+        </a>
 
-            <!-- Navigation desktop -->
-            <ul class="hidden md:flex items-center gap-8">
-                {
-                    navItems.map((item) => (
-                        <li>
-                            <a
-                                href={item.href}
-                                class="text-sm text-ink-500 dark:text-ink-300 hover:text-ink-900 dark:hover:text-ink-50 transition-colors"
-                            >
-                                {item.name}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
+        <div class="relative">
+            <div class="nav-pill flex items-center gap-2 md:px-3 md:py-2 md:rounded-full">
+                <!-- Navigation desktop -->
+                <ul class="hidden md:flex items-center gap-6 px-3">
+                    {
+                        navItems.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    class="text-sm text-ink-500 dark:text-ink-300 hover:text-ink-900 dark:hover:text-ink-50 transition-colors"
+                                >
+                                    {item.name}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
 
-            <div class="flex items-center gap-2">
                 <!-- Toggle thème -->
                 <button
                     id="theme-toggle"
-                    class="p-2 rounded-lg border border-transparent hover:border-ink-200 dark:hover:border-night-border text-ink-500 dark:text-ink-300 transition-colors"
+                    class="p-2 rounded-lg md:rounded-full border border-transparent hover:border-ink-200 dark:hover:border-night-border md:hover:border-transparent md:hover:bg-ink-100 dark:md:hover:bg-night-border text-ink-500 dark:text-ink-300 transition-colors"
                     aria-label="Basculer le thème clair/sombre"
                 >
                     <Icon
@@ -72,27 +72,27 @@ const navItems = [
                     <Icon id="menu-icon-close" name="heroicons:x-mark" class="w-5 h-5 hidden" aria-hidden="true" />
                 </button>
             </div>
-        </div>
 
-        <!-- Menu mobile -->
-        <div
-            id="mobile-menu"
-            class="md:hidden hidden mt-3 card p-3 shadow-lg"
-        >
-            <ul class="space-y-1">
-                {
-                    navItems.map((item) => (
-                        <li>
-                            <a
-                                href={item.href}
-                                class="block py-2 px-3 rounded-lg text-ink-600 dark:text-ink-200 hover:bg-ink-50 dark:hover:bg-night-border transition-colors"
-                            >
-                                {item.name}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
+            <!-- Menu mobile -->
+            <div
+                id="mobile-menu"
+                class="card md:hidden hidden absolute right-0 mt-2 p-3 shadow-lg min-w-[12rem]"
+            >
+                <ul class="space-y-1">
+                    {
+                        navItems.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    class="block py-2 px-3 rounded-lg text-ink-600 dark:text-ink-200 hover:bg-ink-50 dark:hover:bg-night-border transition-colors"
+                                >
+                                    {item.name}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
         </div>
     </nav>
 </header>
@@ -152,9 +152,25 @@ const navItems = [
 </script>
 
 <style>
-    .header-scrolled {
-        @apply bg-paper/85 dark:bg-night-bg/85 border-b border-ink-200/60 dark:border-night-border;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+    /* Sur mobile : pas de pilule, la nav garde son fond plein au scroll comme avant */
+    @media (max-width: 767px) {
+        .header-scrolled nav {
+            @apply bg-paper/85 dark:bg-night-bg/85 border-b border-ink-200/60 dark:border-night-border;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    }
+
+    /* Dès le desktop : navbar flottante en deux pilules arrondies */
+    @media (min-width: 768px) {
+        .nav-pill {
+            @apply bg-paper/85 dark:bg-night-bg/85 border border-ink-200/60 dark:border-night-border transition-shadow duration-300;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .header-scrolled .nav-pill {
+            @apply shadow-md;
+        }
     }
 </style>
