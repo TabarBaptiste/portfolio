@@ -185,7 +185,16 @@ export const projects: Project[] = [
           title: 'Développement',
           items: ['Extension a été développée en **TypeScript**.',
             'Architecture pensée pour être modulaire et facilement extensible.',
-            'Gestion d’erreurs renforcée grâce à **Sentry**.'
+            'Gestion d’erreurs renforcée grâce à **Sentry**.',
+            'Mots de passe des serveurs chiffrés en **AES-256-CBC** (dérivation de clé via scrypt) pour sécuriser les informations de connexion stockées localement.'
+          ]
+        },
+        {
+          title: 'Génération de code',
+          items: [
+            'Génération de code PHP complet : attributs typés, accesseurs (getters/setters) et méthodes CRUD (`read`, `insert`, `update`, `delete`) documentés avec PHPDoc.',
+            'Détection intelligente du projet PHP cible : si aucun dossier ne correspond exactement au nom de la base de données, une **distance de Levenshtein** permet de retrouver le projet le plus proche.',
+            'Versioning automatique des fichiers DAO existants (`1.00` → `1.10` → `1.20`...) à chaque régénération, pour suivre l\'historique des modifications.'
           ]
         },
         {
