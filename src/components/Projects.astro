@@ -8,7 +8,9 @@ const bySlug = (slug: string) => projects.find((p) => p.slug === slug)!;
 const alydousheure = bySlug("alydousheure-fullstack");
 const daoGenerator = bySlug("dao-generator");
 const interfaceSvn = bySlug("interface-svn");
-const compactProjects = [bySlug("alydousheure"), bySlug("beroli"), bySlug("rjweb"), bySlug("fuel")];
+const theTipTop = bySlug("furious-ducks-thetiptop");
+const furiousDucksCicd = bySlug("furious-ducks-cicd");
+const compactProjects = [bySlug("beroli"), bySlug("rjweb")];
 
 // Nombre d'installations de l'extension VSCode, récupéré au build (fallback silencieux)
 let marketplaceInstalls: number | null = null;
@@ -123,6 +125,70 @@ try {
             <div class="flex items-center justify-between">
                 <span class="tech-label">TypeScript · Sentry · CI/CD</span>
                 <Icon name="heroicons:arrow-right" class="w-4 h-4 text-accent-600 dark:text-accent-300 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </div>
+        </a>
+
+        <!-- Workflow CI/CD industrialisé de l'agence fictive Furious Ducks -->
+        <a
+            id={furiousDucksCicd.slug}
+            href={`/projects/${furiousDucksCicd.slug}`}
+            class="reveal scroll-mt-28 card p-6 flex flex-col group hover:border-ink-300 dark:hover:border-ink-600 transition-colors" style="transition: opacity 0.6s ease-out 0.15s, transform 0.6s ease-out 0.15s"
+        >
+            <div class="flex items-center justify-between mb-5">
+                <Icon name="heroicons:server-stack" class="w-8 h-8 text-accent-600 dark:text-accent-300" aria-hidden="true" />
+                <span class="status-badge">Projet de fin d'études</span>
+            </div>
+            <h3 class="text-xl font-semibold text-ink-900 dark:text-ink-50 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors">
+                Workflow CI/CD industrialisé
+            </h3>
+            <p class="text-ink-500 dark:text-ink-300 text-sm leading-relaxed mb-4 flex-1">
+                Conception d'un workflow Docker complet pour une agence fictive de 45
+                collaborateurs : pipelines Jenkins automatisés, registry Harbor,
+                monitoring Prometheus/Grafana et backups sur trois environnements.
+            </p>
+            <div class="flex items-center justify-between">
+                <span class="tech-label">Docker &middot; Jenkins &middot; GitLab &middot; Prometheus</span>
+                <Icon name="heroicons:arrow-right" class="w-4 h-4 text-accent-600 dark:text-accent-300 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </div>
+        </a>
+
+        <!-- Thé Tip Top : jeu-concours et refonte de marque (projet de fin d'études, agence fictive Furious Ducks) -->
+        <a
+            id={theTipTop.slug}
+            href={`/projects/${theTipTop.slug}`}
+            class="reveal scroll-mt-28 md:col-span-2 card p-0 overflow-hidden group hover:border-ink-300 dark:hover:border-ink-600 transition-colors" style="transition: opacity 0.6s ease-out 0s, transform 0.6s ease-out 0s"
+        >
+            <div class="px-8 py-12 border-b border-ink-200 dark:border-night-border bg-gradient-to-br from-accent-50 to-paper dark:from-accent-900/30 dark:to-night-card">
+                <p class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50 mb-2">
+                    Furious Ducks &middot; Thé Tip Top
+                </p>
+                <p class="text-ink-500 dark:text-ink-300 text-sm max-w-md">
+                    Jeu-concours "100% gagnant" et refonte de marque pour une
+                    enseigne de thé - projet de fin d'études en agence fictive.
+                </p>
+            </div>
+
+            <div class="p-6">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="status-badge">
+                        <span class="w-1.5 h-1.5 rounded-full bg-accent-500 dark:bg-accent-400" aria-hidden="true"></span>
+                        Projet de fin d'études
+                    </span>
+                    <span class="tech-label">NestJS &middot; Next.js &middot; PostgreSQL &middot; Docker</span>
+                </div>
+                <h3 class="text-xl font-semibold text-ink-900 dark:text-ink-50 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-300 transition-colors">
+                    Plateforme de jeu-concours full-TypeScript
+                </h3>
+                <p class="text-ink-500 dark:text-ink-300 text-sm leading-relaxed mb-4">
+                    Développeur lead d'une équipe de trois, architecture et
+                    développement d'une plateforme pensée pour 500 000 codes uniques et des
+                    pics de trafic imprévisibles, avec stratégie de tests &agrave; quatre niveaux
+                    et refonte compl&egrave;te de l'identité visuelle du client.
+                </p>
+                <span class="inline-flex items-center gap-1.5 text-sm font-medium text-accent-600 dark:text-accent-300">
+                    Voir le projet en détail
+                    <Icon name="heroicons:arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </span>
             </div>
         </a>
 
