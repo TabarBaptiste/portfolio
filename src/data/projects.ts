@@ -185,7 +185,16 @@ export const projects: Project[] = [
           title: 'Développement',
           items: ['Extension a été développée en **TypeScript**.',
             'Architecture pensée pour être modulaire et facilement extensible.',
-            'Gestion d’erreurs renforcée grâce à **Sentry**.'
+            'Gestion d’erreurs renforcée grâce à **Sentry**.',
+            'Mots de passe des serveurs chiffrés en **AES-256-CBC** (dérivation de clé via scrypt) pour sécuriser les informations de connexion stockées localement.'
+          ]
+        },
+        {
+          title: 'Génération de code',
+          items: [
+            'Génération de code PHP complet : attributs typés, accesseurs (getters/setters) et méthodes CRUD (`read`, `insert`, `update`, `delete`) documentés avec PHPDoc.',
+            'Détection intelligente du projet PHP cible : si aucun dossier ne correspond exactement au nom de la base de données, une **distance de Levenshtein** permet de retrouver le projet le plus proche.',
+            'Versioning automatique des fichiers DAO existants (`1.00` → `1.10` → `1.20`...) à chaque régénération, pour suivre l\'historique des modifications.'
           ]
         },
         {
@@ -285,6 +294,168 @@ export const projects: Project[] = [
     }
   },
   {
+    slug: 'furious-ducks-thetiptop',
+    title: 'Furious Ducks - Thé Tip Top : jeu-concours & refonte de marque',
+    description: 'Projet de fin d\'année réalisé en groupe de trois au sein d\'une agence fictive : conception et développement d\'une plateforme de jeu-concours "100% gagnant" pour une marque de thé, avec refonte complète de son identité visuelle et stratégie digitale associée. Architecture full-TypeScript (NestJS, Next.js, PostgreSQL) pensée pour absorber 500 000 codes uniques et des pics de trafic imprévisibles.',
+    image: '',
+    technologies: ['NestJS', 'Next.js', 'PostgreSQL', 'Prisma', 'Redis', 'Docker', 'Cypress', 'K6'],
+    category: 'web',
+    detailedContent: {
+      introduction: 'Projet de fin d\'année réalisé en équipe de trois au sein de "Furious Ducks", une agence digitale fictive mise en situation dans le cadre de ma formation. Le client, "Thé Tip Top", est lui aussi fictif, mais l\'ensemble du dossier (cahier des charges, spécifications techniques, benchmark concurrentiel, stratégie et code) a été traité avec des exigences professionnelles réelles, jusqu\'à la mise en ligne du site pour la soutenance.\n\nLa demande : à l\'occasion de l\'ouverture d\'une dixième boutique, digitaliser un jeu-concours "100% gagnant" déclenché par un acte d\'achat en boutique (code ticket à 10 caractères saisi en ligne, gain instantané), tout en profitant de l\'opération pour refondre l\'identité visuelle de la marque et construire une véritable stratégie d\'acquisition et de fidélisation digitale.\n\nEn tant que **Développeur Lead** de l\'équipe, j\'ai piloté l\'architecture technique et les choix de stack, en binôme avec une cheffe de projet (stratégie marketing digitale) et un UX/UI designer. Ma partie de ce dossier porte sur la conception du backend, du frontend et de l\'infrastructure de la plateforme ; le [workflow CI/CD industrialisé de l\'agence](/projects/furious-ducks-cicd) que j\'ai également conçu est présenté séparément car il constitue un livrable technique à part entière.',
+      features: [
+        'Mécanique de jeu-concours :',
+        '  • Génération et attribution de 500 000 codes tickets uniques à 10 caractères',
+        '  • Saisie du code et découverte instantanée du gain',
+        '  • Répartition des lots en gammes progressives (infuseur à thé → coffret découverte 69€)',
+        'Comptes et authentification :',
+        '  • Inscription avec consentement RGPD horodaté',
+        '  • Connexion par email/mot de passe ou Social Login (Google, Facebook)',
+        '  • Espace personnel avec historique des participations et des gains',
+        'Back-office :',
+        '  • Tableau de bord administrateur avec statistiques en temps réel',
+        '  • Déclenchement du tirage au sort final',
+        '  • Espace "employé boutique" pour rechercher un client et valider la remise d\'un lot',
+        'Refonte de marque :',
+        '  • Recherche et sélection du logo, charte graphique complète',
+        '  • UX mapping (empathy map, experience map), zoning, wireframes et maquettes responsives',
+        'Stratégie digitale associée :',
+        '  • SEO, SMO et emailing pensés autour des trois objectifs (acquisition, identité, fidélisation)',
+        '  • Suivi de performance via Google Analytics 4'
+      ],
+      technical: [
+        {
+          title: 'Backend - API REST (NestJS)',
+          items: [
+            '**NestJS 10** en **TypeScript**, retenu face à Express/Fastify pour sa structure modulaire imposée (auth, tickets, utilisateurs, gains, statistiques) qui limite la dette technique sur un projet multi-développeurs',
+            '**Prisma** connecté à **PostgreSQL 16**, choisi pour la génération automatique de types à partir du schéma et ses migrations automatiques',
+            'Authentification via **Passport.js** (JWT + OAuth2 Google/Facebook)',
+            '**Redis** pour le cache des statistiques du dashboard admin, les sessions, le rate limiting et la file d\'attente de synchronisation vers l\'outil d\'emailing',
+            'Validation des données via **class-validator**, documentation API générée avec **Swagger/OpenAPI**'
+          ]
+        },
+        {
+          title: 'Frontend - WebApp (Next.js)',
+          items: [
+            '**Next.js 14** en App Router, choisi pour le rendu SSR/SSG (référencement de l\'opération pendant toute sa durée) et les Server Components (moins de JS envoyé au mobile, support privilégié de la cible)',
+            '**TailwindCSS** et **Shadcn/ui** pour l\'interface, **Zustand** pour l\'état global et **React Query** pour la synchronisation des données serveur',
+            '**React Hook Form** et **Zod** pour les formulaires, en cohérence avec la validation côté serveur'
+          ]
+        },
+        {
+          title: 'Stratégie de tests',
+          items: [
+            'Pyramide de tests à quatre niveaux, intégrée au pipeline CI/CD : unitaires (**Jest**), intégration (base PostgreSQL/Redis réelles en conteneur dédié), end-to-end (**Cypress**) et performance (**K6**)',
+            'Quality gate à 80% de couverture minimale sur le nouveau code avant tout déploiement',
+            'Tests de charge K6 simulant les pics de trafic liés aux activations d\'influenceurs (jusqu\'à 500 utilisateurs simultanés), avec seuil de temps de réponse p95 < 500ms sur les endpoints critiques'
+          ]
+        },
+        {
+          title: 'Infrastructure et sécurité',
+          items: [
+            '**Docker / Docker Compose** pour containeriser API, base de données, Redis et frontend, avec parité stricte entre développement, staging et production',
+            'Reverse proxy **Traefik** avec certificats TLS **Let\'s Encrypt** automatiques',
+            'Sous-domaine dédié à l\'opération, isolé du site principal, pour ne pas polluer le référencement une fois le jeu-concours clos',
+            'Sauvegardes selon le principe **3-2-1** (production, stockage objet distant, support externe), chiffrées en **AES-256**, avec test de restauration documenté avant le lancement'
+          ]
+        }
+      ],
+      workflow: 'Le projet a servi de **projet pilote** pour éprouver en conditions réelles le [workflow CI/CD industrialisé conçu pour Furious Ducks](/projects/furious-ducks-cicd) : chaque push déclenche automatiquement build, tests et analyse de qualité, avec promotion contrôlée d\'une image Docker identique du développement à la production.',
+      monitoring: 'Le suivi de l\'opération repose sur :\n\n• **Prometheus / Grafana** pour les métriques techniques (latence, taux d\'erreur, charge)\n• **Google Analytics 4** pour les indicateurs marketing (acquisition, conversion, participation)\n• Rapports de tests de charge **K6** archivés à chaque sprint pour suivre l\'évolution des performances'
+    }
+  },
+  {
+    slug: 'furious-ducks-cicd',
+    title: 'Furious Ducks - Workflow CI/CD industrialisé',
+    description: 'Conception d\'un workflow CI/CD complet basé sur Docker pour industrialiser la production d\'une agence digitale fictive de 45 collaborateurs : pipelines automatisés (build, tests, sécurité, déploiement) sur trois environnements, monitoring, backups et transition vers l\'Agile Scrum. Projet de fin d\'année, livré avec sa propre infrastructure déployée pour la soutenance.',
+    image: '',
+    technologies: ['Docker', 'Jenkins', 'GitLab CE', 'Traefik', 'Harbor', 'SonarQube', 'Prometheus', 'Grafana', 'Loki', 'Restic'],
+    category: 'web',
+    detailedContent: {
+      introduction: 'Second volet du projet de fin d\'année mené au sein de l\'agence fictive "Furious Ducks", cette fois côté organisation interne plutôt que côté client.\n\nLe constat de départ : une agence de 45 collaborateurs qui a grandi plus vite que ses pratiques de production. Sans versionning centralisé, sans backups automatisés et sans tests, chaque mise en production manuelle concentre un risque d\'erreur humaine, et les anomalies ne remontent qu\'une fois en production. La direction a confié à l\'équipe une mission en deux volets : faire évoluer la méthodologie de gestion de projet (du cycle en V vers l\'Agile Scrum) et concevoir un **workflow de production industrialisé, entièrement basé sur Docker**, capable de couvrir tous les projets de l\'agence quelle qu\'en soit la nature.\n\nEn tant que **Développeur Lead**, j\'ai conçu l\'architecture du workflow et justifié l\'ensemble des choix techniques. Le projet [Thé Tip Top](/projects/furious-ducks-thetiptop) a servi de projet pilote pour éprouver ce workflow dans des conditions réelles avant sa généralisation à l\'agence.',
+      features: [
+        'Pipeline CI/CD automatisé de bout en bout :',
+        '  • Déclenchement automatique à chaque push/merge via webhooks GitLab',
+        '  • Build des images Docker, tests (unitaires, intégration, E2E), scans qualité et sécurité',
+        '  • Publication versionnée des artefacts dans un registre centralisé',
+        '  • Déploiement automatique en DEV, contrôlé en PREPROD, validé manuellement en PROD',
+        'Trois environnements strictement séparés (DEV / PREPROD / PROD) avec parité de configuration entre PREPROD et PROD',
+        'Sécurité intégrée au pipeline (DevSecOps) : scan de vulnérabilités des images, audit des dépendances, détection de secrets',
+        'Monitoring et alerting proactifs sur l\'ensemble des services',
+        'Sauvegardes automatisées avec politique de rétention Grandfather-Father-Son',
+        'Transition méthodologique du cycle en V vers l\'Agile Scrum, articulée avec le rythme des pipelines'
+      ],
+      technical: [
+        {
+          title: 'Reverse proxy - Traefik',
+          items: [
+            'Point d\'entrée unique du workflow : routage automatique vers les conteneurs (SCM, CI, registry, monitoring) via labels Docker Compose',
+            'HTTPS systématique avec certificats **Let\'s Encrypt** auto-renouvelés, séparation par sous-domaines dédiés (ci., git., registry., monitor.)',
+            'Middlewares d\'authentification et de limitation de débit sur les routes sensibles'
+          ]
+        },
+        {
+          title: 'SCM - GitLab Community Edition',
+          items: [
+            'Dépôt central de code, pipelines-as-code et fichiers de configuration ("source of truth" de l\'agence)',
+            'Stratégie **GitFlow** (main, develop, feature/*, release/*, hotfix/*), branches protégées, Merge Request obligatoire avec au moins une approbation',
+            '**Conventional Commits** et **Semantic Versioning** pour la traçabilité et la génération automatique de changelogs'
+          ]
+        },
+        {
+          title: 'Orchestration CI - Jenkins',
+          items: [
+            'Pipelines définis en **Jenkinsfile** versionnés dans chaque dépôt (Pipeline as Code)',
+            'Credentials gérés via le Jenkins Credentials Store avec rotation trimestrielle',
+            '**Shared Libraries** pour standardiser les étapes communes entre projets sans duplication',
+            'RBAC à trois rôles : admin CI, mainteneur, développeur'
+          ]
+        },
+        {
+          title: 'Registry Docker - Harbor',
+          items: [
+            'Stockage centralisé, signature et scan de vulnérabilités de toutes les images produites',
+            'Promotion d\'une **image identique** de DEV vers PREPROD puis PROD, sans reconstruction, garantissant la reproductibilité des déploiements',
+            'Convention de tagging app:version, app:commitSHA, avec politique de rétention et garbage collection'
+          ]
+        },
+        {
+          title: 'Qualité et sécurité (DevSecOps)',
+          items: [
+            '**SonarQube Community Edition** avec quality gates bloquants (couverture minimale, zéro vulnérabilité critique, duplication < 3%)',
+            '**K6** pour les tests de charge en PREPROD avant toute promotion en production',
+            '**Trivy** (scan des images), **Semgrep** (analyse statique SAST) et **Gitleaks** (détection de secrets, hook pre-commit) intégrés directement dans les pipelines',
+            'Gestion stricte des secrets : Jenkins Credentials Store pour les secrets CI/CD, credentials distincts par environnement, aucun secret versionné dans Git'
+          ]
+        },
+        {
+          title: 'Monitoring - Prometheus, Grafana, Loki',
+          items: [
+            '**Prometheus** pour la collecte de métriques (CPU, RAM, disque, latence, taux d\'erreur)',
+            '**Grafana** pour les dashboards standardisés et l\'alerting basé sur les symptômes (plutôt que sur les causes)',
+            '**Loki** pour l\'agrégation et l\'interrogation centralisée des logs de l\'ensemble des services'
+          ]
+        },
+        {
+          title: 'Backups - Restic & MinIO',
+          items: [
+            'Sauvegarde des données, configurations et volumes Docker via **Restic**, vers un stockage objet S3-compatible **MinIO**',
+            'Politique de rétention Grandfather-Father-Son (quotidienne sur 7 jours, hebdomadaire sur 4 semaines, mensuelle sur 6 mois, annuelle sur 2 ans)'
+          ]
+        }
+      ],
+      workflow: 'Le workflow standardise la chaîne de production pour tous les projets de l\'agence (sites vitrines, applications web, API, mobile) sans imposer de technologie unique :\n\n1. **DEV** : intégration continue et tests automatisés à chaque push\n2. **PREPROD** : validation fonctionnelle et technique, recette et tests de charge K6, environnement au plus proche de la production\n3. **PROD** : promotion de l\'image Docker validée en PREPROD, sans reconstruction, avec validation humaine\n\nLa méthodologie **Agile Scrum** structure le rythme des sprints, chaque sprint donnant lieu à des livraisons testées et intégrées automatiquement, tandis que le workflow CI/CD automatise et sécurise la chaîne technique correspondante.',
+      monitoring: 'La supervision proactive remplace une exploitation jusque-là réactive (incidents découverts en premier par le client) :\n\n• **Prometheus / Grafana** pour les métriques techniques et applicatives, avec alerting sur les symptômes (latence, taux d\'erreur, saturation)\n• **Loki** pour la journalisation centralisée\n• Vérification d\'intégrité hebdomadaire des sauvegardes et test de restauration documenté',
+      assets: {
+        title: 'Architecture globale du workflow',
+        items: [
+          '**Traefik** (entrée unique HTTPS) ↔ **GitLab CE** (SCM) → webhook → **Jenkins** (CI/CD)',
+          '**Jenkins** → build/tests/scans → **Harbor** (registry) → déploiement **DEV → PREPROD → PROD**',
+          '**Prometheus / Grafana / Loki** (monitoring) et **Restic / MinIO** (backups) supervisent l\'ensemble des services'
+        ]
+      }
+    }
+  },
+  {
     slug: 'beroli',
     title: 'Beroli - Application mobile',
     description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',
@@ -296,123 +467,9 @@ export const projects: Project[] = [
     category: 'mobile'
   },
   {
-    slug: 'fuel',
-    title: 'Fuel',
-    description: 'Application web pour suivre les pleins d\'essence avec calculs automatiques des kilomètres parcourus, consommation et coûts. Inclut des statistiques en temps réel, visualisations graphiques, estimations de trajet, et interface moderne.',
-    image: '/projects/fuel/tableau_bord.png',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Next.js API Routes', 'PostgreSQL', 'Prisma'],
-    github: 'https://github.com/TabarBaptiste/fuel',
-    demo: 'https://fuel-nine.vercel.app/',
-    demoLabel: 'Voir l\'application',
-    category: 'web',
-    screenshots: [
-      { name: 'Tableau de bord', path: '/projects/fuel/tableau_bord.png' },
-      { name: 'Historique', path: '/projects/fuel/historique.png' },
-      { name: 'Résumé mensuel', path: '/projects/fuel/resume_mensuel.png' },
-      { name: 'Graphiques', path: '/projects/fuel/graphiques.png' }
-    ],
-    detailedContent: {
-      introduction: 'Application web **full-stack** développée pour suivre et gérer efficacement les pleins d\'essence d\'un véhicule.\n\nPensée pour un usage personnel, elle offre une interface intuitive permettant d\'enregistrer chaque plein, de visualiser les statistiques de consommation et de coûts, avec des calculs automatiques des kilomètres parcourus et de la consommation moyenne.\n\nLe projet met l\'accent sur une **expérience utilisateur fluide**, des **visualisations graphiques claires** et une **persistance fiable des données**. L\'ensemble a été conçu pour être **performant**, **maintenable** et facilement **déployable**.',
-      features: [
-        'Gestion des pleins :',
-        '  • Ajout et suppression de pleins d\'essence',
-        '  • Saisie des données (kilométrage, litres, prix)',
-        '  • Calcul automatique des kilomètres parcourus',
-        '  • Calcul automatique de la consommation (L/100km)',
-        '  • Calcul automatique des coûts totaux',
-        'Statistiques et visualisations :',
-        '  • Graphiques en temps réel des consommations',
-        '  • Évolution des coûts sur le temps',
-        '  • Moyennes et tendances',
-        '  • Cartes visuelles interactives',
-        'Estimations de trajet :',
-        '  • Calcul des litres estimés pour un trajet donné',
-        '  • Estimation du coût basé sur la consommation moyenne',
-        '  • Planification économique des déplacements',
-        'Authentification et sécurité :',
-        '  • Connexion sécurisée via code PIN',
-        '  • Protection des données personnelles',
-      ],
-      technical: [
-        {
-          title: 'Frontend - Next.js 14',
-          items: [
-            '**Next.js** avec App Router pour une navigation moderne',
-            '**React** pour la construction d\'interfaces dynamiques',
-            '**TypeScript** pour la sécurité des types',
-            '**Tailwind CSS** pour un design responsive et cohérent',
-            'Composants réutilisables et modulaires',
-            'Optimisation des performances et du SEO'
-          ]
-        },
-        {
-          title: 'Backend - Next.js API Routes',
-          items: [
-            '**API Routes** de **Next.js** pour les endpoints backend',
-            'Architecture RESTful pour les opérations CRUD',
-            'Validation des données côté serveur',
-            'Gestion des erreurs et logging'
-          ]
-        },
-        {
-          title: 'Base de données - Neon PostgreSQL & Prisma ORM',
-          items: [
-            '**Prisma ORM** pour une gestion type-safe de la base',
-            '**Neon PostgreSQL** pour l\'hébergement cloud de la base de données',
-            'Schéma relationnel pour les pleins et véhicules',
-            'Migrations automatisées et versionnées'
-          ]
-        },
-        {
-          title: 'Déploiement - Vercel',
-          items: [
-            'Déploiement automatique avec **Vercel** pour l\'hébergement full-stack (frontend + API)',
-            'Variables d\'environnement sécurisées',
-            'Monitoring des performances intégré'
-          ]
-        }
-      ],
-      workflow: 'Le projet suit un **workflow de développement simplifié** adapté à une application personnelle :\n\n1. **Développement local** : Next.js en mode développement avec base de données Neon\n2. **Contrôle qualité** : Vérifications TypeScript et tests manuels\n3. **Déploiement automatique** : Push sur GitHub déclenche le déploiement sur Vercel\n\nCette approche garantit **rapidité de développement** et **fiabilité du déploiement** pour un projet personnel.'
-    }
-  },
-  {
-    slug: 'alydousheure',
-    title: 'Aly dous\'heure - Site vitrine',
-    description: 'Site vitrine moderne pour une masseuse professionnelle. Système de réservation en ligne, catalogue complet des prestations, visualisation des disponibilités, formulaire de contact et géolocalisation. Interface responsive optimisée pour mobile et desktop.',
-    image: '',
-    technologies: ['Astro', 'CI/CD', 'Tailwind CSS', 'JavaScript', 'Référencement SEO'],
-    github: 'https://github.com/TabarBaptiste/alydousheure_vitrine',
-    demo: 'https://aly-dousheure.netlify.app/',
-    demoLabel: 'Voir le site',
-    category: 'web',
-    detailedContent: {
-      introduction: 'Création d\'un site vitrine moderne pour une masseuse professionnelle indépendante.\n\nLe site présente les prestations, les disponibilités, les informations de contact ainsi qu\'une carte de localisation.\n\nL\'objectif était de proposer une interface claire, chaleureuse et mobile first.\n\nCe projet m\'a également permis de travailler sur un vrai besoin client en intégrant identité visuelle, optimisation du contenu et bonnes pratiques SEO.',
-      features: [
-        'Catalogue complet des prestations et tarifs',
-        'Visualisation des horaires et disponibilités',
-        'Liens directs vers appel téléphonique, WhatsApp et Instagram',
-        'Géolocalisation intégrée',
-        'Interface responsive (mobile-first)',
-        'Optimisation SEO pour la visibilité locale'
-      ],
-      technical: [
-        {
-          title: 'Technologies',
-          items: [
-            '**Astro** pour le rendu statique et la structure du site',
-            '**Tailwind CSS** pour le design et la mise en page',
-            '**Google Analytics** & **Google Search Console** pour le suivi du trafic et l\'optimisation',
-            '**@astrojs/sitemap** pour améliorer l\'indexation par les moteurs de recherche'
-          ]
-        }
-      ],
-      workflow: 'Un workflow **CI/CD GitHub Actions** est mis en place pour automatiser le process de build.\n\nÀ chaque push sur la branche `master`, le pipeline :\n\n1. Vérifie et récupère le dépôt\n2. Installe les dépendances\n3. Génère la version optimisée du site\n4. Produit un artefact prêt à être déployé\n\nCe système garantit un déploiement rapide, fiable et reproductible à chaque mise à jour du projet.'
-    }
-  },
-  {
     slug: 'rjweb',
     title: 'RjWeb - Plateforme communautaire',
-    description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Lavalle. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
+    description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Hilard à Laval. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
     image: '/projects/preview.png',
     imageLight: '/projects/preview_white.png',
     technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
@@ -429,7 +486,7 @@ export const projects: Project[] = [
       { name: 'À propos', path: '/projects/about.png' }
     ],
     detailedContent: {
-      introduction: 'Plateforme web réalisée durant mon stage de BTS pour centraliser et faciliter la gestion des activités du quartier Lavalle. \n\n Le site permettait aux habitants de s’inscrire aux évènements, de recevoir automatiquement les informations importantes par e-mail, et d’accéder à un espace personnel. \n\n Un espace administrateur complet permettait de gérer les évènements, les utilisateurs et les envois de newsletters.',
+      introduction: 'Plateforme web réalisée durant mon stage de BTS pour centraliser et faciliter la gestion des activités du quartier Hilard à Laval. \n\n Le site permettait aux habitants de s’inscrire aux évènements, de recevoir automatiquement les informations importantes par e-mail, et d’accéder à un espace personnel. \n\n Un espace administrateur complet permettait de gérer les évènements, les utilisateurs et les envois de newsletters.',
       features: [
         'Création de compte utilisateur, connexion, modification et suppression du compte.',
         'Inscription et désinscription aux différents évènements.',
