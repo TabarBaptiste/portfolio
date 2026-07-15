@@ -31,12 +31,18 @@ export const projects: Project[] = [
     slug: 'alydousheure-fullstack',
     title: 'Aly dous\'heure - Plateforme de réservation',
     description: 'Plateforme web de réservation et de gestion pour une masseuse professionnelle. Système de prise de rendez-vous en ligne, paiement sécurisé, gestion des disponibilités, authentification utilisateur et tableau de bord statistiques pour le professionnel.',
-    image: '',
+    image: '/projects/alydousheure/hero.png',
     technologies: ['NestJS', 'Next.js', 'Prisma', 'Supabase', 'Stripe Connect', 'Cloudinary', 'Resend', 'Vercel', 'Render', 'GitHub Actions', 'IONOS'],
     github: 'https://github.com/TabarBaptiste/masseuse',
     demo: 'https://alydousheure.fr/',
     demoLabel: 'Voir le site',
     category: 'web',
+    screenshots: [
+      { name: 'Page d\'accueil', path: '/projects/alydousheure/hero.png' },
+      { name: 'Détail d\'un massage', path: '/projects/alydousheure/massage_tonique.png' },
+      { name: 'Liste des soins', path: '/projects/alydousheure/soins.png' },
+      { name: 'Réservation', path: '/projects/alydousheure/reserver.png' },
+    ],
     detailedContent: {
       introduction: 'Plateforme web **full-stack** développée pour digitaliser l\'activité d\'une masseuse professionnelle indépendante.\n\nLe projet couvre l\'ensemble du parcours client : de la découverte des prestations à la réservation en ligne, en passant par le paiement sécurisé et la gestion post-visite (avis clients).\n\nCôté professionnel, l\'application offre un **tableau de bord complet** pour gérer les réservations, visualiser les statistiques, administrer les prestations et paramétrer le site.\n\nL\'architecture est pensée pour être **performante, maintenable et évolutive**, avec une **séparation claire entre frontend et backend**, un **déploiement automatisé** et une **gestion rigoureuse des données sensibles**.',
       features: [
