@@ -4,8 +4,7 @@
 
 export interface CdvmSection {
   title: string;
-  paragraphs?: string[];
-  items?: string[];
+  paragraphs: string[];
 }
 
 export interface Chantier {
@@ -22,13 +21,123 @@ export interface Chantier {
 export const intro = {
   eyebrow: 'Conseil départemental du Val-de-Marne',
   title: 'Outillage du cycle de vie applicatif',
-  period: 'Janvier 2026 → juillet 2026 · Domaine Développement',
+  period: 'Octobre 2025 → juillet 2026 · Domaine Développement',
   paragraphs: [
-    "Le parc applicatif du CDVM, c'est une trentaine d'applications métier (`annuaire`, `ordival`, `sportval`, `sos_rentree`, `regie94`, `orv`, `dematrh`, `voeux_cd94`…) qui partagent toutes le même moteur maison **Belight** (backend PHP + frontend ExtJS). Elles vivent sur des dépôts SVN hébergés sur `svn3-prod-app`, et sont déployées sur des serveurs Windows en développement et Linux en production.",
-    "Autour de ce parc, il y avait tout un ensemble de gestes **répétitifs, manuels et faillibles** : vérifier qu'un serveur de production est bien configuré avant d'y installer une application, fabriquer à la main la liste des fichiers d'un livrable, créer un dépôt SVN en SSH sur le serveur, migrer une librairie Excel obsolète fichier par fichier.",
-    "Le fil rouge de mon travail a été de **transformer ces gestes manuels en outils**, et de ramener ces outils **dans les interfaces que les gens utilisent déjà** (le back-office Belight et l'application Liste Serveur) plutôt que dans des scripts que seul leur auteur sait lancer.",
+    "Le parc applicatif du CDVM, c'est une trentaine d'applications métier qui partagent toutes le même moteur maison, **Belight** - un socle backend PHP et interface ExtJS commun à tout le parc. Ces applications vivent sur des dépôts **SVN**, clonés localement sur des postes Windows, et sont déployées sur des serveurs Linux en développement, qualification et production.",
+    "Autour de ce parc, il y avait tout un ensemble de gestes **répétitifs, manuels et faillibles** : vérifier qu'un serveur de production est bien configuré avant d'y installer une application, fabriquer à la main la liste des fichiers d'un livrable, administrer les dépôts SVN en se connectant directement sur le serveur, migrer une librairie de génération Excel obsolète application par application.",
+    "Le fil rouge de mon travail a été de **transformer ces gestes manuels en outils**, et de ramener ces outils **dans Belight et dans les interfaces que l'équipe utilise déjà**, plutôt que dans des scripts que seul leur auteur sait lancer.",
   ],
 };
+
+export interface GlossaireEntry {
+  term: string;
+  definition: string;
+  slug: string;
+  // Mots à repérer dans le texte pour poser une astérisque de renvoi vers cette entrée.
+  // Vide = le terme est déjà mis en valeur autrement (ex : `code`), pas besoin d'astérisque.
+  match: string[];
+}
+
+export const glossaire: GlossaireEntry[] = [
+  {
+    term: 'Belight',
+    slug: 'belight',
+    match: ['Belight'],
+    definition:
+      "Le moteur maison du CDVM : un socle commun de backend PHP et d'interface ExtJS, partagé par la trentaine d'applications métier du parc. Chaque application est une déclinaison de ce même socle.",
+  },
+  {
+    term: 'ExtJS',
+    slug: 'extjs',
+    match: ['ExtJS'],
+    definition:
+      "Framework JavaScript pour interfaces web riches (formulaires, grilles, fenêtres), utilisé côté client par Belight et par Liste Serveur.",
+  },
+  {
+    term: 'SVN (Subversion)',
+    slug: 'svn',
+    match: ['SVN'],
+    definition:
+      "Système de gestion de versions du code, comme Git mais centralisé : un seul dépôt de référence par application, avec un historique de révisions numérotées et un mécanisme de branches et tags.",
+  },
+  {
+    term: 'Trunk / branche / tag',
+    slug: 'trunk-branche-tag',
+    match: ['trunk', 'branches?', 'tags?'],
+    definition:
+      "Vocabulaire SVN. Le trunk est la ligne de développement principale d'un dépôt. Une branche est une copie de travail parallèle (par exemple pour figer une ancienne version) ; un tag est une copie figée à un instant donné, en général une version livrée.",
+  },
+  {
+    term: 'php.ini',
+    slug: 'php-ini',
+    match: [],
+    definition:
+      "Fichier de configuration de PHP : mémoire allouée, durée d'exécution maximale, extensions actives, etc. Un serveur web et une exécution en ligne de commande peuvent charger deux `php.ini` différents.",
+  },
+  {
+    term: 'MariaDB',
+    slug: 'mariadb',
+    match: ['MariaDB'],
+    definition:
+      'Système de gestion de base de données relationnelle utilisé par les applications du CDVM, compatible avec MySQL.',
+  },
+  {
+    term: 'Active Directory / LDAP',
+    slug: 'active-directory-ldap',
+    match: ['Active Directory', 'LDAP'],
+    definition:
+      "Annuaire d'entreprise de la collectivité, qui centralise les comptes utilisateurs. LDAP est le protocole standard utilisé pour l'interroger.",
+  },
+  {
+    term: 'SOAP',
+    slug: 'soap',
+    match: ['SOAP'],
+    definition:
+      "Protocole d'échange entre applications via des webservices XML, utilisé ici pour un webservice interne à la collectivité.",
+  },
+  {
+    term: 'Apache',
+    slug: 'apache',
+    match: ['Apache'],
+    definition:
+      "Serveur web qui exécute les applications PHP du parc. Il tourne sous un compte système dédié, volontairement limité en droits.",
+  },
+  {
+    term: 'Liste Serveur',
+    slug: 'liste-serveur',
+    match: ['Liste Serveur'],
+    definition:
+      "Application interne du CDVM qui centralise l'inventaire des applications du parc et, depuis ce chantier, l'administration des dépôts SVN.",
+  },
+  {
+    term: 'PHPExcel / PhpSpreadsheet',
+    slug: 'phpexcel-phpspreadsheet',
+    match: ['PHPExcel', 'PhpSpreadsheet'],
+    definition:
+      'Deux librairies PHP successives pour générer des fichiers Excel depuis le code. PHPExcel est abandonnée depuis 2017 ; PhpSpreadsheet est sa remplaçante activement maintenue.',
+  },
+  {
+    term: 'CLI',
+    slug: 'cli',
+    match: ['CLI'],
+    definition:
+      "Command Line Interface : exécution d'un script en ligne de commande, par opposition à un appel depuis un navigateur web.",
+  },
+  {
+    term: 'SEPI',
+    slug: 'sepi',
+    match: ['SEPI'],
+    definition:
+      "Service Exploitation et Production Informatique. L'équipe du CDVM chargée de mettre effectivement les applications en production sur les serveurs.",
+  },
+  {
+    term: 'DOCMEP',
+    slug: 'docmep',
+    match: ['DOCMEP'],
+    definition:
+      "Document de mise en production : le document Word de procédure d'installation qui accompagne chaque livraison, rédigé par les développeurs à destination du SEPI.",
+  },
+];
 
 export const chantiers: Chantier[] = [
   {
@@ -38,80 +147,63 @@ export const chantiers: Chantier[] = [
     tagline: 'Le contrôle technique du serveur',
     tags: ['PHP 8', 'CLI + Web', 'DOCX / ZIP', 'SMTP'],
     problem: [
-      "Livrer une application sur un nouveau serveur, c'était partir d'un document Word de « Procédure d'installation » — un `.docx` listant la version de PHP attendue, la version de MariaDB, les directives `php.ini` et les extensions à activer — puis vérifier tout ça **à la main**, ligne par ligne, sur la machine cible.",
-      "Une extension oubliée, un `memory_limit` trop bas, et l'application partait en erreur en production, souvent plusieurs jours après le déploiement, quand un utilisateur tombait dessus.",
+      "Livrer une application sur un nouveau serveur, c'était partir d'un document Word de procédure d'installation (le **DOCMEP**, document de mise en production), listant la version de PHP attendue, la version de MariaDB, les réglages `php.ini` et les extensions à activer, puis vérifier tout ça **à la main**, ligne par ligne, sur la machine cible. Cette vérification est à la charge du **SEPI** (Service Exploitation et Production Informatique), l'équipe chargée de mettre effectivement les applications en production, l'outil leur est destiné en priorité. Une extension oubliée, un `memory_limit` trop bas, et l'application partait en erreur en production, souvent plusieurs jours après le déploiement, quand un utilisateur tombait dessus.",
     ],
     sections: [
       {
-        title: 'Un script autonome qui répond à une seule question',
+        title: 'Un outil qui répond à une seule question',
         paragraphs: [
-          "`check.php` porte la classe `ServerChecker`, pilotée entièrement par un fichier `config.ini`. Déposée sur n'importe quel serveur, elle répond à : **est-ce que cette machine est prête à accueillir l'application ?** Sept familles de contrôles :",
-        ],
-        items: [
-          "**Version de PHP**, avec une comparaison volontairement stricte : majeur et mineur doivent être *identiques*, seul le patch peut être supérieur. Un serveur en PHP 8.3 n'est pas « mieux » qu'un serveur en PHP 8.2 attendu, c'est un serveur différent.",
-          "**Directives `php.ini`** (`memory_limit`, `max_execution_time`, `max_input_time`, `post_max_size`, `upload_max_filesize`), lues **directement dans le fichier `php.ini`** via `getIniFileValue()`, pas via `ini_get()`. En CLI, PHP charge un `php.ini` différent de celui d'Apache : `ini_get()` mentirait sur ce que verra réellement l'application. Il ne sert que de repli.",
-          "**Service MariaDB actif**, avec une commande adaptée à l'OS (`Get-Service wampmariadb64` sous Windows, `service mariadb status` sous Linux), pour que le même script tourne en développement comme en production.",
-          "**Version de MariaDB**, extraite de `mariadb --help | grep Distrib`.",
-          "**Extensions PHP requises**. Le `config.ini` liste *toutes* les extensions connues, celles à vérifier étant décommentées. Le parsing INI natif de PHP ignore les commentaires, d'où `parseExtensions()` qui relit le fichier ligne à ligne. Activer un contrôle revient à enlever un `;`, lisible par n'importe quel exploitant.",
-          "**Joignabilité de l'Active Directory** (`vipad.cg94.loc:636`), en `fsockopen` avec timeout, activée seulement si un hôte est renseigné.",
-          "**Joignabilité du webservice SOAP**, même principe, avec gestion du préfixe `ssl://` selon le schéma.",
+          "J'ai construit un script autonome, déposable sur n'importe quel serveur, qui répond à : *cette machine est-elle prête à accueillir l'application ?* Il exécute une série de contrôles : la version de PHP, avec une comparaison volontairement stricte, version majeure et mineure identiques, seul le correctif peut être supérieur, parce qu'un serveur en PHP 8.3 n'est pas « mieux » qu'un serveur attendu en PHP 8.2, c'est une version différente. Les réglages PHP critiques (mémoire allouée, durée d'exécution maximale, taille de fichiers acceptée), lus **directement dans le fichier `php.ini`** du serveur plutôt qu'en interrogeant PHP sur ses propres réglages, parce qu'en ligne de commande, PHP charge parfois un `php.ini` différent de celui utilisé par Apache, et une simple interrogation aurait pu donner une réponse trompeuse. L'état du service MariaDB et sa version, avec une commande adaptée selon Windows ou Linux, pour que le même outil serve en développement comme en production. Les extensions PHP requises, pilotées par une liste où chaque extension à vérifier est simplement décommentée, à la portée de n'importe quel exploitant sans toucher au code. Et deux contrôles réseau optionnels : la joignabilité de l'Active Directory de la collectivité, et celle d'un webservice SOAP interne, activés uniquement si nécessaire.",
         ],
       },
       {
-        title: 'Deux points de finition',
-        items: [
-          "**Le tri des résultats.** Les erreurs remontent en haut de chaque catégorie (`getResultPriority()`). Quand on ouvre un rapport, on veut voir ce qui cloche, pas scroller à travers vingt lignes vertes.",
-          "**Le double rendu.** Le script détecte s'il tourne en web ou en CLI et produit soit un rapport HTML aux couleurs de la collectivité, soit un rapport texte aligné pour la console. Un seul script, deux contextes d'usage.",
-        ],
+        title: 'Un rapport qui remonte aux développeurs, pas au SEPI',
         paragraphs: [
-          "Il **envoie aussi un mail** à l'équipe de développement avec le log complet, avec un sujet différent selon qu'il y a des erreurs ou non. Les passerelles mail de la collectivité réécrivent les URLs, ce qui rendait les liens illisibles dans le rapport : `buildEmailHtmlBody()` échappe le contenu puis reconstruit des balises `<a>` propres avec un libellé lisible.",
+          "L'outil envoie aussi un mail avec le rapport complet, avec un sujet différent selon qu'il y a des erreurs ou non. Ce mail part vers l'**équipe de développement**, pas vers le SEPI, pour que les développeurs puissent vérifier de leur côté s'il manque quelque chose dans le DOCMEP ou dans la configuration exécutée par le script.",
         ],
       },
       {
-        title: 'Le pont avec l\'existant : generate.php',
+        title: "Le pont avec l'existant",
         paragraphs: [
-          "Restait un maillon : quelqu'un devait quand même **écrire** le `config.ini` en recopiant le document Word. `generate.php` ouvre le `.docx` comme ce qu'il est, une archive ZIP, extrait `word/document.xml`, le parse en DOM et reconstruit le texte paragraphe par paragraphe pour préserver la structure. Puis il applique des extracteurs ciblés : nom de l'application, version PHP, version MariaDB, directives, extensions.",
-          "Le morceau le plus retors a été `extractPhpSettings()`. Word produit des espaces insécables, colle parfois les paramètres les uns aux autres sans séparateur, et la mise en forme varie d'un document à l'autre. J'ai construit une regex à lookahead qui capture chaque valeur *jusqu'à la clé suivante*, avec normalisation des NBSP en amont, et une seconde passe plus permissive en repli si la première échoue. Une table de normalisation (`xml reader` → `xml`, `pdo mysql` → `pdo_mysql`) traduit les noms d'extensions écrits en langage humain.",
+          "Restait un maillon : quelqu'un devait quand même écrire la configuration de vérification en recopiant le document Word à la main. J'ai automatisé cette étape aussi : l'outil ouvre le `.docx` de procédure comme ce qu'il est au fond, une archive ZIP, en extrait le texte en préservant sa structure en paragraphes, puis repère automatiquement le nom de l'application, les versions attendues, les réglages et les extensions à activer.",
         ],
       },
     ],
     result:
-      "On pointe le script sur le `.docx` de mise en production, on obtient un `config.ini` prêt à l'emploi. La chaîne complète, du document de procédure au rapport mail en passant par la configuration et la vérification, est automatisée de bout en bout.",
+      "On pointe l'outil sur le document de procédure de mise en production, on obtient une configuration de vérification prête à l'emploi.",
   },
   {
     slug: 'configinstall',
     index: '02',
     title: 'configinstall',
-    tagline: 'Ramener check_install dans Belight',
+    tagline: 'Ramener cet outil dans Belight',
     tags: ['ExtJS', 'PHP 8', 'SVN export'],
     problem: [
-      "Le script fonctionnait, mais il fallait toujours ouvrir un terminal et connaître son existence. Je l'ai intégré au **back-office Belight**, dans l'onglet Assistant, à côté des autres outils de développement.",
+      "L'outil de vérification fonctionnait, mais il fallait toujours ouvrir un terminal et savoir qu'il existait. Je l'ai intégré directement dans le back-office Belight, dans l'onglet Assistant, à côté des autres outils de développement.",
     ],
     sections: [
       {
         title: 'Le formulaire',
         paragraphs: [
-          "`ConfigInstall.js` est un formulaire ExtJS structuré en quatre fieldsets (Application, Paramètres PHP, MariaDB, Extensions), avec validation en saisie : `maskRe` bloque les caractères interdits à la frappe, `regex` valide le format (`8.2.13`, `256M`, `1G`), les messages d'erreur sont explicites. Les champs de taille mémoire passent automatiquement en majuscules à la volée, parce que `256m` et `256M` doivent produire le même résultat.",
-          "`ConfigInstallViewController.js` pré-remplit le formulaire à l'ouverture : le nom de l'application est repris de la configuration Belight courante (débarrassé du suffixe `- Dev`), les emails développeurs sont préremplis, et la liste des extensions reçue du serveur est transformée dynamiquement en cases à cocher sur 6 colonnes. On ouvre le formulaire, l'essentiel est déjà rempli.",
+          "J'ai construit un formulaire ExtJS structuré en quatre sections (Application, réglages PHP, MariaDB, extensions), avec une validation en temps réel : les caractères interdits sont bloqués à la frappe, le format attendu (une version PHP, une taille mémoire) est vérifié à la volée avec un message d'erreur explicite. Les champs de taille mémoire passent automatiquement en majuscules pendant la saisie, parce que `256m` et `256M` doivent produire exactement le même résultat.",
+          "Le formulaire se pré-remplit tout seul à l'ouverture : le nom de l'application est repris de la configuration Belight courante, débarrassé du suffixe « - Dev » s'il traîne encore, les adresses mail de l'équipe de développement sont préremplies, et la liste des extensions disponibles est transformée automatiquement en cases à cocher.",
         ],
       },
       {
         title: 'La factorisation qui compte',
         paragraphs: [
-          "À ce stade j'avais **deux** générateurs de `config.ini` : le CLI (depuis le `.docx`) et le web (depuis le formulaire). Deux sources de vérité, donc deux occasions de diverger.",
-          "J'ai extrait `ConfigIniBuilder.php`, une classe unique qui porte la liste de référence des extensions PHP et la méthode `build()` qui produit le fichier. Les deux points d'entrée l'appellent. Le fichier généré a exactement le même format, les mêmes commentaires, les mêmes défauts, quelle que soit la porte d'entrée.",
-          "Le builder embarque une petite intelligence contextuelle : l'hôte Active Directory n'est prérempli **que si** l'extension `ldap` a été cochée, et l'URL SOAP **que si** l'extension `soap` l'a été. Pas de contrôle réseau parasite sur une application qui n'en a pas besoin.",
+          "À ce stade, j'avais deux façons de générer la même configuration : le script en ligne de commande d'un côté, le formulaire web de l'autre. Deux chemins qui produisent la même chose finissent toujours par diverger un jour. J'ai extrait cette logique dans un seul bloc partagé, utilisé par les deux entrées : la configuration générée est identique, quel que soit le chemin emprunté. Ce bloc commun embarque une petite intelligence contextuelle : l'adresse de l'Active Directory n'est proposée que si l'extension LDAP est cochée, et il en va de même pour le webservice SOAP.",
         ],
       },
       {
         title: 'Le kit de déploiement complet',
         paragraphs: [
-          "Dernière brique, `zip_check_install.php` : un bouton « Récupérer les fichiers depuis SVN » qui fait un `svn export` de `check.php` et `config.ini` depuis le dépôt, les empaquette dans un ZIP horodaté et le propose au téléchargement.",
+          "Dernière brique : un bouton qui récupère automatiquement depuis SVN la dernière version des outils de vérification, les regroupe dans une archive ZIP horodatée, et la propose au téléchargement.",
         ],
       },
     ],
     result:
-      "Au moment de préparer une livraison, on ouvre l'assistant, on remplit le formulaire, on génère, on télécharge un ZIP, et on a le kit de vérification complet et à jour à déposer sur le serveur cible. Plus de « quelle version du script tu utilises, toi ? ».",
+      "Au moment de préparer une livraison, on ouvre l'assistant Belight, on remplit le formulaire, on génère, on télécharge une archive, et on a le kit de vérification complet et à jour, prêt à déposer sur le serveur cible.",
   },
   {
     slug: 'svncompare',
@@ -120,110 +212,71 @@ export const chantiers: Chantier[] = [
     tagline: 'Fabriquer les livrables sans les faire à la main',
     tags: ['PHP 8', 'ExtJS', 'svn diff', 'svn log'],
     problem: [
-      "Belight disposait déjà d'un module **Package** qui génère les livrables de production : on coche des fichiers dans une arborescence, il fabrique l'archive. Sauf que **remplir cette liste était manuel**. Pour une livraison, il fallait se souvenir de tout ce qui avait changé depuis la mise en production précédente, ou lire les logs SVN à la main et retranscrire. Un fichier oublié dans le package, c'est une régression en production.",
-      "Or l'information existe déjà : elle est dans SVN. Entre la révision de la dernière livraison et la révision courante, SVN sait exactement ce qui a été ajouté, modifié ou supprimé.",
+      "Belight dispose déjà d'un module Package qui génère les livrables de production : on coche des fichiers dans une arborescence, il fabrique l'archive à déployer. Sauf que remplir cette liste était entièrement manuel. Pour chaque livraison, il fallait se souvenir de tout ce qui avait changé depuis la précédente mise en production, ou éplucher l'historique SVN à la main. Un fichier oublié dans le livrable, c'est une régression en production.",
+      "Or cette information existe déjà, intacte, dans SVN : entre deux révisions, SVN sait exactement ce qui a été ajouté, modifié ou supprimé.",
     ],
     sections: [
       {
-        title: 'Détection du dépôt et croisement avec le référentiel',
+        title: 'La détection automatique du dépôt',
         paragraphs: [
-          "`get_repositories.php` déduit l'application courante depuis l'URI de la requête, lance un `svn info` dans son répertoire pour récupérer l'URL du dépôt, puis **interroge l'application Liste Serveur** pour confronter cette URL au référentiel officiel.",
-          "Ce croisement a une vraie valeur d'exploitation : si l'URL SVN locale ne correspond à aucune entrée active dans Liste Serveur, l'utilisateur voit un message d'alerte l'invitant à la corriger ou la créer. L'outil ne se contente pas de fonctionner, il **signale les incohérences du référentiel** au passage. Et la vérification est non bloquante : si Liste Serveur est injoignable, la comparaison fonctionne quand même.",
+          "J'ai construit une fenêtre de comparaison, ouverte depuis le module Package, qui détecte toute seule l'application en cours, retrouve automatiquement son dépôt SVN, et vérifie que cette information correspond bien à ce qui est déclaré dans **Liste Serveur**, l'application de la collectivité qui centralise l'inventaire de toutes les applications. Si les deux ne correspondent pas, un message d'alerte invite à corriger la fiche du référentiel, l'outil ne se contente pas de fonctionner, il signale au passage les incohérences qu'il croise. Et cette vérification n'est jamais bloquante : si Liste Serveur est injoignable, la comparaison fonctionne quand même.",
         ],
       },
       {
-        title: 'Le parsing des révisions',
+        title: 'Choisir une révision en la lisant, pas en la devinant',
         paragraphs: [
-          "`get_revisions.php` est une machine à états qui reconstruit, pour chaque révision, son numéro, sa date (reformatée en `jj/mm/aaaa`) et son message de commit multi-lignes. Avec une passe de normalisation d'encodage (`mb_detect_encoding` sur UTF-8 / ISO-8859-1 / Windows-1252 puis conversion), parce que les commits du dépôt ont été faits sur dix ans, depuis des postes et des clients SVN différents, et que les accents mal encodés cassaient le JSON de retour.",
-          "Ce parsing sert directement l'ergonomie : dans les combos de sélection, chaque révision s'affiche `r1234 - 12/03/2026 - message du commit`. On choisit sa révision de départ **en lisant les messages de commit**, pas en devinant un numéro.",
+          "L'outil récupère l'historique des révisions SVN de l'application, chaque révision accompagnée de sa date et de son message de commit. On choisit donc sa révision de départ en lisant ce qui a été livré, pas en devinant un numéro au hasard. Un souci d'encodage m'a occupé un moment : les messages de commit ont été écrits sur plus de dix ans, depuis des postes et des clients SVN différents, et certains caractères accentués mal encodés faisaient planter l'affichage. J'ai ajouté une étape de normalisation systématique.",
         ],
       },
       {
-        title: 'Le cœur : la comparaison filtrée',
+        title: 'Le cœur : une comparaison qui connaît les règles du métier',
         paragraphs: [
-          "`compare_revisions.php` lance un `svn diff --summarize` entre les deux révisions, avec réordonnancement automatique si l'utilisateur les a inversées, puis applique un filtrage métier qui encode les règles réelles de fabrication d'un package du CDVM :",
-        ],
-        items: [
-          "les fichiers de `__sencha_architect` (métadonnées de l'IDE) sont exclus ;",
-          "`log.txt` est exclu ;",
-          "dans `obfiles/log/`, seul `index.php` est conservé : on livre la structure du dossier de logs, pas les logs ;",
-          "dans `templates/`, on garde les répertoires et les `index.php`, pas les modèles eux-mêmes.",
-        ],
-      },
-      {
-        title: "L'injection dans la grille",
-        paragraphs: [
-          "`SvnCompareViewController.js` alimente la grille du module Package via `loadResultsIntoGrid()`, avec **déduplication** : les fichiers déjà présents ne sont pas ajoutés deux fois, et l'utilisateur est informé du nombre de doublons évités. Les fichiers supprimés entre les deux révisions sont insérés avec l'action `Supprimer`, les autres avec `Ajouter` : la logique de suppression en production est portée aussi. Le retour final est un récapitulatif chiffré (X ajoutés, Y modifiés, Z supprimés, dont N déjà présents).",
+          "Une fois les deux révisions choisies, l'outil lance une comparaison SVN entre elles, puis applique un filtrage qui encode les règles réelles de fabrication d'un livrable au CDVM : les fichiers propres à l'IDE de développement sont exclus, les fichiers de journalisation ne sont jamais livrés, certains dossiers techniques ne conservent que leur structure. Ces règles, c'était de la connaissance qu'il fallait avoir en tête à chaque livraison. Elles sont maintenant appliquées automatiquement, de la même façon, quelle que soit la personne qui prépare le livrable.",
+          "Les résultats s'insèrent directement dans la grille du module Package, avec une vérification pour éviter les doublons, et un compte-rendu chiffré.",
         ],
       },
     ],
     result:
-      "La construction d'un livrable passe de « se souvenir de ce qu'on a fait » à « choisir deux révisions ». Le risque d'oubli disparaît, et les règles d'exclusion, jusque-là de la connaissance tacite, sont appliquées uniformément quelle que soit la personne qui prépare la livraison.",
+      "La construction d'un livrable passe de « se souvenir de ce qu'on a fait » à « choisir deux révisions SVN ». Le risque d'oubli disparaît.",
   },
   {
     slug: 'exploitation-svn',
     index: '04',
     title: 'Exploitation SVN',
-    tagline: "L'administration des dépôts par le web",
+    tagline: "L'administration SVN par le web",
     tags: ['Bash', 'sudo NOPASSWD', 'PHP 8', 'ExtJS', 'svnadmin'],
     problem: [
-      "C'est le chantier le plus long (mars → juillet 2026) et le plus sensible, parce qu'il touche à l'administration système.",
-      "Toute l'administration des dépôts SVN se faisait **en SSH sur `svn3-prod-app`, en root**. Créer un dépôt pour une nouvelle application, ajouter un utilisateur SVN, créer une branche de version, sauvegarder les dépôts, consulter l'historique : à chaque fois, une connexion serveur et des commandes à la main. Concentré sur quelques personnes, non tracé, et risqué : une faute de frappe dans un `rm -rf` ou un `svnadmin` n'a pas de bouton « annuler ».",
+      "Toute l'administration des dépôts SVN se faisait en SSH sur le serveur, en root. Créer un dépôt pour une nouvelle application, ajouter un utilisateur SVN, créer une branche de version, sauvegarder l'ensemble des dépôts, consulter un historique : à chaque fois, une connexion serveur et des commandes tapées à la main. Concentré sur une poignée de personnes, non tracé, et risqué.",
     ],
     sections: [
       {
         title: "L'architecture de sécurité",
         paragraphs: [
-          "Le point de départ de la conception était contraignant : **Apache tourne sous l'utilisateur `apache`**, qui n'a évidemment pas le droit de créer des dépôts dans `/var/svn/repository` ni d'écrire dans le fichier d'authentification SVN. Donner ces droits à Apache aurait été inacceptable.",
-          "La solution : un **wrapper bash unique, exécuté en root via `sudo` NOPASSWD**, avec une liste blanche d'actions. `svn-admin-wrapper` démarre en `set -euo pipefail`, et son `case \"$ACTION\"` se termine par un `*) echo \"Action non autorisee\"; exit 1`. **Tout ce qui n'est pas explicitement prévu est refusé.** PHP ne peut jamais exécuter une commande arbitraire en root : il ne peut que demander une des treize actions du catalogue (`show-history`, `list-users`, `add-user`, `delete-user`, `create-repo`, `create-repo-belight`, `delete-repo`, `delete-reference`, `rename-repo`, `backup-all`, `backup-one`, `backup-cleanup`, `backup-cleanup-one`, `migrate-trunk`).",
-        ],
-        items: [
-          "les noms de dépôts et de branches sont validés par regex (`^[a-zA-Z0-9][a-zA-Z0-9._-]*$`) ;",
-          "les types de références sont contraints à `branches` ou `tags`, les modes d'opération à `migrate` / `empty` / `copy` ;",
-          "l'existence du dépôt est vérifiée par la présence du fichier `format`, la vraie signature d'un dépôt SVN, pas juste un dossier du bon nom ;",
-          "pour la suppression de dumps, le chemin doit **commencer par** le répertoire autorisé et ne pas contenir `..` ;",
-          "la validation est **doublée** côté PHP : chaque script vérifie ses entrées avant même d'appeler le wrapper. Si un appel PHP est contourné, le wrapper refuse quand même.",
-        ],
-      },
-      {
-        title: 'Deux garde-fous dont je suis content',
-        paragraphs: [
-          "**`delete-user` refuse de supprimer un compte qui a de l'activité SVN.** La fonction `user_has_svn_activity()` parcourt tous les dépôts, lit les logs, et si le login apparaît comme auteur d'un commit, elle renvoie `HAS_ACTIVITY` au lieu de supprimer. L'interface affiche alors une confirmation explicite, et seul un appel avec `force` procède. On ne supprime pas silencieusement un compte qui est dans l'historique du dépôt.",
-          "La manipulation du fichier d'authentification `svnserve_auth_file` se fait en **awk avec réécriture dans un fichier temporaire puis `mv` atomique**, en respectant la structure des sections INI et en recréant la section `[users]` si elle est absente. Pas de `sed` en place sur un fichier critique d'authentification.",
+          "Le point de départ était contraignant : Apache tourne sous un compte volontairement limité, qui n'a évidemment pas le droit de créer des dépôts SVN ni de modifier le fichier d'authentification SVN. Lui donner ces droits aurait été inacceptable.",
+          "La solution a été de construire un intermédiaire unique en Bash, exécuté avec des droits root via `sudo`, mais strictement encadré : il n'expose qu'un catalogue fermé d'une treizaine d'opérations précises, et refuse explicitement tout ce qui n'y figure pas. PHP ne peut donc jamais exécuter une commande arbitraire en root, il peut seulement demander l'une des opérations prévues au catalogue, elle-même doublement validée : une première fois côté PHP, une seconde fois dans le wrapper Bash, avec des règles strictes sur les noms de dépôts autorisés, les types d'opérations possibles, et une vérification que le dépôt existe vraiment avant d'agir dessus.",
+          "Un détail dont je suis particulièrement content : la suppression d'un compte SVN est bloquée si ce compte a une activité réelle dans l'historique d'au moins un dépôt, l'outil parcourt tous les dépôts, vérifie si la personne y a commité quelque chose, et si oui, demande une confirmation explicite plutôt que de supprimer silencieusement un compte qui fait partie de la mémoire du projet.",
         ],
       },
       {
         title: 'Les fonctionnalités livrées',
-        items: [
-          "**Création de dépôt** (`create_depot.php`), en deux modes : dépôt SVN nu, ou dépôt **initialisé avec le moteur belight_v7** (le script `initAppli` crée toute la structure applicative et la commite). Si le dépôt ou le répertoire web existe déjà, le script **ne force rien** : il renvoie `confirm_required` et laisse l'utilisateur trancher.",
-          "**Liste des dépôts** (`list_depots.php`), un scan de `/var/svn/repository` qui remonte pour chaque dépôt l'URL, la dernière révision (`svnlook youngest`), le dernier auteur, la date et le message. Le script cherche dans `/var/svn/dump` un fichier dont la révision correspond **exactement** à la révision courante : un dump antérieur n'est pas compté comme une sauvegarde valide, parce que ce n'en est pas une. Et la suppression n'est proposée que si `last_revision <= 2` : un dépôt avec plus de deux révisions contient du travail réel.",
-          "**Branches et tags** (`migrate_trunk.php` + `migrateTrunk`), en trois modes : `copy` (créer une branche ou un tag depuis le trunk courant), `empty` (référence vide) et `migrate`, le plus puissant : créer la branche de l'ancienne version, puis **purger le trunk et le réinitialiser avec le moteur belight_v7**. C'est exactement le geste d'une migration v6 → v7.",
-          "**Historique SVN** (`show_history.php`), un `svn log --xml --verbose` parsé en SimpleXML, avec filtrage par plage de révisions, détail des chemins modifiés (action, chemin, mention de la copie source pour les branches) et un mode `authors_only` qui alimente justement la vérification d'activité avant suppression d'un compte.",
-          "**Renommage, suppression de dépôt, suppression de branches et tags, gestion des comptes SVN** complètent le module.",
+        paragraphs: [
+          "La création de dépôt SVN, avec deux options : un dépôt nu, ou un dépôt directement initialisé avec la structure applicative de Belight. Dans les deux cas, si un dépôt du même nom existe déjà, rien n'est écrasé automatiquement : l'utilisateur est prévenu et doit confirmer explicitement.",
+          "La liste des dépôts existants, avec pour chacun sa dernière révision, son dernier auteur, sa date de modification, et une vérification fine sur les sauvegardes : un dépôt n'est considéré comme sauvegardé à jour que si son archive de sauvegarde correspond exactement à sa révision actuelle, pas à une version antérieure qui donnerait une fausse impression de sécurité.",
+          "La création de branches et de tags SVN, avec trois modes selon le besoin, dupliquer le trunk courant, créer une référence vide, ou le geste le plus élaboré : archiver l'ancienne version dans une branche puis réinitialiser le trunk avec la dernière version du moteur Belight, exactement le geste d'une montée de version majeure.",
+          "La consultation de l'historique SVN complet d'un dépôt, avec filtrage par plage de révisions et détail des fichiers touchés.",
+          "Le renommage et la suppression de dépôts, la gestion des branches et tags, et la gestion des comptes SVN complètent l'ensemble.",
         ],
       },
       {
         title: 'La sauvegarde, le morceau le plus élaboré',
         paragraphs: [
-          "Un dump complet de tous les dépôts prend plusieurs minutes, bien au-delà du timeout d'une requête HTTP. L'architecture retenue : le backup est **lancé en tâche de fond détachée** (`nohup … &`), il écrit sa progression dans un fichier de statut JSON, et le front interroge ce statut en polling pour alimenter une barre de progression ExtJS. `backup.php` est un dispatcher à cinq tâches : lancement, `status`, `download`, `cleanup`, et le dump d'un dépôt isolé.",
-        ],
-        items: [
-          "**détection d'un backup déjà en cours**, avec affichage du nom de la personne qui l'a lancé, pour éviter que deux exploitants ne se marchent dessus sans comprendre pourquoi ;",
-          "**compatibilité ascendante** du fichier de statut (un ancien format stockait le nom en deux champs, le code gère les deux) ;",
-          "**pourcentage plafonné à 0,95** tant que le statut n'est pas `done` : 100 % ne s'affiche que quand c'est réellement fini, jamais « presque » ;",
-          "**contrôle du chemin au téléchargement** : `realpath()` puis vérification du préfixe autorisé. Pas de traversée de répertoire possible via le paramètre `zipPath` ;",
-          "**nettoyage automatique** des fichiers temporaires, après téléchargement et au lancement d'un nouveau backup.",
-        ],
-      },
-      {
-        title: "Côté interface",
-        paragraphs: [
-          "Une page **Exploitation → Gestion des dépôts SVN** qui rassemble tout : formulaire de création en haut à gauche, grille des utilisateurs SVN en haut à droite, grille principale des dépôts en dessous, avec colonnes d'action en icônes (historique, renommer, backup, supprimer), édition en ligne du nom, sélection multiple par cases à cocher pour les backups ciblés et persistance de l'état de la grille en cookie. Trois fenêtres modales complètent l'ensemble : création de branches et tags, consultation de l'historique, ajout d'un compte.",
+          "Une sauvegarde complète de tous les dépôts SVN prend plusieurs minutes, bien au-delà de ce qu'une page web peut attendre sans se bloquer. J'ai conçu ce traitement pour qu'il se lance en tâche de fond, indépendamment de la page qui l'a déclenché, en écrivant sa progression dans un fichier de suivi que l'interface interroge régulièrement pour alimenter une vraie barre de progression ExtJS.",
+          "Plusieurs garde-fous s'y ajoutent : si une sauvegarde est déjà en cours, l'interface affiche qui l'a lancée. Le pourcentage affiché ne peut jamais atteindre 100 % tant que le traitement n'est pas réellement terminé. Le téléchargement du fichier final vérifie strictement que le chemin demandé reste dans le répertoire autorisé. Et les fichiers temporaires sont nettoyés automatiquement.",
         ],
       },
     ],
     result:
-      "L'administration SVN quotidienne ne nécessite plus d'accès SSH root au serveur. Les opérations sont validées, tracées dans des logs et accessibles à l'équipe depuis une interface web, tout en restant strictement bornées par la liste blanche du wrapper.",
+      "L'administration SVN courante ne nécessite plus d'accès SSH root au serveur. Les opérations sont validées, tracées, et accessibles à toute l'équipe depuis Liste Serveur, tout en restant strictement bornées par le catalogue fermé d'actions autorisées.",
   },
   {
     slug: 'convert-phpexcel',
@@ -232,80 +285,46 @@ export const chantiers: Chantier[] = [
     tagline: 'La migration PHPExcel → PhpSpreadsheet',
     tags: ['PHP 8', 'CLI', 'Regex', 'Migration'],
     problem: [
-      "PHPExcel est **abandonné depuis 2017**. Son successeur PhpSpreadsheet impose des changements en cascade : des classes namespacées au lieu de classes préfixées, des noms de méthodes en camelCase, des constantes déplacées, des clés de tableaux de style renommées (`allborders` → `allBorders`, `style` → `borderStyle`, `type` → `fillType`), des marges qui passent de chaînes à des flottants.",
-      "Ces appels étaient disséminés dans une quinzaine de fichiers d'édition, répartis sur autant d'applications (`annuaire`, `ordival`, `sportval`, `sos_rentree`, `orv`, `adep`, `arcade`, `livres`, `dematrh`) plus le cœur du moteur, chacun de plusieurs centaines de lignes de génération Excel.",
-      "Le faire à la main, c'était garantir des oublis : les changements sont mécaniques mais nombreux, et une clé de style oubliée ne casse pas le code, elle produit silencieusement un fichier Excel sans bordures.",
+      "PHPExcel, la librairie utilisée par une quinzaine de modules d'édition pour générer des fichiers Excel, est abandonnée depuis 2017. Sa remplaçante, PhpSpreadsheet, impose des changements mécaniques mais nombreux et dispersés : des noms de méthodes différents, des constantes déplacées, des propriétés de mise en forme renommées, des formats de valeurs qui changent. Ces usages étaient répartis dans une quinzaine de fichiers, sur autant d'applications différentes du parc, plus le cœur du moteur Belight.",
+      "Le faire à la main, c'était garantir des oublis : une propriété de mise en forme oubliée ne fait pas planter le code, elle produit silencieusement un fichier Excel sans bordures.",
     ],
     sections: [
       {
         title: 'Un convertisseur, pas un script jetable',
         paragraphs: [
-          "`convert_phpexcel.php` traite soit un fichier, soit tout un répertoire. La logique est portée par une table de patterns regex → remplacement, ce qui rend l'outil **extensible sans toucher au moteur** : quand on découvre un nouveau cas, on ajoute une ligne au tableau. Les points de conception qui font la différence :",
-        ],
-        items: [
-          "**La sauvegarde n'est créée qu'en cas de modification réelle.** Le contenu converti est calculé *avant* toute écriture ; si rien ne change, le fichier n'est pas touché et aucun `.bak` inutile n'est créé.",
-          "**Restauration automatique en cas d'échec d'écriture.** Si le `file_put_contents` échoue, le `.bak` est immédiatement recopié par-dessus. On ne laisse jamais un fichier à moitié converti.",
-          "**L'insertion des `use` est contextuelle.** `addUseStatements()` cherche le dernier `require_once` ou `use` de premier niveau qui précède la déclaration de classe et s'insère juste après. Le fichier converti reste lisible, imports groupés au bon endroit. Le repli après `<?php` n'intervient que si aucun import n'existe.",
-          "**Détection d'idempotence.** Si les `use` PhpSpreadsheet sont déjà présents, le fichier n'est pas retouché : on peut relancer le convertisseur sans risque.",
-          "**Le récapitulatif résout les rétro-références.** Plutôt que d'afficher le pattern regex brut, `applyReplacements()` calcule le remplacement réellement obtenu pour chaque occurrence (en résolvant les `$1` / `$2`) avant de l'enregistrer. Le rapport affiche `->SetCellValue( → ->setCellValue( (47 fois)`, quelque chose qu'on peut relire et vérifier. Les suppressions sont typées différemment des remplacements, pour ne pas afficher une flèche vers le vide.",
+          "J'ai construit un outil de conversion automatique en PHP, capable de traiter un fichier isolé ou un dossier entier, piloté par une liste de correspondances entre l'ancienne et la nouvelle écriture, facile à enrichir dès qu'un nouveau cas se présente.",
+          "Quelques choix de conception font la différence entre un script jetable et un outil de confiance : une copie de sauvegarde n'est créée que si le fichier va réellement être modifié. Si l'écriture du fichier converti échoue, la sauvegarde est automatiquement remise en place. Les nouvelles déclarations `use` nécessaires à PhpSpreadsheet sont insérées au bon endroit, juste après celles qui existent déjà, pour que le fichier converti reste lisible. Et l'outil peut être relancé sans risque sur un fichier déjà converti : il détecte que le travail est déjà fait et ne le refait pas.",
+          "Le compte-rendu produit après chaque conversion affiche pour chaque changement le texte exact avant et après, pas une expression régulière abstraite, on peut le relire comme une vraie relecture, et repérer immédiatement si quelque chose semble anormal.",
         ],
       },
     ],
     result:
-      "La migration de la génération Excel a été menée sur l'ensemble du parc, 15 fichiers répartis sur 9 applications plus le moteur Belight, de façon uniforme et vérifiable, avec un rapport de conversion pour chaque fichier. Le parc est sorti d'une dépendance abandonnée depuis huit ans.",
+      "La migration a été menée sur l'ensemble du parc concerné, quinze fichiers, répartis sur neuf applications différentes, plus le moteur Belight, de façon uniforme et vérifiable. Le parc applicatif est sorti d'une dépendance abandonnée depuis huit ans.",
   },
 ];
 
 export const principes = [
   {
     title: 'Une seule source de vérité',
-    body: "`ConfigIniBuilder` a été extrait dès qu'il y a eu deux générateurs de `config.ini`. Le wrapper SVN est le point de passage unique de toute opération privilégiée. Quand deux chemins de code font la même chose, ils finissent par ne plus la faire pareil.",
+    body: "Dès qu'une même information a pu être produite par deux chemins différents, je les ai fusionnés en un seul.",
   },
   {
-    title: 'La sécurité par liste blanche',
-    body: "Le wrapper n'énumère pas ce qui est interdit : il énumère ce qui est permis, et refuse tout le reste. Combiné à une validation dupliquée côté PHP et côté bash, et à des contrôles de chemins par préfixe autorisé.",
+    title: 'La sécurité par liste blanche, jamais par liste noire',
+    body: "Là où des droits élevés étaient nécessaires, l'accès n'a jamais été ouvert en confiance : toujours un catalogue fermé d'opérations précises, avec tout le reste refusé par défaut.",
   },
   {
-    title: 'Les règles tacites deviennent du code',
-    body: "Les exclusions de fichiers dans un package, la correspondance dump/révision, l'interdiction de supprimer un compte qui a de l'activité : c'était de la connaissance dans la tête des gens. C'est maintenant dans les scripts, appliqué de la même façon par tout le monde.",
+    title: 'Les règles tacites deviennent des règles écrites',
+    body: "Les exclusions à respecter dans un livrable, la définition d'une sauvegarde réellement à jour, l'interdiction de supprimer un compte actif : c'était de la connaissance dans la tête des gens. C'est maintenant appliqué automatiquement.",
   },
   {
     title: "L'outil doit être là où sont les gens",
-    body: "Un script CLI que seul son auteur sait lancer ne réduit le risque de personne. Chaque outil a été ramené dans une interface existante : `check_install` dans l'assistant Belight, `svncompare` dans le module Package, l'administration SVN dans Liste Serveur.",
+    body: "Chaque outil a été ramené dans Belight ou dans Liste Serveur, pas laissé en script isolé.",
   },
   {
-    title: 'Ne jamais détruire sans filet',
-    body: "Sauvegarde avant conversion et restauration en cas d'échec, `confirm_required` avant de recréer un dépôt existant, `HAS_ACTIVITY` avant de supprimer un compte, suppression de dépôt limitée aux dépôts quasi vides. Les opérations irréversibles demandent toujours un accord explicite.",
-  },
-];
-
-export const recapitulatif = [
-  {
-    chantier: 'check_install',
-    livrables: '`check.php`, `generate.php`, `config.ini`',
-    remplace: 'La vérification manuelle des prérequis serveur, document Word en main',
-  },
-  {
-    chantier: 'configinstall',
-    livrables: 'Formulaire ExtJS, `ConfigIniBuilder`, export ZIP depuis SVN',
-    remplace: 'La rédaction manuelle du `config.ini` et la circulation de versions divergentes du script',
-  },
-  {
-    chantier: 'svncompare',
-    livrables: '3 endpoints PHP + fenêtre ExtJS intégrée au module Package',
-    remplace: "La reconstitution de mémoire de la liste des fichiers d'un livrable",
-  },
-  {
-    chantier: 'Exploitation SVN',
-    livrables: 'Wrapper sudo 13 actions, 12 scripts PHP, 11 scripts bash, 4 vues ExtJS',
-    remplace: "L'administration SVN en SSH root sur le serveur de production",
-  },
-  {
-    chantier: 'convert_phpexcel',
-    livrables: 'Convertisseur automatique PHPExcel → PhpSpreadsheet',
-    remplace: 'La migration manuelle de 15 fichiers d\'édition sur 9 applications',
+    title: 'Ne jamais détruire sans confirmation ni filet',
+    body: "Sauvegarde avant modification, confirmation explicite avant d'écraser quelque chose qui existe déjà, blocage avant de supprimer un compte actif.",
   },
 ];
 
 export const conclusion =
-  "J'ai pris cinq gestes manuels, risqués et concentrés sur quelques personnes, et j'en ai fait des outils validés, tracés et accessibles à toute l'équipe, sans jamais élargir les droits d'Apache d'un pouce.";
+  "En une phrase : j'ai pris cinq gestes manuels, risqués et concentrés sur quelques personnes, et j'en ai fait des outils validés, tracés et accessibles à toute l'équipe, sans jamais élargir les droits du compte Apache d'un pouce.";

@@ -6,14 +6,39 @@ import Button from "../components/ui/Button.astro";
 import { Icon } from "astro-icon/components";
 import {
   intro,
+  glossaire,
   chantiers,
   principes,
-  recapitulatif,
   conclusion,
 } from "../data/cdvm";
 
 // Même mise en forme légère que les études de cas : **gras** et `code`
-const formatText = (text: string) =>
+// + astérisque de renvoi vers le glossaire, posée sur la première occurrence
+// de chaque terme rencontrée dans le texte narratif.
+const usedGlossaryTerms = new Set<string>();
+const MARK_OPEN = "\x01";
+const MARK_CLOSE = "\x02";
+
+const annotateGlossary = (text: string) => {
+  let result = text;
+  for (const entry of glossaire) {
+    if (usedGlossaryTerms.has(entry.term)) continue;
+    for (const alt of entry.match) {
+      const regex = new RegExp(`\\b(${alt})\\b`);
+      if (regex.test(result)) {
+        result = result.replace(
+          regex,
+          `$1${MARK_OPEN}${entry.slug}${MARK_CLOSE}`,
+        );
+        usedGlossaryTerms.add(entry.term);
+        break;
+      }
+    }
+  }
+  return result;
+};
+
+const baseFormat = (text: string) =>
   text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -23,7 +48,16 @@ const formatText = (text: string) =>
     .replace(
       /`([^`]+)`/g,
       '<code class="px-1.5 py-0.5 rounded bg-ink-100 dark:bg-night-border text-accent-700 dark:text-accent-200 text-[0.85em] font-mono">$1</code>',
+    )
+    .replace(
+      /\x01([a-z0-9-]+)\x02/g,
+      '<sup><a href="#gloss-$1" class="text-accent-600 dark:text-accent-300 no-underline hover:underline">*</a></sup>',
     );
+
+// Utilisé partout sauf dans les définitions du glossaire lui-même
+const formatText = (text: string) => baseFormat(annotateGlossary(text));
+// Utilisé pour les définitions du glossaire : pas d'auto-référencement
+const formatTextPlain = (text: string) => baseFormat(text);
 ---
 
 <Layout
@@ -65,6 +99,31 @@ const formatText = (text: string) =>
             />
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- Glossaire -->
+    <section class="px-4 md:px-8 pb-4">
+      <div class="max-w-3xl mx-auto reveal">
+        <details class="card p-0 overflow-hidden group">
+          <summary class="cursor-pointer px-6 py-4 font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300 flex items-center justify-between hover:bg-ink-50 dark:hover:bg-night-bg transition-colors">
+            Glossaire des termes techniques
+            <Icon name="heroicons:chevron-down" class="w-4 h-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <dl class="px-6 pb-6 pt-1 grid sm:grid-cols-2 gap-x-8 gap-y-5">
+            {glossaire.map((entry) => (
+              <div id={`gloss-${entry.slug}`} class="scroll-mt-28">
+                <dt class="font-semibold text-sm text-ink-900 dark:text-ink-50 mb-1">
+                  {entry.term}
+                </dt>
+                <dd
+                  class="text-sm text-ink-500 dark:text-ink-300 leading-relaxed"
+                  set:html={formatTextPlain(entry.definition)}
+                />
+              </div>
+            ))}
+          </dl>
+        </details>
       </div>
     </section>
 
@@ -143,32 +202,14 @@ const formatText = (text: string) =>
                 <h3 class="font-semibold text-lg text-ink-900 dark:text-ink-50 mb-4">
                   {section.title}
                 </h3>
-                {section.paragraphs && (
-                  <div class="space-y-3">
-                    {section.paragraphs.map((paragraph) => (
-                      <p
-                        class="text-ink-600 dark:text-ink-200 leading-relaxed"
-                        set:html={formatText(paragraph)}
-                      />
-                    ))}
-                  </div>
-                )}
-                {section.items && (
-                  <ul class={`space-y-3 ${section.paragraphs ? "mt-4" : ""}`}>
-                    {section.items.map((item) => (
-                      <li class="flex items-start gap-3">
-                        <span
-                          class="w-1.5 h-1.5 rounded-full bg-accent-400 dark:bg-accent-300 flex-shrink-0 mt-2.5"
-                          aria-hidden="true"
-                        ></span>
-                        <span
-                          class="text-ink-600 dark:text-ink-200 leading-relaxed"
-                          set:html={formatText(item)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div class="space-y-3">
+                  {section.paragraphs.map((paragraph) => (
+                    <p
+                      class="text-ink-600 dark:text-ink-200 leading-relaxed"
+                      set:html={formatText(paragraph)}
+                    />
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -191,13 +232,9 @@ const formatText = (text: string) =>
     <section id="principes" class="px-4 md:px-8 py-12 scroll-mt-28">
       <div class="max-w-3xl mx-auto">
         <div class="reveal border-t border-ink-200 dark:border-night-border pt-10 mb-8">
-          <h2 class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50 mb-3">
+          <h2 class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50">
             Ce qui relie tout ça
           </h2>
-          <p class="text-ink-500 dark:text-ink-300">
-            Cinq principes de conception que je n'avais pas formulés au départ,
-            mais qui se sont imposés d'un chantier à l'autre.
-          </p>
         </div>
 
         <div class="space-y-4">
@@ -218,54 +255,11 @@ const formatText = (text: string) =>
             </div>
           ))}
         </div>
-      </div>
-    </section>
 
-    <!-- Récapitulatif -->
-    <section class="px-4 md:px-8 py-12">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="reveal font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50 mb-8">
-          Récapitulatif
-        </h2>
-
-        <div class="reveal card p-0 overflow-x-auto">
-          <table class="w-full text-left border-collapse min-w-[44rem]">
-            <thead>
-              <tr class="border-b border-ink-200 dark:border-night-border">
-                <th class="px-5 py-4 font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300">
-                  Chantier
-                </th>
-                <th class="px-5 py-4 font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300">
-                  Livrables
-                </th>
-                <th class="px-5 py-4 font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300">
-                  Ce que ça remplace
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {recapitulatif.map((ligne) => (
-                <tr class="border-b border-ink-200 dark:border-night-border last:border-b-0 align-top">
-                  <td class="px-5 py-4 font-semibold text-sm text-ink-900 dark:text-ink-50 whitespace-nowrap">
-                    {ligne.chantier}
-                  </td>
-                  <td
-                    class="px-5 py-4 text-sm text-ink-600 dark:text-ink-200 leading-relaxed"
-                    set:html={formatText(ligne.livrables)}
-                  />
-                  <td
-                    class="px-5 py-4 text-sm text-ink-500 dark:text-ink-300 leading-relaxed"
-                    set:html={formatText(ligne.remplace)}
-                  />
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <p class="reveal mt-8 font-display text-xl md:text-2xl leading-snug text-ink-900 dark:text-ink-50">
-          {conclusion}
-        </p>
+        <p
+          class="reveal mt-10 font-display text-xl md:text-2xl leading-snug text-ink-900 dark:text-ink-50"
+          set:html={formatText(conclusion)}
+        />
       </div>
     </section>
 
