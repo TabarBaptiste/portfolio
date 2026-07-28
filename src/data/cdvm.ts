@@ -141,107 +141,8 @@ export const glossaire: GlossaireEntry[] = [
 
 export const chantiers: Chantier[] = [
   {
-    slug: 'check-install',
-    index: '01',
-    title: 'check_install',
-    tagline: 'Le contrôle technique du serveur',
-    tags: ['PHP 8', 'CLI + Web', 'DOCX / ZIP', 'SMTP'],
-    problem: [
-      "Livrer une application sur un nouveau serveur, c'était partir d'un document Word de procédure d'installation (le **DOCMEP**, document de mise en production), listant la version de PHP attendue, la version de MariaDB, les réglages `php.ini` et les extensions à activer, puis vérifier tout ça **à la main**, ligne par ligne, sur la machine cible. Cette vérification est à la charge du **SEPI** (Service Exploitation et Production Informatique), l'équipe chargée de mettre effectivement les applications en production, l'outil leur est destiné en priorité. Une extension oubliée, un `memory_limit` trop bas, et l'application partait en erreur en production, souvent plusieurs jours après le déploiement, quand un utilisateur tombait dessus.",
-    ],
-    sections: [
-      {
-        title: 'Un outil qui répond à une seule question',
-        paragraphs: [
-          "J'ai construit un script autonome, déposable sur n'importe quel serveur, qui répond à : *cette machine est-elle prête à accueillir l'application ?* Il exécute une série de contrôles : la version de PHP, avec une comparaison volontairement stricte, version majeure et mineure identiques, seul le correctif peut être supérieur, parce qu'un serveur en PHP 8.3 n'est pas « mieux » qu'un serveur attendu en PHP 8.2, c'est une version différente. Les réglages PHP critiques (mémoire allouée, durée d'exécution maximale, taille de fichiers acceptée), lus **directement dans le fichier `php.ini`** du serveur plutôt qu'en interrogeant PHP sur ses propres réglages, parce qu'en ligne de commande, PHP charge parfois un `php.ini` différent de celui utilisé par Apache, et une simple interrogation aurait pu donner une réponse trompeuse. L'état du service MariaDB et sa version, avec une commande adaptée selon Windows ou Linux, pour que le même outil serve en développement comme en production. Les extensions PHP requises, pilotées par une liste où chaque extension à vérifier est simplement décommentée, à la portée de n'importe quel exploitant sans toucher au code. Et deux contrôles réseau optionnels : la joignabilité de l'Active Directory de la collectivité, et celle d'un webservice SOAP interne, activés uniquement si nécessaire.",
-        ],
-      },
-      {
-        title: 'Un rapport qui remonte aux développeurs, pas au SEPI',
-        paragraphs: [
-          "L'outil envoie aussi un mail avec le rapport complet, avec un sujet différent selon qu'il y a des erreurs ou non. Ce mail part vers l'**équipe de développement**, pas vers le SEPI, pour que les développeurs puissent vérifier de leur côté s'il manque quelque chose dans le DOCMEP ou dans la configuration exécutée par le script.",
-        ],
-      },
-      {
-        title: "Le pont avec l'existant",
-        paragraphs: [
-          "Restait un maillon : quelqu'un devait quand même écrire la configuration de vérification en recopiant le document Word à la main. J'ai automatisé cette étape aussi : l'outil ouvre le `.docx` de procédure comme ce qu'il est au fond, une archive ZIP, en extrait le texte en préservant sa structure en paragraphes, puis repère automatiquement le nom de l'application, les versions attendues, les réglages et les extensions à activer.",
-        ],
-      },
-    ],
-    result:
-      "On pointe l'outil sur le document de procédure de mise en production, on obtient une configuration de vérification prête à l'emploi.",
-  },
-  {
-    slug: 'configinstall',
-    index: '02',
-    title: 'configinstall',
-    tagline: 'Ramener cet outil dans Belight',
-    tags: ['ExtJS', 'PHP 8', 'SVN export'],
-    problem: [
-      "L'outil de vérification fonctionnait, mais il fallait toujours ouvrir un terminal et savoir qu'il existait. Je l'ai intégré directement dans le back-office Belight, dans l'onglet Assistant, à côté des autres outils de développement.",
-    ],
-    sections: [
-      {
-        title: 'Le formulaire',
-        paragraphs: [
-          "J'ai construit un formulaire ExtJS structuré en quatre sections (Application, réglages PHP, MariaDB, extensions), avec une validation en temps réel : les caractères interdits sont bloqués à la frappe, le format attendu (une version PHP, une taille mémoire) est vérifié à la volée avec un message d'erreur explicite. Les champs de taille mémoire passent automatiquement en majuscules pendant la saisie, parce que `256m` et `256M` doivent produire exactement le même résultat.",
-          "Le formulaire se pré-remplit tout seul à l'ouverture : le nom de l'application est repris de la configuration Belight courante, débarrassé du suffixe « - Dev » s'il traîne encore, les adresses mail de l'équipe de développement sont préremplies, et la liste des extensions disponibles est transformée automatiquement en cases à cocher.",
-        ],
-      },
-      {
-        title: 'La factorisation qui compte',
-        paragraphs: [
-          "À ce stade, j'avais deux façons de générer la même configuration : le script en ligne de commande d'un côté, le formulaire web de l'autre. Deux chemins qui produisent la même chose finissent toujours par diverger un jour. J'ai extrait cette logique dans un seul bloc partagé, utilisé par les deux entrées : la configuration générée est identique, quel que soit le chemin emprunté. Ce bloc commun embarque une petite intelligence contextuelle : l'adresse de l'Active Directory n'est proposée que si l'extension LDAP est cochée, et il en va de même pour le webservice SOAP.",
-        ],
-      },
-      {
-        title: 'Le kit de déploiement complet',
-        paragraphs: [
-          "Dernière brique : un bouton qui récupère automatiquement depuis SVN la dernière version des outils de vérification, les regroupe dans une archive ZIP horodatée, et la propose au téléchargement.",
-        ],
-      },
-    ],
-    result:
-      "Au moment de préparer une livraison, on ouvre l'assistant Belight, on remplit le formulaire, on génère, on télécharge une archive, et on a le kit de vérification complet et à jour, prêt à déposer sur le serveur cible.",
-  },
-  {
-    slug: 'svncompare',
-    index: '03',
-    title: 'svncompare',
-    tagline: 'Fabriquer les livrables sans les faire à la main',
-    tags: ['PHP 8', 'ExtJS', 'svn diff', 'svn log'],
-    problem: [
-      "Belight dispose déjà d'un module Package qui génère les livrables de production : on coche des fichiers dans une arborescence, il fabrique l'archive à déployer. Sauf que remplir cette liste était entièrement manuel. Pour chaque livraison, il fallait se souvenir de tout ce qui avait changé depuis la précédente mise en production, ou éplucher l'historique SVN à la main. Un fichier oublié dans le livrable, c'est une régression en production.",
-      "Or cette information existe déjà, intacte, dans SVN : entre deux révisions, SVN sait exactement ce qui a été ajouté, modifié ou supprimé.",
-    ],
-    sections: [
-      {
-        title: 'La détection automatique du dépôt',
-        paragraphs: [
-          "J'ai construit une fenêtre de comparaison, ouverte depuis le module Package, qui détecte toute seule l'application en cours, retrouve automatiquement son dépôt SVN, et vérifie que cette information correspond bien à ce qui est déclaré dans **Liste Serveur**, l'application de la collectivité qui centralise l'inventaire de toutes les applications. Si les deux ne correspondent pas, un message d'alerte invite à corriger la fiche du référentiel, l'outil ne se contente pas de fonctionner, il signale au passage les incohérences qu'il croise. Et cette vérification n'est jamais bloquante : si Liste Serveur est injoignable, la comparaison fonctionne quand même.",
-        ],
-      },
-      {
-        title: 'Choisir une révision en la lisant, pas en la devinant',
-        paragraphs: [
-          "L'outil récupère l'historique des révisions SVN de l'application, chaque révision accompagnée de sa date et de son message de commit. On choisit donc sa révision de départ en lisant ce qui a été livré, pas en devinant un numéro au hasard. Un souci d'encodage m'a occupé un moment : les messages de commit ont été écrits sur plus de dix ans, depuis des postes et des clients SVN différents, et certains caractères accentués mal encodés faisaient planter l'affichage. J'ai ajouté une étape de normalisation systématique.",
-        ],
-      },
-      {
-        title: 'Le cœur : une comparaison qui connaît les règles du métier',
-        paragraphs: [
-          "Une fois les deux révisions choisies, l'outil lance une comparaison SVN entre elles, puis applique un filtrage qui encode les règles réelles de fabrication d'un livrable au CDVM : les fichiers propres à l'IDE de développement sont exclus, les fichiers de journalisation ne sont jamais livrés, certains dossiers techniques ne conservent que leur structure. Ces règles, c'était de la connaissance qu'il fallait avoir en tête à chaque livraison. Elles sont maintenant appliquées automatiquement, de la même façon, quelle que soit la personne qui prépare le livrable.",
-          "Les résultats s'insèrent directement dans la grille du module Package, avec une vérification pour éviter les doublons, et un compte-rendu chiffré.",
-        ],
-      },
-    ],
-    result:
-      "La construction d'un livrable passe de « se souvenir de ce qu'on a fait » à « choisir deux révisions SVN ». Le risque d'oubli disparaît.",
-  },
-  {
     slug: 'exploitation-svn',
-    index: '04',
+    index: '01',
     title: 'Exploitation SVN',
     tagline: "L'administration SVN par le web",
     tags: ['Bash', 'sudo NOPASSWD', 'PHP 8', 'ExtJS', 'svnadmin'],
@@ -277,6 +178,105 @@ export const chantiers: Chantier[] = [
     ],
     result:
       "L'administration SVN courante ne nécessite plus d'accès SSH root au serveur. Les opérations sont validées, tracées, et accessibles à toute l'équipe depuis Liste Serveur, tout en restant strictement bornées par le catalogue fermé d'actions autorisées.",
+  },
+  {
+    slug: 'check-install',
+    index: '02',
+    title: 'check_install',
+    tagline: 'Le contrôle technique du serveur',
+    tags: ['PHP 8', 'CLI + Web', 'DOCX / ZIP', 'SMTP'],
+    problem: [
+      "Livrer une application sur un nouveau serveur, c'était partir d'un document Word de procédure d'installation (le **DOCMEP**, document de mise en production), listant la version de PHP attendue, la version de MariaDB, les réglages `php.ini` et les extensions à activer, puis vérifier tout ça **à la main**, ligne par ligne, sur la machine cible. Cette vérification est à la charge du **SEPI** (Service Exploitation et Production Informatique), l'équipe chargée de mettre effectivement les applications en production, l'outil leur est destiné en priorité. Une extension oubliée, un `memory_limit` trop bas, et l'application partait en erreur en production, souvent plusieurs jours après le déploiement, quand un utilisateur tombait dessus.",
+    ],
+    sections: [
+      {
+        title: 'Un outil qui répond à une seule question',
+        paragraphs: [
+          "J'ai construit un script autonome, déposable sur n'importe quel serveur, qui répond à : *cette machine est-elle prête à accueillir l'application ?* Il exécute une série de contrôles : la version de PHP, avec une comparaison volontairement stricte, version majeure et mineure identiques, seul le correctif peut être supérieur, parce qu'un serveur en PHP 8.3 n'est pas « mieux » qu'un serveur attendu en PHP 8.2, c'est une version différente. Les réglages PHP critiques (mémoire allouée, durée d'exécution maximale, taille de fichiers acceptée), lus **directement dans le fichier `php.ini`** du serveur plutôt qu'en interrogeant PHP sur ses propres réglages, parce qu'en ligne de commande, PHP charge parfois un `php.ini` différent de celui utilisé par Apache, et une simple interrogation aurait pu donner une réponse trompeuse. L'état du service MariaDB et sa version, avec une commande adaptée selon Windows ou Linux, pour que le même outil serve en développement comme en production. Les extensions PHP requises, pilotées par une liste où chaque extension à vérifier est simplement décommentée, à la portée de n'importe quel exploitant sans toucher au code. Et deux contrôles réseau optionnels : la joignabilité de l'Active Directory de la collectivité, et celle d'un webservice SOAP interne, activés uniquement si nécessaire.",
+        ],
+      },
+      {
+        title: 'Un rapport qui remonte aux développeurs, pas au SEPI',
+        paragraphs: [
+          "L'outil envoie aussi un mail avec le rapport complet, avec un sujet différent selon qu'il y a des erreurs ou non. Ce mail part vers l'**équipe de développement**, pas vers le SEPI, pour que les développeurs puissent vérifier de leur côté s'il manque quelque chose dans le DOCMEP ou dans la configuration exécutée par le script.",
+        ],
+      },
+      {
+        title: "Le pont avec l'existant",
+        paragraphs: [
+          "Restait un maillon : quelqu'un devait quand même écrire la configuration de vérification en recopiant le document Word à la main. J'ai automatisé cette étape aussi : l'outil ouvre le `.docx` de procédure comme ce qu'il est au fond, une archive ZIP, en extrait le texte en préservant sa structure en paragraphes, puis repère automatiquement le nom de l'application, les versions attendues, les réglages et les extensions à activer.",
+        ],
+      },
+    ],
+    result:
+      "On pointe l'outil sur le document de procédure de mise en production, on obtient une configuration de vérification prête à l'emploi.",
+  },
+  {
+    slug: 'configinstall',
+    index: '03',
+    title: 'configinstall',
+    tagline: 'Ramener cet outil dans Belight',
+    tags: ['ExtJS', 'PHP 8', 'SVN export'],
+    problem: [
+      "L'outil de vérification fonctionnait, mais il fallait toujours ouvrir un terminal et savoir qu'il existait. Je l'ai intégré directement dans le back-office Belight, dans l'onglet Assistant, à côté des autres outils de développement.",
+    ],
+    sections: [
+      {
+        title: 'Le formulaire',
+        paragraphs: [
+          "J'ai construit un formulaire ExtJS structuré en quatre sections (Application, réglages PHP, MariaDB, extensions), avec une validation en temps réel : les caractères interdits sont bloqués à la frappe, le format attendu (une version PHP, une taille mémoire) est vérifié à la volée avec un message d'erreur explicite. Les champs de taille mémoire passent automatiquement en majuscules pendant la saisie, parce que `256m` et `256M` doivent produire exactement le même résultat.",
+          "Le formulaire se pré-remplit tout seul à l'ouverture : le nom de l'application est repris de la configuration Belight courante, débarrassé du suffixe « - Dev » s'il traîne encore, les adresses mail de l'équipe de développement sont préremplies, et la liste des extensions disponibles est transformée automatiquement en cases à cocher.",
+        ],
+      },
+      {
+        title: 'La factorisation qui compte',
+        paragraphs: [
+          "À ce stade, j'avais deux façons de générer la même configuration : le script en ligne de commande d'un côté, le formulaire web de l'autre. Deux chemins qui produisent la même chose finissent toujours par diverger un jour. J'ai extrait cette logique dans un seul bloc partagé, utilisé par les deux entrées : la configuration générée est identique, quel que soit le chemin emprunté. Ce bloc commun embarque une petite intelligence contextuelle : l'adresse de l'Active Directory n'est proposée que si l'extension LDAP est cochée, et il en va de même pour le webservice SOAP.",
+        ],
+      },
+      {
+        title: 'Le kit de déploiement complet',
+        paragraphs: [
+          "Dernière brique : un bouton qui récupère automatiquement depuis SVN la dernière version des outils de vérification, les regroupe dans une archive ZIP horodatée, et la propose au téléchargement.",
+        ],
+      },
+    ],
+    result:
+      "Au moment de préparer une livraison, on ouvre l'assistant Belight, on remplit le formulaire, on génère, on télécharge une archive, et on a le kit de vérification complet et à jour, prêt à déposer sur le serveur cible.",
+  },
+  {
+    slug: 'svncompare',
+    index: '04',
+    title: 'svncompare',
+    tagline: 'Fabriquer les livrables sans les faire à la main',
+    tags: ['PHP 8', 'ExtJS', 'svn diff', 'svn log'],
+    problem: [
+      "Belight dispose déjà d'un module Package qui génère les livrables de production : on coche des fichiers dans une arborescence, il fabrique l'archive à déployer. Sauf que remplir cette liste était entièrement manuel. Pour chaque livraison, il fallait se souvenir de tout ce qui avait changé depuis la précédente mise en production, ou éplucher l'historique SVN à la main. Un fichier oublié dans le livrable, c'est une régression en production.",
+      "Or cette information existe déjà, intacte, dans SVN : entre deux révisions, SVN sait exactement ce qui a été ajouté, modifié ou supprimé.",
+    ],
+    sections: [
+      {
+        title: 'La détection automatique du dépôt',
+        paragraphs: [
+          "J'ai construit une fenêtre de comparaison, ouverte depuis le module Package, qui détecte toute seule l'application en cours, retrouve automatiquement son dépôt SVN, et vérifie que cette information correspond bien à ce qui est déclaré dans **Liste Serveur**, l'application de la collectivité qui centralise l'inventaire de toutes les applications. Si les deux ne correspondent pas, un message d'alerte invite à corriger la fiche du référentiel, l'outil ne se contente pas de fonctionner, il signale au passage les incohérences qu'il croise. Et cette vérification n'est jamais bloquante : si Liste Serveur est injoignable, la comparaison fonctionne quand même.",
+        ],
+      },
+      {
+        title: 'Choisir une révision en la lisant, pas en la devinant',
+        paragraphs: [
+          "L'outil récupère l'historique des révisions SVN de l'application, chaque révision accompagnée de sa date et de son message de commit. On choisit donc sa révision de départ en lisant ce qui a été livré, pas en devinant un numéro au hasard. Un souci d'encodage m'a occupé un moment : les messages de commit ont été écrits sur plus de dix ans, depuis des postes et des clients SVN différents, et certains caractères accentués mal encodés faisaient planter l'affichage. J'ai ajouté une étape de normalisation systématique.",
+        ],
+      },
+      {
+        title: 'Le cœur : une comparaison qui connaît les règles du métier',
+        paragraphs: [
+          "Une fois les deux révisions choisies, l'outil lance une comparaison SVN entre elles, puis applique un filtrage qui encode les règles réelles de fabrication d'un livrable au CDVM : les fichiers propres à l'IDE de développement sont exclus, les fichiers de journalisation ne sont jamais livrés, certains dossiers techniques ne conservent que leur structure. Ces règles, c'était de la connaissance qu'il fallait avoir en tête à chaque livraison. Elles sont maintenant appliquées automatiquement, de la même façon, quelle que soit la personne qui prépare le livrable.",
+          "Les résultats s'insèrent directement dans la grille du module Package, avec une vérification pour éviter les doublons, et un compte-rendu chiffré.",
+        ],
+      },
+    ],
+    result:
+      "La construction d'un livrable passe de « se souvenir de ce qu'on a fait » à « choisir deux révisions SVN ». Le risque d'oubli disparaît.",
   },
   {
     slug: 'convert-phpexcel',
