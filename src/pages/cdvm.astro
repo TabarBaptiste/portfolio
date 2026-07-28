@@ -1,0 +1,281 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Button from "../components/ui/Button.astro";
+import { Icon } from "astro-icon/components";
+import {
+  intro,
+  glossaire,
+  chantiers,
+  principes,
+  conclusion,
+} from "../data/cdvm";
+
+// Même mise en forme légère que les études de cas : **gras** et `code`
+// + astérisque de renvoi vers le glossaire, posée sur la première occurrence
+// de chaque terme rencontrée dans le texte narratif.
+const usedGlossaryTerms = new Set<string>();
+const MARK_OPEN = "\x01";
+const MARK_CLOSE = "\x02";
+
+const annotateGlossary = (text: string) => {
+  let result = text;
+  for (const entry of glossaire) {
+    if (usedGlossaryTerms.has(entry.term)) continue;
+    for (const alt of entry.match) {
+      const regex = new RegExp(`\\b(${alt})\\b`);
+      if (regex.test(result)) {
+        result = result.replace(
+          regex,
+          `$1${MARK_OPEN}${entry.slug}${MARK_CLOSE}`,
+        );
+        usedGlossaryTerms.add(entry.term);
+        break;
+      }
+    }
+  }
+  return result;
+};
+
+const baseFormat = (text: string) =>
+  text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(
+      /`([^`]+)`/g,
+      '<code class="px-1.5 py-0.5 rounded bg-ink-100 dark:bg-night-border text-accent-700 dark:text-accent-200 text-[0.85em] font-mono">$1</code>',
+    )
+    .replace(
+      /\x01([a-z0-9-]+)\x02/g,
+      '<sup><a href="#gloss-$1" class="text-accent-600 dark:text-accent-300 no-underline hover:underline">*</a></sup>',
+    );
+
+// Utilisé partout sauf dans les définitions du glossaire lui-même
+const formatText = (text: string) => baseFormat(annotateGlossary(text));
+// Utilisé pour les définitions du glossaire : pas d'auto-référencement
+const formatTextPlain = (text: string) => baseFormat(text);
+---
+
+<Layout
+  title="Travaux au Conseil départemental du Val-de-Marne - Baptiste TABAR LABONNE"
+  description="Cinq chantiers d'outillage du cycle de vie applicatif au Conseil départemental du Val-de-Marne : vérification de serveurs, génération de configuration, fabrication de livrables SVN, administration des dépôts par le web et migration PHPExcel."
+>
+  <Header />
+  <main id="main" class="min-h-[100dvh]">
+    <!-- En-tête -->
+    <section class="px-4 md:px-8 pt-36 pb-12">
+      <div class="max-w-3xl mx-auto">
+        <nav class="mb-8 reveal">
+          <a
+            href="/#experience"
+            class="inline-flex items-center gap-1.5 font-mono text-sm text-ink-500 dark:text-ink-300 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
+          >
+            <Icon name="heroicons:arrow-left" class="w-3.5 h-3.5" aria-hidden="true" />
+            Parcours
+          </a>
+        </nav>
+
+        <p class="reveal font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-4">
+          {intro.eyebrow}
+        </p>
+
+        <h1 class="font-display text-4xl md:text-6xl leading-[1.1] text-ink-900 dark:text-ink-50 mb-5 reveal">
+          {intro.title}
+        </h1>
+
+        <p class="reveal font-mono text-sm text-ink-500 dark:text-ink-300 mb-10">
+          {intro.period}
+        </p>
+
+        <div class="space-y-4 reveal">
+          {intro.paragraphs.map((paragraph) => (
+            <p
+              class="text-ink-600 dark:text-ink-200 leading-relaxed"
+              set:html={formatText(paragraph)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Glossaire -->
+    <section class="px-4 md:px-8 pb-4">
+      <div class="max-w-3xl mx-auto reveal">
+        <details class="card p-0 overflow-hidden group">
+          <summary class="cursor-pointer px-6 py-4 font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300 flex items-center justify-between hover:bg-ink-50 dark:hover:bg-night-bg transition-colors">
+            Glossaire des termes techniques
+            <Icon name="heroicons:chevron-down" class="w-4 h-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <dl class="px-6 pb-6 pt-1 grid sm:grid-cols-2 gap-x-8 gap-y-5">
+            {glossaire.map((entry) => (
+              <div id={`gloss-${entry.slug}`} class="scroll-mt-28">
+                <dt class="font-semibold text-sm text-ink-900 dark:text-ink-50 mb-1">
+                  {entry.term}
+                </dt>
+                <dd
+                  class="text-sm text-ink-500 dark:text-ink-300 leading-relaxed"
+                  set:html={formatTextPlain(entry.definition)}
+                />
+              </div>
+            ))}
+          </dl>
+        </details>
+      </div>
+    </section>
+
+    <!-- Sommaire -->
+    <section class="px-4 md:px-8 pb-4">
+      <div class="max-w-3xl mx-auto reveal">
+        <div class="card p-6">
+          <h2 class="font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300 mb-4">
+            Cinq chantiers
+          </h2>
+          <ol class="space-y-2">
+            {chantiers.map((chantier) => (
+              <li>
+                <a
+                  href={`#${chantier.slug}`}
+                  class="group flex items-baseline gap-4 py-1.5 text-ink-700 dark:text-ink-100 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
+                >
+                  <span class="font-mono text-xs text-ink-400 dark:text-ink-500">
+                    {chantier.index}
+                  </span>
+                  <span class="font-semibold">{chantier.title}</span>
+                  <span class="text-sm text-ink-500 dark:text-ink-300 hidden sm:inline">
+                    {chantier.tagline}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chantiers -->
+    {chantiers.map((chantier) => (
+      <section id={chantier.slug} class="px-4 md:px-8 py-12 scroll-mt-28">
+        <div class="max-w-3xl mx-auto">
+          <!-- Titre du chantier -->
+          <div class="reveal border-t border-ink-200 dark:border-night-border pt-10 mb-8">
+            <p class="font-mono text-xs text-ink-400 dark:text-ink-500 mb-3">
+              Chantier {chantier.index}
+            </p>
+            <h2 class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50 mb-2">
+              {chantier.title}
+            </h2>
+            <p class="text-lg text-ink-500 dark:text-ink-300 mb-5">
+              {chantier.tagline}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {chantier.tags.map((tag) => (
+                <span class="font-mono text-xs px-2.5 py-1 rounded-md bg-ink-50 text-ink-600 border border-ink-200 dark:bg-night-card dark:text-ink-200 dark:border-night-border">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Le problème -->
+          <div class="reveal mb-10 pl-5 border-l-2 border-ink-200 dark:border-night-border">
+            <h3 class="font-mono text-xs uppercase tracking-wider text-ink-500 dark:text-ink-300 mb-3">
+              Le problème
+            </h3>
+            <div class="space-y-3">
+              {chantier.problem.map((paragraph) => (
+                <p
+                  class="text-ink-600 dark:text-ink-200 leading-relaxed"
+                  set:html={formatText(paragraph)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <!-- Ce que j'ai construit -->
+          <div class="space-y-10">
+            {chantier.sections.map((section) => (
+              <div class="reveal">
+                <h3 class="font-semibold text-lg text-ink-900 dark:text-ink-50 mb-4">
+                  {section.title}
+                </h3>
+                <div class="space-y-3">
+                  {section.paragraphs.map((paragraph) => (
+                    <p
+                      class="text-ink-600 dark:text-ink-200 leading-relaxed"
+                      set:html={formatText(paragraph)}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Résultat -->
+          <div class="reveal card p-6 mt-10">
+            <h3 class="font-mono text-xs uppercase tracking-wider text-accent-600 dark:text-accent-300 mb-3">
+              Résultat concret
+            </h3>
+            <p
+              class="text-ink-700 dark:text-ink-100 leading-relaxed"
+              set:html={formatText(chantier.result)}
+            />
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- Principes -->
+    <section id="principes" class="px-4 md:px-8 py-12 scroll-mt-28">
+      <div class="max-w-3xl mx-auto">
+        <div class="reveal border-t border-ink-200 dark:border-night-border pt-10 mb-8">
+          <h2 class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50">
+            Ce qui relie tout ça
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          {principes.map((principe, i) => (
+            <div class="reveal card p-6 flex gap-5">
+              <span class="font-mono text-sm text-ink-400 dark:text-ink-500 pt-0.5">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 class="font-semibold text-ink-900 dark:text-ink-50 mb-2">
+                  {principe.title}
+                </h3>
+                <p
+                  class="text-sm text-ink-600 dark:text-ink-200 leading-relaxed"
+                  set:html={formatText(principe.body)}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p
+          class="reveal mt-10 font-display text-xl md:text-2xl leading-snug text-ink-900 dark:text-ink-50"
+          set:html={formatText(conclusion)}
+        />
+      </div>
+    </section>
+
+    <!-- Retour -->
+    <section class="px-4 md:px-8 py-12">
+      <div class="max-w-3xl mx-auto reveal flex flex-wrap gap-3">
+        <Button href="/#experience" variant="outline" size="sm">
+          <Icon name="heroicons:arrow-left" class="w-4 h-4 mr-2" aria-hidden="true" />
+          Retour au parcours
+        </Button>
+        <Button href="/#projects" variant="outline" size="sm">
+          Voir mes projets
+          <Icon name="heroicons:arrow-right" class="w-4 h-4 ml-2" aria-hidden="true" />
+        </Button>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
