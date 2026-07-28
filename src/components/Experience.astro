@@ -22,8 +22,12 @@ const experiences = [
     company: 'Conseil Départemental du Val-de-Marne',
     period: `2023 - ${endYear}`,
     year: 2023.5,
-    description: "Refonte complète d'applications web, optimisation de bases de données, maintenance de solutions existantes. Conception d'une extension VSCode publiée sur le Marketplace pour améliorer la productivité de l'équipe.",
-    type: 'work'
+    description: "Refonte et maintenance d'applications web, optimisation de code. Développement d'une interface de gestion SVN sécurisée et d'une extension VSCode publiée sur le Marketplace.",
+    type: 'work',
+    link: {
+      label: 'Voir le détail de mes travaux',
+      url: '/cdvm'
+    }
   },
   {
     title: "Licence Professionnelle - Applications Web (DAW2I)",
@@ -93,12 +97,16 @@ const educationExperiences = experiences.filter((exp) => exp.type === 'education
             {exp.link && (
               <a
                 href={exp.link.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={exp.link.url.startsWith('/') ? undefined : '_blank'}
+                rel={exp.link.url.startsWith('/') ? undefined : 'noopener noreferrer'}
                 class="link-underline inline-flex items-center gap-1 text-sm mt-2"
               >
                 {exp.link.label}
-                <Icon name="heroicons:arrow-top-right-on-square" class="w-3.5 h-3.5" aria-hidden="true" />
+                <Icon
+                  name={exp.link.url.startsWith('/') ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
+                  class="w-3.5 h-3.5"
+                  aria-hidden="true"
+                />
               </a>
             )}
           </div>
@@ -126,12 +134,16 @@ const educationExperiences = experiences.filter((exp) => exp.type === 'education
             {exp.link && (
               <a
                 href={exp.link.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={exp.link.url.startsWith('/') ? undefined : '_blank'}
+                rel={exp.link.url.startsWith('/') ? undefined : 'noopener noreferrer'}
                 class="link-underline inline-flex items-center gap-1 text-sm mt-2"
               >
                 {exp.link.label}
-                <Icon name="heroicons:arrow-top-right-on-square" class="w-3.5 h-3.5" aria-hidden="true" />
+                <Icon
+                  name={exp.link.url.startsWith('/') ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
+                  class="w-3.5 h-3.5"
+                  aria-hidden="true"
+                />
               </a>
             )}
           </div>
