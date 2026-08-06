@@ -8,11 +8,14 @@ import Projects from "../components/Projects.astro";
 import Skills from "../components/Skills.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
+import { isAvailableNow } from "../lib/availability";
+
+const availability = isAvailableNow() ? "immédiatement" : "à partir d'octobre 2026";
 ---
 
 <Layout
 	title="Baptiste TABAR LABONNE - Développeur Full-Stack"
-	description="Portfolio de Baptiste TABAR LABONNE, développeur Full-Stack passionné, spécialisé en architectures web modernes, Next.js, NestJS et TypeScript. Disponible en Île-de-France à partir d'octobre 2026."
+	description={`Portfolio de Baptiste TABAR LABONNE, développeur Full-Stack passionné, spécialisé en architectures web modernes, Next.js, NestJS et TypeScript. Disponible ${availability}.`}
 >
 	<Header />
 	<main id="main">
