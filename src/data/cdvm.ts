@@ -21,7 +21,7 @@ export interface Chantier {
 export const intro = {
   eyebrow: 'Conseil départemental du Val-de-Marne',
   title: 'Outillage du cycle de vie applicatif',
-  period: 'Octobre 2025 → juillet 2026 · Domaine Développement',
+  period: 'Octobre 2023 → septembre 2026 · Domaine Développement',
   paragraphs: [
     "Le parc applicatif du CDVM, c'est une trentaine d'applications métier qui partagent toutes le même moteur maison, **Belight** - un socle backend PHP et interface ExtJS commun à tout le parc. Ces applications vivent sur des dépôts **SVN**, clonés localement sur des postes Windows, et sont déployées sur des serveurs Linux en développement, qualification et production.",
     "Autour de ce parc, il y avait tout un ensemble de gestes **répétitifs, manuels et faillibles** : vérifier qu'un serveur de production est bien configuré avant d'y installer une application, fabriquer à la main la liste des fichiers d'un livrable, administrer les dépôts SVN en se connectant directement sur le serveur, migrer une librairie de génération Excel obsolète application par application.",
