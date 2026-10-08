@@ -15,7 +15,11 @@ const experiences = [
     period: `2024 - ${endYear}`,
     year: 2026,
     description: "Formation d'expertise en alternance orientée architecture web, développement full-stack et pilotage de projets digitaux.",
-    type: 'education'
+    type: 'education',
+    link: {
+      label: 'Voir ma présentation',
+      url: '/Soutenance_Master_Architecte_Web_TABAR_LABONNE_Baptiste.pdf'
+    }
   },
   {
     title: 'Développeur Full-Stack en alternance',
@@ -67,6 +71,9 @@ const experiences = [
   }
 ].sort((a, b) => b.year - a.year);
 
+// Lien interne vers une page du site (hors fichiers PDF, ouverts dans un nouvel onglet)
+const isPage = (url: string) => url.startsWith('/') && !url.endsWith('.pdf');
+
 const workExperiences = experiences.filter((exp) => exp.type === 'work');
 const educationExperiences = experiences.filter((exp) => exp.type === 'education');
 ---
@@ -97,13 +104,13 @@ const educationExperiences = experiences.filter((exp) => exp.type === 'education
             {exp.link && (
               <a
                 href={exp.link.url}
-                target={exp.link.url.startsWith('/') ? undefined : '_blank'}
-                rel={exp.link.url.startsWith('/') ? undefined : 'noopener noreferrer'}
+                target={isPage(exp.link.url) ? undefined : '_blank'}
+                rel={isPage(exp.link.url) ? undefined : 'noopener noreferrer'}
                 class="link-underline inline-flex items-center gap-1 text-sm mt-2"
               >
                 {exp.link.label}
                 <Icon
-                  name={exp.link.url.startsWith('/') ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
+                  name={isPage(exp.link.url) ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
                   class="w-3.5 h-3.5"
                   aria-hidden="true"
                 />
@@ -134,13 +141,13 @@ const educationExperiences = experiences.filter((exp) => exp.type === 'education
             {exp.link && (
               <a
                 href={exp.link.url}
-                target={exp.link.url.startsWith('/') ? undefined : '_blank'}
-                rel={exp.link.url.startsWith('/') ? undefined : 'noopener noreferrer'}
+                target={isPage(exp.link.url) ? undefined : '_blank'}
+                rel={isPage(exp.link.url) ? undefined : 'noopener noreferrer'}
                 class="link-underline inline-flex items-center gap-1 text-sm mt-2"
               >
                 {exp.link.label}
                 <Icon
-                  name={exp.link.url.startsWith('/') ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
+                  name={isPage(exp.link.url) ? 'heroicons:arrow-right' : 'heroicons:arrow-top-right-on-square'}
                   class="w-3.5 h-3.5"
                   aria-hidden="true"
                 />
