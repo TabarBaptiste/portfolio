@@ -3,7 +3,7 @@ name: Warm Ledger
 description: Portfolio de développeur full-stack — mise en page éditoriale sur fond papier chaleureux, titres serif Cooper BT, données techniques en monospace OCR-B, accent bleu encre unique.
 colors:
   primary: "#1A1813"
-  secondary: "#6B675D"
+  secondary: "#55514A"
   tertiary: "#254D92"
   neutral: "#FAF8F3"
   paper: "#FAF8F3"
@@ -13,7 +13,7 @@ colors:
   ink-200: "#DAD6CB"
   ink-300: "#B5B0A3"
   ink-400: "#8B8679"
-  ink-500: "#6B675D"
+  ink-500: "#55514A"
   ink-600: "#4C4941"
   ink-700: "#35322B"
   ink-800: "#23211B"
@@ -21,7 +21,7 @@ colors:
   accent-50: "#EDF2FB"
   accent-100: "#D3DFF5"
   accent-200: "#A9C0EA"
-  accent-300: "#7A9CDB"
+  accent-300: "#90ADE2"
   accent-400: "#4F7AC8"
   accent-500: "#2E62B8"
   accent-600: "#254D92"
@@ -138,7 +138,7 @@ L'objectif est la crédibilité, pas la démonstration : peu de couleurs, peu d'
 ## Colors
 
 - **Primary — Ink 900 (#1A1813):** Encre presque noire, chaude. Titres, texte de boutons pleins, texte principal en mode sombre inversé.
-- **Secondary — Ink 500 (#6B675D):** Gris chaud moyen. Texte de support, sous-titres, métadonnées, labels de formulaire.
+- **Secondary — Ink 500 (#55514A):** Gris chaud moyen. Texte de support, sous-titres, métadonnées, labels de formulaire.
 - **Tertiary — Accent 600 (#254D92):** Bleu encre. Seul moteur d'interaction — liens, survols, icônes actives, focus. Utilisé avec parcimonie pour rester un signal fort.
 - **Neutral — Paper (#FAF8F3):** Fond de page par défaut. Un blanc cassé chaud, jamais du blanc pur.
 - **Paper Card (#FFFFFF):** Cartes et surfaces élevées en mode clair — contraste doux avec le fond papier.
