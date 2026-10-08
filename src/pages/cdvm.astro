@@ -69,7 +69,7 @@ const formatTextPlain = (text: string) => baseFormat(text);
     <!-- En-tête -->
     <section class="px-4 md:px-8 pt-36 pb-12">
       <div class="max-w-3xl mx-auto">
-        <nav class="mb-8 reveal">
+        <nav aria-label="Fil d'Ariane" class="mb-8 reveal">
           <a
             href="/#experience"
             class="inline-flex items-center gap-1.5 font-mono text-sm text-ink-500 dark:text-ink-300 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
@@ -141,7 +141,7 @@ const formatTextPlain = (text: string) => baseFormat(text);
                   href={`#${chantier.slug}`}
                   class="group flex items-baseline gap-4 py-1.5 text-ink-700 dark:text-ink-100 hover:text-accent-600 dark:hover:text-accent-300 transition-colors"
                 >
-                  <span class="font-mono text-xs text-ink-400 dark:text-ink-500">
+                  <span class="font-mono text-xs text-ink-500 dark:text-ink-300">
                     {chantier.index}
                   </span>
                   <span class="font-semibold">{chantier.title}</span>
@@ -162,7 +162,7 @@ const formatTextPlain = (text: string) => baseFormat(text);
         <div class="max-w-3xl mx-auto">
           <!-- Titre du chantier -->
           <div class="reveal border-t border-ink-200 dark:border-night-border pt-10 mb-8">
-            <p class="font-mono text-xs text-ink-400 dark:text-ink-500 mb-3">
+            <p class="font-mono text-xs text-ink-500 dark:text-ink-300 mb-3">
               Chantier {chantier.index}
             </p>
             <h2 class="font-display text-3xl md:text-4xl text-ink-900 dark:text-ink-50 mb-2">
@@ -240,7 +240,7 @@ const formatTextPlain = (text: string) => baseFormat(text);
         <div class="space-y-4">
           {principes.map((principe, i) => (
             <div class="reveal card p-6 flex gap-5">
-              <span class="font-mono text-sm text-ink-400 dark:text-ink-500 pt-0.5">
+              <span class="font-mono text-sm text-ink-500 dark:text-ink-300 pt-0.5">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
