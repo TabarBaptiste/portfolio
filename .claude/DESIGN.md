@@ -28,9 +28,9 @@ colors:
   accent-700: "#1C3B72"
   accent-800: "#142B54"
   accent-900: "#0C1C39"
-  night-bg: "#161511"
-  night-card: "#1F1D17"
-  night-border: "#2E2B23"
+  night-bg: "#131312"
+  night-card: "#1C1C1A"
+  night-border: "#2C2B28"
   success: "#22C55E"
   success-container: "#F0FDF4"
   on-success-container: "#166534"
@@ -144,7 +144,7 @@ L'objectif est la crédibilité, pas la démonstration : peu de couleurs, peu d'
 - **Paper Card (#FFFFFF):** Cartes et surfaces élevées en mode clair — contraste doux avec le fond papier.
 - **Échelle Ink (50→900):** Grille de gris chauds pour texte, bordures et fonds neutres. 50–200 pour fonds/bordures discrets, 300–500 pour texte secondaire, 700–900 pour texte principal et éléments à fort contraste.
 - **Échelle Accent (50→900):** Déclinaisons du bleu encre. 50/100 pour fonds de badges, 500/600 pour texte et icônes interactifs, 300 comme équivalent accent en mode sombre.
-- **Night (bg #161511, card #1F1D17, border #2E2B23):** Surfaces du mode sombre — un brun-noir chaud, jamais de bleu-noir type "dark mode SaaS".
+- **Night (bg #131312, card #1C1C1A, border #2C2B28):** Surfaces du mode sombre — un noir quasi neutre à peine chaud, jamais de bleu-noir type "dark mode SaaS".
 - **Success (#22C55E / container #F0FDF4):** Statut "en production", disponibilité, confirmation d'envoi de formulaire.
 - **Error (#EF4444 / container #FEF2F2):** Échec d'envoi de formulaire uniquement — pas utilisé ailleurs dans l'UI.
 
