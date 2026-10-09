@@ -38,9 +38,9 @@ export default {
                 },
                 // Surfaces du mode sombre (chaud, pas noir bleuté)
                 night: {
-                    bg: '#161511',
-                    card: '#1F1D17',
-                    border: '#2E2B23',
+                    bg: '#131312',
+                    card: '#1C1C1A',
+                    border: '#2C2B28',
                 },
             },
             fontFamily: {
