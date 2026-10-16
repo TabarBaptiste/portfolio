@@ -1,6 +1,6 @@
 import React from "react";
 import { Easing, interpolate, useCurrentFrame } from "remotion";
-import { Chars, Scene, Words } from "../components";
+import { Chars, Scene, Words, useMobile } from "../components";
 import { fonts, grounds } from "../theme";
 
 const g = grounds.paper;
@@ -8,6 +8,10 @@ const g = grounds.paper;
 // Transition par zoom : le mot "Projets" grossit jusqu'à traverser l'écran
 export const ProjectsTitle: React.FC<{ duration: number }> = ({ duration }) => {
     const frame = useCurrentFrame();
+    const m = useMobile();
+    const L = m
+        ? { x: 80, top: 740, size: 260, subTop: 1080, sub: 54, origin: "34% 51%" }
+        : { x: 160, top: 200, size: 400, subTop: 700, sub: 48, origin: "36% 46%" };
     const zoom = interpolate(frame, [duration - 40, duration], [1, 9], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
@@ -17,9 +21,9 @@ export const ProjectsTitle: React.FC<{ duration: number }> = ({ duration }) => {
 
     return (
         <Scene ground="paper" duration={duration} padded={false}>
-            <div style={{ position: "absolute", inset: 0, transform: `scale(${zoom})`, transformOrigin: "36% 46%", opacity: fade }}>
-                <Chars text="Projets" delay={2} stagger={3} style={{ position: "absolute", left: 150, top: 200, fontFamily: fonts.display, fontSize: 400, lineHeight: 1, color: g.ink }} />
-                <Words text="Le besoin de départ, mes choix techniques, le résultat." delay={22} stagger={2} style={{ position: "absolute", left: 160, top: 700, fontSize: 48, color: g.soft }} />
+            <div style={{ position: "absolute", inset: 0, transform: `scale(${zoom})`, transformOrigin: L.origin, opacity: fade }}>
+                <Chars text="Projets" delay={2} stagger={3} style={{ position: "absolute", left: L.x - 10, top: L.top, fontFamily: fonts.display, fontSize: L.size, lineHeight: 1, color: g.ink }} />
+                <Words text="Le besoin de départ, mes choix techniques, le résultat." delay={22} stagger={2} style={{ position: "absolute", left: L.x, top: L.subTop, width: m ? 920 : undefined, fontSize: L.sub, color: g.soft }} />
             </div>
         </Scene>
     );

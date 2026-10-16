@@ -1,6 +1,6 @@
 import React from "react";
 import { Img, staticFile, useCurrentFrame } from "remotion";
-import { Chars, Dir, Scene, Words } from "../components";
+import { Chars, Dir, Scene, Words, useMobile } from "../components";
 import { colors, easeOut, fonts, grounds, progress } from "../theme";
 
 const g = grounds.paper;
@@ -12,20 +12,31 @@ const rows = [
     ["vue", "nestjs", "symfony", "nodejs", "postgresql", "mysql"],
     ["prisma", "docker", "github", "tailwind", "stripe", "sentry"],
 ];
+// En vertical : quatre rangées plus courtes
+const mobileRows = [
+    ["typescript", "javascript", "php", "react", "nextjs"],
+    ["angular", "vue", "nestjs", "symfony", "nodejs"],
+    ["postgresql", "mysql", "prisma", "docker"],
+    ["github", "tailwind", "stripe", "sentry"],
+];
 const labels: Record<string, string> = { nextjs: "next.js", nodejs: "node.js", vue: "vue.js" };
 
-// Trois rangées de logos qui défilent en sens contraires, à des vitesses différentes
+// Rangées de logos qui défilent en sens contraires, à des vitesses différentes
 export const Stack: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
+    const m = useMobile();
+    const L = m
+        ? { x: 80, titleTop: 200, subTop: 400, sub: 44, rowsTop: 640, rows: mobileRows, tile: 230, icon: 92, label: 22 }
+        : { x: 160, titleTop: 90, subTop: 280, sub: 38, rowsTop: 400, rows, tile: TILE, icon: 72, label: 18 };
     return (
         <Scene ground="paper" duration={duration} exit={exit} padded={false}>
-            <Chars text="Compétences" delay={4} stagger={2} style={{ position: "absolute", left: 160, top: 90, fontFamily: fonts.display, fontSize: 150, lineHeight: 1.1, color: g.ink }} />
-            <Words text="Du front au déploiement, les outils que je pratique au quotidien." delay={20} stagger={2} style={{ position: "absolute", left: 160, top: 280, fontSize: 38, color: g.soft }} />
+            <Chars text="Compétences" delay={4} stagger={2} style={{ position: "absolute", left: L.x, top: L.titleTop, fontFamily: fonts.display, fontSize: 150, lineHeight: 1.1, color: g.ink }} />
+            <Words text="Du front au déploiement, les outils que je pratique au quotidien." delay={20} stagger={2} style={{ position: "absolute", left: L.x, top: L.subTop, width: m ? 920 : undefined, fontSize: L.sub, color: g.soft }} />
 
-            {rows.map((row, r) => {
+            {L.rows.map((row, r) => {
                 const dir = r % 2 === 0 ? -1 : 1;
-                const speed = [2.4, 1.8, 2.9][r];
-                const width = row.length * (TILE + GAP);
+                const speed = [2.4, 1.8, 2.9, 2.1][r];
+                const width = row.length * (L.tile + GAP);
                 const enter = progress(frame, 8 + r * 8, 50, easeOut);
                 const travel = (frame * speed) % width;
                 const x = dir < 0 ? -travel : travel - width;
@@ -34,7 +45,7 @@ export const Stack: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                         key={r}
                         style={{
                             position: "absolute",
-                            top: 400 + r * (TILE + GAP),
+                            top: L.rowsTop + r * (L.tile + GAP),
                             left: 0,
                             display: "flex",
                             gap: GAP,
@@ -45,8 +56,8 @@ export const Stack: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                             <div
                                 key={i}
                                 style={{
-                                    width: TILE,
-                                    height: TILE,
+                                    width: L.tile,
+                                    height: L.tile,
                                     flex: "none",
                                     borderRadius: 16,
                                     backgroundColor: colors.card,
@@ -57,8 +68,8 @@ export const Stack: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                                     gap: 18,
                                 }}
                             >
-                                <Img src={staticFile(`icon_svg/${icon}.svg`)} style={{ width: 72, height: 72, objectFit: "contain" }} />
-                                <span style={{ fontFamily: fonts.mono, fontSize: 18, color: g.soft }}>{labels[icon] ?? icon}</span>
+                                <Img src={staticFile(`icon_svg/${icon}.svg`)} style={{ width: L.icon, height: L.icon, objectFit: "contain" }} />
+                                <span style={{ fontFamily: fonts.mono, fontSize: L.label, color: g.soft }}>{labels[icon] ?? icon}</span>
                             </div>
                         ))}
                     </div>

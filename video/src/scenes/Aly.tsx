@@ -1,6 +1,6 @@
 import React from "react";
 import { Easing, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
-import { Chars, Chip, Dir, Scene, Typewriter, Words } from "../components";
+import { Chars, Chip, Dir, Scene, Typewriter, Words, useMobile } from "../components";
 import { BEAT, fonts, grounds, pop } from "../theme";
 
 const g = grounds.paper;
@@ -13,18 +13,23 @@ const EDGE = "linear-gradient(to right, transparent 0, #000 90px)";
 // Elles sont espacées de plus que leur largeur : sans intersection, l'ordre de profondeur ne s'inverse jamais.
 export const Aly: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
-    const cam = interpolate(frame, [0, duration], [40, -2700], { easing: Easing.bezier(0.33, 0, 0.4, 1) });
+    const m = useMobile();
+    // En vertical : le texte en haut, l'enfilade de captures en dessous sur toute la largeur
+    const L = m
+        ? { text: { left: 80, top: 230, width: 920 }, url: 34, title: 120, desc: 42, stage: { left: 0, top: 1020, width: 1080, height: 900 }, railTop: 150, card: [820, 512], gap: 900, cam: [140, -2500], mask: undefined }
+        : { text: { left: 160, top: 220, width: 720 }, url: 26, title: 116, desc: 34, stage: { left: 900, top: 0, width: 1020, height: 1080 }, railTop: 240, card: [900, 560], gap: 980, cam: [40, -2700], mask: EDGE };
+    const cam = interpolate(frame, [0, duration], L.cam, { easing: Easing.bezier(0.33, 0, 0.4, 1) });
 
     return (
         <Scene ground="paper" duration={duration} exit={exit} padded={false}>
-            <div style={{ position: "absolute", left: 160, top: 220, width: 720 }}>
-                <Typewriter text="alydousheure.fr" delay={10} speed={1} style={{ fontSize: 26, color: g.accent }} />
-                <Chars text="Aly dous’heure" delay={6} stagger={2} style={{ fontFamily: fonts.display, fontSize: 116, lineHeight: 1.1, marginTop: 20 }} />
+            <div style={{ position: "absolute", ...L.text }}>
+                <Typewriter text="alydousheure.fr" delay={10} speed={1} style={{ fontSize: L.url, color: g.accent }} />
+                <Chars text="Aly dous’heure" delay={6} stagger={2} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: 20 }} />
                 <Words
                     text="Réservation en ligne pour une masseuse indépendante : créneaux en temps réel, paiement sécurisé, tableau de bord pour la professionnelle."
                     delay={22}
                     stagger={2}
-                    style={{ fontSize: 34, lineHeight: 1.45, color: g.ink, marginTop: 28 }}
+                    style={{ fontSize: L.desc, lineHeight: 1.45, color: g.ink, marginTop: 28 }}
                 />
                 <div style={{ marginTop: 40 }}>
                     {tech.map((t, i) => (
@@ -33,8 +38,8 @@ export const Aly: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
                 </div>
             </div>
 
-            <div style={{ position: "absolute", left: 900, top: 0, width: 1020, height: 1080, overflow: "hidden", perspective: 1400, perspectiveOrigin: "0% 45%", maskImage: EDGE, WebkitMaskImage: EDGE }}>
-                <div style={{ position: "absolute", left: 0, top: 240, transformStyle: "preserve-3d", transform: `rotateY(18deg) translateX(${cam}px)` }}>
+            <div style={{ position: "absolute", ...L.stage, overflow: "hidden", perspective: 1400, perspectiveOrigin: "0% 45%", maskImage: L.mask, WebkitMaskImage: L.mask }}>
+                <div style={{ position: "absolute", left: 0, top: L.railTop, transformStyle: "preserve-3d", transform: `rotateY(18deg) translateX(${cam}px)` }}>
                     {shots.map((shot, i) => {
                         const s = pop(frame, 4 + i * 7, 20);
                         return (
@@ -42,10 +47,10 @@ export const Aly: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
                                 key={shot}
                                 style={{
                                     position: "absolute",
-                                    left: i * 980,
+                                    left: i * L.gap,
                                     top: 0,
-                                    width: 900,
-                                    height: 560,
+                                    width: L.card[0],
+                                    height: L.card[1],
                                     borderRadius: 12,
                                     overflow: "hidden",
                                     backgroundColor: "#fff",

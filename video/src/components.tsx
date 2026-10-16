@@ -1,8 +1,14 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { BEAT, Ground, colors, easeInOut, fonts, grounds, pop, progress } from "./theme";
 
 export type Dir = "up" | "down" | "left" | "right" | "iris" | "zoom";
+
+// Même vidéo, deux formats : chaque scène recompose sa mise en page quand l'image est verticale (9:16)
+export const useMobile = () => {
+    const { width, height } = useVideoConfig();
+    return height > width;
+};
 
 // Fond plein du chapitre + léger travelling avant (rien n'est jamais figé)
 // + recul de la scène pendant que le volet suivant la recouvre
@@ -46,7 +52,7 @@ export const Wipe: React.FC<{ dir: Dir; to: Ground }> = ({ dir, to }) => {
         const p = progress(frame, delay, WIPE - 8, easeInOut);
         let style: React.CSSProperties = {};
         if (dir === "iris") {
-            style = { clipPath: `circle(${p * 75}% at 50% 55%)` };
+            style = { clipPath: `circle(${p * 80}% at 50% 55%)` };
         } else {
             const t = (1 - p) * 100;
             const tr = { up: `translateY(${t}%)`, down: `translateY(${-t}%)`, left: `translateX(${t}%)`, right: `translateX(${-t}%)` }[
@@ -140,7 +146,7 @@ export const Typewriter: React.FC<{
     );
 };
 
-// Mot qui change à chaque temps, comme un compteur mécanique
+// Mot qui change à chaque temps, comme un compteur mécanique (un "\n" dans un mot le coupe en deux lignes)
 export const Slot: React.FC<{
     items: string[];
     times: number[];
@@ -149,7 +155,7 @@ export const Slot: React.FC<{
     const frame = useCurrentFrame();
     return (
         <div style={{ position: "relative", overflow: "hidden", padding: "0.15em 0 0.18em", ...style }}>
-            <span style={{ visibility: "hidden" }}>{items.reduce((a, b) => (a.length > b.length ? a : b))}</span>
+            <span style={{ visibility: "hidden", whiteSpace: "pre" }}>{items.reduce((a, b) => (a.length > b.length ? a : b))}</span>
             {items.map((item, i) => {
                 const enter = progress(frame, times[i], 16, easeInOut);
                 const leave = i < items.length - 1 ? progress(frame, times[i + 1], 16, easeInOut) : 0;
@@ -160,8 +166,8 @@ export const Slot: React.FC<{
                             position: "absolute",
                             left: 0,
                             top: "0.15em",
-                            whiteSpace: "nowrap",
-                            transform: `translateY(${(1 - enter) * 1.5 - leave * 1.5}em)`,
+                            whiteSpace: "pre",
+                            transform: `translateY(calc(${(1 - enter - leave) * 100}% + ${(1 - enter - leave) * 0.5}em))`,
                         }}
                     >
                         {item}
@@ -175,14 +181,15 @@ export const Slot: React.FC<{
 // Étiquette technique qui apparaît avec un petit rebond
 export const Chip: React.FC<{ label: string; delay: number; ground: Ground }> = ({ label, delay, ground }) => {
     const s = pop(useCurrentFrame(), delay, 13);
+    const mobile = useMobile();
     const filled = { paper: colors.ink100, night: colors.nightBorder, accent: colors.accent800 }[ground];
     return (
         <span
             style={{
                 display: "inline-block",
                 fontFamily: fonts.mono,
-                fontSize: 24,
-                padding: "10px 18px",
+                fontSize: mobile ? 32 : 24,
+                padding: mobile ? "12px 22px" : "10px 18px",
                 borderRadius: 8,
                 backgroundColor: filled,
                 color: grounds[ground].ink,

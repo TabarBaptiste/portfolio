@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, interpolate, useCurrentFrame } from "remotion";
 import "./fonts";
-import { Dir, WIPE, Wipe } from "./components";
+import { Dir, WIPE, Wipe, useMobile } from "./components";
 import { Aly } from "./scenes/Aly";
 import { Dao } from "./scenes/Dao";
 import { Intro } from "./scenes/Intro";
@@ -47,16 +47,17 @@ export const totalDuration = scenes[scenes.length - 1].from + scenes[scenes.leng
 // Bandeau discret en haut, qui prend l'encre du chapitre en cours
 const Chrome: React.FC = () => {
     const frame = useCurrentFrame();
+    const m = useMobile();
     const current = scenes.find((s) => frame < s.from + s.duration) ?? scenes[scenes.length - 1];
     const last = scenes[scenes.length - 1].from;
     const opacity = interpolate(frame, [scenes[1].from, scenes[1].from + 20, last - 10, last], [0, 1, 1, 0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
     });
-    const style: React.CSSProperties = { fontFamily: fonts.mono, fontSize: 20, color: grounds[current.ground].soft };
+    const style: React.CSSProperties = { fontFamily: fonts.mono, fontSize: m ? 26 : 20, color: grounds[current.ground].soft };
     return (
         <AbsoluteFill style={{ opacity, pointerEvents: "none" }}>
-            <div style={{ position: "absolute", top: 50, left: 160, right: 160, display: "flex", justifyContent: "space-between" }}>
+            <div style={{ position: "absolute", top: m ? 90 : 50, left: m ? 80 : 160, right: m ? 80 : 160, display: "flex", justifyContent: "space-between" }}>
                 <span style={style}>baptiste tabar labonne</span>
                 <span style={style}>{current.label}</span>
             </div>
