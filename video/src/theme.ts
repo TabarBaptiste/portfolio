@@ -1,4 +1,5 @@
-import { Easing, interpolate } from "remotion";
+import { Easing, interpolate, spring } from "remotion";
+import timeline from "./timeline.json";
 
 // Tokens repris de la charte "Warm Ledger" (.claude/DESIGN.md / tailwind.config.mjs)
 export const colors = {
@@ -14,7 +15,14 @@ export const colors = {
     ink800: "#23211B",
     ink900: "#1A1813",
     accent50: "#EDF2FB",
+    accent100: "#D3DFF5",
+    accent200: "#A9C0EA",
+    accent300: "#90ADE2",
     accent600: "#254D92",
+    accent800: "#142B54",
+    night: "#131312",
+    nightCard: "#1C1C1A",
+    nightBorder: "#2C2B28",
     success: "#22C55E",
 };
 
@@ -24,15 +32,31 @@ export const fonts = {
     mono: "'OCR-B', ui-monospace, monospace",
 };
 
-export const FPS = 30;
+// Chaque chapitre a son propre fond plein ; l'encre suit le fond
+export type Ground = "paper" | "night" | "accent";
 
-// Même courbe que les transitions du site (ease-out prononcé)
-export const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
+export const grounds: Record<Ground, { bg: string; ink: string; soft: string; accent: string }> = {
+    paper: { bg: colors.paper, ink: colors.ink900, soft: colors.ink500, accent: colors.accent600 },
+    night: { bg: colors.night, ink: colors.ink50, soft: colors.ink300, accent: colors.accent300 },
+    accent: { bg: colors.accent600, ink: colors.paper, soft: colors.accent100, accent: colors.paper },
+};
 
-// Progression 0 → 1 démarrant à `delay` et durant `duration` frames
-export const progress = (frame: number, delay: number, duration = 24) =>
+// Rythme : tout est calé sur la musique (120 BPM, 60 i/s → 30 images par temps)
+export const FPS = timeline.fps;
+export const BEAT = (60 / timeline.bpm) * FPS;
+export const BAR = BEAT * 4;
+
+export const easeOut = Easing.bezier(0.22, 1, 0.36, 1);
+export const easeInOut = Easing.bezier(0.76, 0, 0.24, 1);
+
+// Progression 0 → 1 démarrant à `delay` et durant `duration` images
+export const progress = (frame: number, delay: number, duration = 30, easing = easeOut) =>
     interpolate(frame, [delay, delay + duration], [0, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
-        easing: easeOut,
+        easing,
     });
+
+// Ressort avec un léger dépassement : donne du poids aux entrées
+export const pop = (frame: number, delay: number, damping = 16) =>
+    spring({ frame: frame - delay, fps: FPS, config: { damping, stiffness: 170, mass: 0.9 } });

@@ -1,103 +1,88 @@
 import React from "react";
-import { AbsoluteFill, Series, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Audio, Sequence, interpolate, useCurrentFrame } from "remotion";
 import "./fonts";
-import {
-    DaoShowcase,
-    Intro,
-    Journey,
-    OtherProjects,
-    Outro,
-    Principles,
-    ProjectShowcase,
-    ProjectsTitle,
-    Stack,
-    Stats,
-} from "./scenes";
-import { colors, fonts } from "./theme";
+import { Dir, WIPE, Wipe } from "./components";
+import { Aly } from "./scenes/Aly";
+import { Dao } from "./scenes/Dao";
+import { Intro } from "./scenes/Intro";
+import { Journey } from "./scenes/Journey";
+import { Others } from "./scenes/Others";
+import { Outro } from "./scenes/Outro";
+import { Principles } from "./scenes/Principles";
+import { ProjectsTitle } from "./scenes/ProjectsTitle";
+import { Stack } from "./scenes/Stack";
+import { Stats } from "./scenes/Stats";
+import { Svn } from "./scenes/Svn";
+import { BAR, Ground, fonts, grounds } from "./theme";
+import timeline from "./timeline.json";
+import music from "../audio/music.mp3";
 
-type Step = { label: string; duration: number; render: (duration: number) => React.ReactNode };
+type SceneProps = { duration: number; exit?: Dir };
+const components: Record<string, React.FC<SceneProps>> = {
+    intro: Intro,
+    stats: Stats,
+    principles: Principles,
+    projects: ProjectsTitle,
+    aly: Aly,
+    dao: Dao,
+    svn: Svn,
+    others: Others,
+    stack: Stack,
+    journey: Journey,
+    outro: Outro,
+};
 
-const steps: Step[] = [
-    { label: "", duration: 150, render: (d) => <Intro duration={d} /> },
-    { label: "à propos", duration: 120, render: (d) => <Stats duration={d} /> },
-    { label: "à propos", duration: 180, render: (d) => <Principles duration={d} /> },
-    { label: "projets", duration: 75, render: (d) => <ProjectsTitle duration={d} /> },
-    {
-        label: "projets",
-        duration: 165,
-        render: (d) => (
-            <ProjectShowcase
-                duration={d}
-                title="Aly dous'heure"
-                context="En production  ·  alydousheure.fr"
-                description="Plateforme de réservation pour une masseuse indépendante : créneaux en temps réel, paiement en ligne, tableau de bord pour la professionnelle."
-                tech={["NestJS", "Next.js", "Prisma", "Stripe"]}
-                main="projects/alydousheure/hero.png"
-                secondary="projects/alydousheure/reserver.png"
-            />
-        ),
+// Début et durée de chaque scène, en images, à partir des mesures du fichier timeline.json
+const scenes = timeline.scenes.reduce<{ id: string; ground: Ground; label: string; enter?: Dir; from: number; duration: number }[]>(
+    (acc, s) => {
+        const prev = acc[acc.length - 1];
+        const from = prev ? prev.from + prev.duration : 0;
+        return [...acc, { id: s.id, ground: s.bg as Ground, label: s.label, enter: s.enter as Dir | undefined, from, duration: s.bars * BAR }];
     },
-    { label: "projets", duration: 165, render: (d) => <DaoShowcase duration={d} /> },
-    {
-        label: "projets",
-        duration: 165,
-        render: (d) => (
-            <ProjectShowcase
-                duration={d}
-                title="Interface de gestion SVN"
-                context="En production  ·  Val-de-Marne"
-                description="Dépôts, branches, tags et sauvegardes gérés depuis le navigateur, sans ligne de commande. Un wrapper root sécurisé n'autorise qu'une liste fermée d'actions."
-                tech={["PHP", "Bash", "Linux", "Ext JS"]}
-                main="projects/interface-svn/accueil.png"
-                secondary="projects/interface-svn/permissions-production.png"
-            />
-        ),
-    },
-    { label: "projets", duration: 165, render: (d) => <OtherProjects duration={d} /> },
-    { label: "compétences", duration: 150, render: (d) => <Stack duration={d} /> },
-    { label: "parcours", duration: 180, render: (d) => <Journey duration={d} /> },
-    { label: "contact", duration: 180, render: (d) => <Outro duration={d} /> },
-];
+    [],
+);
 
-export const totalDuration = steps.reduce((sum, s) => sum + s.duration, 0);
+export const totalDuration = scenes[scenes.length - 1].from + scenes[scenes.length - 1].duration;
 
-// Bandeau discret en haut : nom à gauche, section courante à droite
+// Bandeau discret en haut, qui prend l'encre du chapitre en cours
 const Chrome: React.FC = () => {
     const frame = useCurrentFrame();
-    const introEnd = steps[0].duration;
-    let start = 0;
-    let label = "";
-    for (const step of steps) {
-        if (frame < start + step.duration) {
-            label = step.label;
-            break;
-        }
-        start += step.duration;
-    }
-    const opacity = interpolate(frame, [introEnd - 10, introEnd + 10], [0, 1], {
+    const current = scenes.find((s) => frame < s.from + s.duration) ?? scenes[scenes.length - 1];
+    const last = scenes[scenes.length - 1].from;
+    const opacity = interpolate(frame, [scenes[1].from, scenes[1].from + 20, last - 10, last], [0, 1, 1, 0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
     });
-    const style: React.CSSProperties = { fontFamily: fonts.mono, fontSize: 20, color: colors.ink400 };
+    const style: React.CSSProperties = { fontFamily: fonts.mono, fontSize: 20, color: grounds[current.ground].soft };
     return (
         <AbsoluteFill style={{ opacity, pointerEvents: "none" }}>
-            <div style={{ position: "absolute", top: 56, left: 160, right: 160, display: "flex", justifyContent: "space-between" }}>
+            <div style={{ position: "absolute", top: 50, left: 160, right: 160, display: "flex", justifyContent: "space-between" }}>
                 <span style={style}>baptiste tabar labonne</span>
-                <span style={style}>{label}</span>
+                <span style={style}>{current.label}</span>
             </div>
         </AbsoluteFill>
     );
 };
 
 export const Presentation: React.FC = () => (
-    <AbsoluteFill style={{ backgroundColor: colors.paper }}>
-        <Series>
-            {steps.map((step, i) => (
-                <Series.Sequence key={i} durationInFrames={step.duration}>
-                    {step.render(step.duration)}
-                </Series.Sequence>
-            ))}
-        </Series>
+    <AbsoluteFill style={{ backgroundColor: grounds.night.bg }}>
+        {scenes.map((s, i) => {
+            const Component = components[s.id];
+            return (
+                <Sequence key={s.id} from={s.from} durationInFrames={s.duration}>
+                    <Component duration={s.duration} exit={scenes[i + 1]?.enter} />
+                </Sequence>
+            );
+        })}
         <Chrome />
+        {/* Volets entre chapitres : ils se terminent pile sur la coupe */}
+        {scenes.map((s) =>
+            s.enter && s.enter !== "zoom" ? (
+                <Sequence key={`wipe-${s.id}`} from={s.from - WIPE} durationInFrames={WIPE}>
+                    <Wipe dir={s.enter} to={s.ground} />
+                </Sequence>
+            ) : null,
+        )}
+        <Audio src={music} />
     </AbsoluteFill>
 );

@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render Presentation out/presentation.mp4",
-    "still": "remotion still Presentation out/still.png"
+    "render": "remotion render Presentation out/presentation.mp4 --codec=h264 --crf=18",
+    "music": "python3 audio/generate.py"
   },
   "dependencies": {
     "@remotion/cli": "4.0.528",
