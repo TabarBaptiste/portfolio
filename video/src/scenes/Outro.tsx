@@ -5,18 +5,22 @@ import { BAR, BEAT, easeInOut, fonts, grounds, progress } from "../theme";
 
 const g = grounds.accent;
 const display: React.CSSProperties = { fontFamily: fonts.display, fontSize: 160, lineHeight: 1.05, color: g.ink };
-const contacts = [
+
+// Signature finale à la mesure 3 : le nom, puis les liens tapés un par temps
+// (audio/generate.py place ses clics de machine à écrire sur ces mêmes instants)
+const SIGNATURE = 2 * BAR;
+const links = [
     ["email", "tabarbaptiste@gmail.com"],
     ["linkedin", "in/baptiste-tabar-labonne"],
     ["github", "TabarBaptiste"],
+    ["portfolio", "portfolio-tabarlabonne.netlify.app"],
 ];
+const linkDelay = (i: number) => SIGNATURE + BEAT + i * BEAT;
 
-// La question, les contacts tapés au temps, puis la signature finale
+// La question, puis un seul écran de fin : le nom et tous les liens
 export const Outro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
-    const q = progress(frame, 2 * BAR - 30, 24, easeInOut);
-    const c = progress(frame, 3 * BAR - 20, 24, easeInOut);
-    const contactStart = 2 * BAR - 4;
+    const q = progress(frame, SIGNATURE - 30, 24, easeInOut);
 
     return (
         <Scene ground="accent" duration={duration} exit={exit} padded={false}>
@@ -32,18 +36,22 @@ export const Outro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                 />
             </div>
 
-            <div style={{ position: "absolute", left: 160, top: 300, transform: `translateY(${-c * 200}px)`, opacity: frame < contactStart ? 0 : 1 - c }}>
-                {contacts.map(([label, value], i) => (
-                    <div key={label} style={{ display: "flex", alignItems: "baseline", height: 150 }}>
-                        <Typewriter text={label} delay={contactStart + i * BEAT} speed={1} cursorUntil={0} style={{ width: 300, fontSize: 32, color: g.soft }} />
-                        <Typewriter text={value} delay={contactStart + i * BEAT + 8} speed={0.7} cursorUntil={contactStart + (i + 1) * BEAT + 8} style={{ fontSize: 64, color: g.ink }} />
-                    </div>
-                ))}
-            </div>
-
-            <div style={{ position: "absolute", left: 160, top: 360 }}>
-                <Chars text="Baptiste TABAR LABONNE" delay={3 * BAR} stagger={2} style={{ ...display, fontSize: 120 }} />
-                <Typewriter text="portfolio-tabarlabonne.netlify.app" delay={3 * BAR + BEAT} speed={0.8} style={{ fontSize: 44, color: g.soft, marginTop: 36 }} />
+            <div style={{ position: "absolute", left: 160, top: 220 }}>
+                <Chars text="Baptiste TABAR LABONNE" delay={SIGNATURE} stagger={2} style={{ ...display, fontSize: 120 }} />
+                <div style={{ marginTop: 70 }}>
+                    {links.map(([label, value], i) => (
+                        <div key={label} style={{ display: "flex", alignItems: "baseline", height: 100 }}>
+                            <Typewriter text={label} delay={linkDelay(i)} speed={1} cursorUntil={0} style={{ width: 260, fontSize: 28, color: g.soft }} />
+                            <Typewriter
+                                text={value}
+                                delay={linkDelay(i) + 8}
+                                speed={0.7}
+                                cursorUntil={i < links.length - 1 ? linkDelay(i + 1) + 8 : Infinity}
+                                style={{ fontSize: 48, color: g.ink }}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
         </Scene>
     );

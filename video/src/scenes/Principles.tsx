@@ -14,7 +14,8 @@ const principles = [
     { title: "Full-stack pour de vrai", text: "Base de données, API, interface, déploiement : toute la chaîne." },
 ];
 
-// Un principe par mesure : la liste défile comme un prompteur, la ligne active passe en pleine encre
+// Un principe par mesure : chaque ligne n'apparaît qu'au moment d'être lue, puis remonte et s'efface
+// comme sur un prompteur (aucune ligne à venir n'est visible en avance)
 export const Principles: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
     const active = principles.slice(1).reduce((a, _, i) => a + progress(frame, (i + 1) * BAR - 12, 30, easeInOut), 0);
@@ -25,11 +26,11 @@ export const Principles: React.FC<{ duration: number; exit?: Dir }> = ({ duratio
 
             <div style={{ position: "absolute", left: 160, top: ANCHOR - active * LINE }}>
                 {principles.map((p, i) => {
-                    const d = Math.abs(i - active);
-                    const opacity = d <= 1 ? 1 - 0.75 * d : Math.max(0, 0.25 * (2 - d));
+                    const d = active - i;
+                    const opacity = d <= 0 ? 1 : d <= 1 ? 1 - 0.82 * d : Math.max(0, 0.18 * (2 - d));
                     return (
                         <div key={p.title} style={{ height: LINE, opacity }}>
-                            <Chars text={p.title} delay={10 + i * 8} stagger={1} style={{ fontFamily: fonts.display, fontSize: 96, lineHeight: 1.1, color: g.ink }} />
+                            <Chars text={p.title} delay={i === 0 ? 10 : i * BAR - 12} stagger={1} style={{ fontFamily: fonts.display, fontSize: 96, lineHeight: 1.1, color: g.ink }} />
                         </div>
                     );
                 })}

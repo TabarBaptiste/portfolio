@@ -19,7 +19,7 @@ const TODAY_X = 260 + steps.length * STEP;
 
 // Travelling horizontal le long d'une frise : chaque étape apparaît quand la caméra l'atteint
 const cameraAt = (frame: number) =>
-    interpolate(frame, [30, 430], [0, TODAY_X - 1250], {
+    interpolate(frame, [30, 430], [0, TODAY_X - 1000], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
         easing: Easing.bezier(0.45, 0, 0.4, 1),
@@ -87,9 +87,9 @@ export const Journey: React.FC<{ duration: number; exit?: Dir }> = ({ duration, 
                         transform: `scale(${today})`,
                     }}
                 />
-                <div style={{ position: "absolute", left: TODAY_X - 22, top: LINE_Y + 60, width: 600 }}>
+                <div style={{ position: "absolute", left: TODAY_X - 22, top: LINE_Y + 60, width: 820 }}>
                     <Words text="Aujourd’hui" delay={reachedAt(TODAY_X, 1500) + 6} style={{ fontFamily: fonts.display, fontSize: 80, color: g.ink }} />
-                    <Words text="disponible immédiatement" delay={reachedAt(TODAY_X, 1500) + 16} style={{ fontFamily: fonts.mono, fontSize: 30, color: colors.success, marginTop: 8 }} />
+                    <Words text="disponible pour un CDI ou un CDD" delay={reachedAt(TODAY_X, 1500) + 16} style={{ fontFamily: fonts.mono, fontSize: 30, color: colors.success, marginTop: 8 }} />
                 </div>
             </div>
         </Scene>

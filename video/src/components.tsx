@@ -72,23 +72,27 @@ export const Chars: React.FC<{
     style?: React.CSSProperties;
 }> = ({ text, delay = 0, stagger = 2, style }) => {
     const frame = useCurrentFrame();
+    // Le masque déborde un peu autour du texte : accents, capitales et jambages ne sont jamais rognés
     return (
-        <div style={{ overflow: "hidden", paddingBottom: "0.16em", marginBottom: "-0.16em", whiteSpace: "nowrap", ...style }}>
-            {Array.from(text).map((ch, i) => {
-                const s = pop(frame, delay + i * stagger, 18);
-                return (
-                    <span
-                        key={i}
-                        style={{
-                            display: "inline-block",
-                            transform: `translateY(${(1 - s) * 1.25}em) rotate(${(1 - s) * 8}deg)`,
-                            transformOrigin: "0% 100%",
-                        }}
-                    >
-                        {ch === " " ? " " : ch}
-                    </span>
-                );
-            })}
+        <div style={{ whiteSpace: "nowrap", ...style }}>
+            <div style={{ overflow: "hidden", padding: "0.18em 0.06em 0.2em", margin: "-0.18em -0.06em -0.2em" }}>
+                {Array.from(text).map((ch, i) => {
+                    const s = pop(frame, delay + i * stagger, 18);
+                    return (
+                        <span
+                            key={i}
+                            style={{
+                                display: "inline-block",
+                                // Décalé de toute sa hauteur + une marge : invisible tant qu'il n'est pas entré
+                                transform: `translateY(calc(${(1 - s) * 100}% + ${(1 - s) * 0.45}em)) rotate(${(1 - s) * 8}deg)`,
+                                transformOrigin: "0% 100%",
+                            }}
+                        >
+                            {ch === " " ? "\u00A0" : ch}
+                        </span>
+                    );
+                })}
+            </div>
         </div>
     );
 };
@@ -106,8 +110,8 @@ export const Words: React.FC<{
             {text.split(" ").map((word, i) => {
                 const p = progress(frame, delay + i * stagger, 22);
                 return (
-                    <span key={i} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
-                        <span style={{ display: "inline-block", transform: `translateY(${(1 - p) * 1.3}em)` }}>{word}</span>
+                    <span key={i} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top", padding: "0.12em 0", margin: "-0.12em 0" }}>
+                        <span style={{ display: "inline-block", transform: `translateY(calc(${(1 - p) * 100}% + ${(1 - p) * 0.4}em))` }}>{word}</span>
                         {" "}
                     </span>
                 );
@@ -144,7 +148,7 @@ export const Slot: React.FC<{
 }> = ({ items, times, style }) => {
     const frame = useCurrentFrame();
     return (
-        <div style={{ position: "relative", overflow: "hidden", paddingBottom: "0.16em", ...style }}>
+        <div style={{ position: "relative", overflow: "hidden", padding: "0.15em 0 0.18em", ...style }}>
             <span style={{ visibility: "hidden" }}>{items.reduce((a, b) => (a.length > b.length ? a : b))}</span>
             {items.map((item, i) => {
                 const enter = progress(frame, times[i], 16, easeInOut);
@@ -155,9 +159,9 @@ export const Slot: React.FC<{
                         style={{
                             position: "absolute",
                             left: 0,
-                            top: 0,
+                            top: "0.15em",
                             whiteSpace: "nowrap",
-                            transform: `translateY(${(1 - enter) * 1.25 - leave * 1.25}em)`,
+                            transform: `translateY(${(1 - enter) * 1.5 - leave * 1.5}em)`,
                         }}
                     >
                         {item}

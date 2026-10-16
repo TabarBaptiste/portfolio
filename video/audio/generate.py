@@ -207,7 +207,8 @@ chords = [[57, 60, 64, 67], [53, 57, 60, 64], [60, 64, 67, 71], [55, 59, 62, 64]
 roots = [33, 29, 36, 31]
 
 drop = {starts["projects"]}  # la montée avant le zoom sur les projets
-final = starts["outro"] + 3  # la signature finale
+signature = starts["outro"] + 2  # l'écran final (nom et liens)
+groove_until = starts["outro"] + 4  # la dernière mesure ne garde que la nappe
 groove_from = 1  # la grosse caisse entre quand le métier s'affiche
 
 
@@ -221,7 +222,7 @@ kick_times = []
 for b in range(TOTAL_BARS):
     c = chord_at(b)
     place(tracks["pad"], pad_chord(chords[c], BAR + 0.5), bar(b))
-    groove = groove_from <= b < final and b not in drop
+    groove = groove_from <= b < groove_until and b not in drop
     for beat in range(4):
         at = bar(b) + beat * BEAT
         if groove:
@@ -235,14 +236,14 @@ for b in range(TOTAL_BARS):
             if b >= starts["stats"]:
                 for half in (0, 1):
                     place(tracks["bass"], bass_note(midi(roots[c] + (12 if half and beat == 3 else 0)), BEAT / 2 - 0.02), at + half * BEAT / 2, gain=0.6 if half == 0 else 1.0)
-        if starts["principles"] <= b < final and b not in drop:
+        if starts["principles"] <= b < groove_until and b not in drop:
             notes = chords[c] + [chords[c][1] + 12]
             for eighth in range(2):
                 m = notes[(beat * 2 + eighth + b) % len(notes)] + 12
                 place(tracks["pluck"], pluck(midi(m)), at + eighth * BEAT / 2, gain=0.7 + 0.3 * (eighth == 0), pan=0.3 * np.sin(b + beat))
 
 # Impacts : le métier, le retour après le zoom, la signature finale
-for b in (groove_from, starts["projects"] + 1, final):
+for b in (groove_from, starts["projects"] + 1, signature):
     place(tracks["fx"], impact(), bar(b), gain=1.0)
 
 # Montée sur la mesure de "Projets", coupée net à l'impact
@@ -260,13 +261,12 @@ for scene in timeline["scenes"]:
     pan = {"left": 0.5, "right": -0.5}.get(enter, 0.0)
     place(tracks["fx"], w, cut - WIPE_FRAMES / FPS - 0.05, gain=0.9, pan=pan)
 
-# Clics de machine à écrire (intro et contacts)
-for i in range(len("disponible immédiatement")):
-    place(tracks["ticks"], tick(), (14 + i * 1.4) / FPS, gain=RNG.uniform(0.6, 1.0), pan=RNG.uniform(-0.2, 0.2))
-contact_start = bar(starts["outro"] + 2) - 4 / FPS
-for i, value in enumerate(["tabarbaptiste@gmail.com", "in/baptiste-tabar-labonne", "TabarBaptiste"]):
+# Clics de machine à écrire sur les liens de l'écran final (mêmes instants que src/scenes/Outro.tsx)
+links = ["tabarbaptiste@gmail.com", "in/baptiste-tabar-labonne", "TabarBaptiste", "portfolio-tabarlabonne.netlify.app"]
+for i, value in enumerate(links):
     for k in range(len(value)):
-        place(tracks["ticks"], tick(), contact_start + i * BEAT + (8 + k * 0.7) / FPS, gain=RNG.uniform(0.5, 0.9), pan=RNG.uniform(-0.2, 0.2))
+        at = bar(signature) + BEAT + i * BEAT + (8 + k * 0.7) / FPS
+        place(tracks["ticks"], tick(), at, gain=RNG.uniform(0.5, 0.9), pan=RNG.uniform(-0.2, 0.2))
 
 # Sidechain : nappes, basse et arpège s'effacent à chaque coup de grosse caisse
 t = np.arange(N) / SR

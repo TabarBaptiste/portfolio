@@ -11,7 +11,7 @@ const STOPS = [0, 3 * BEAT, 6 * BEAT, 9 * BEAT];
 const stats = [
     { value: "3", count: 3, size: 440, label: "années d'alternance", note: "au Conseil Départemental du Val-de-Marne" },
     { value: "5", count: 5, size: 440, label: "projets en production", note: "dont une extension publiée sur le VSCode Marketplace" },
-    { value: "TS · PHP", size: 230, label: "stack principale", note: "NestJS, Next.js, Angular, Symfony" },
+    { value: "TS · PHP", size: 200, label: "stack principale", note: "NestJS, Next.js, Angular, Symfony" },
     { value: "BAC+5", size: 300, label: "niveau d'études", note: "Mastère Architecte Web, Digital School of Paris" },
 ];
 
@@ -36,7 +36,7 @@ export const Stats: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                     return (
                         <div
                             key={stat.label}
-                            style={{ position: "absolute", left: i * PANEL, top: 0, width: PANEL - 80, height: 1080, opacity: 0.15 + active * 0.85 }}
+                            style={{ position: "absolute", left: i * PANEL, top: 0, width: PANEL - 80, height: 1080, opacity: active }}
                         >
                             <div style={{ position: "absolute", left: 0, top: 150, height: 480, display: "flex", alignItems: "flex-end" }}>
                                 {shown !== null ? (
