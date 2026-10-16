@@ -25,7 +25,7 @@ npm run render:mobile  # génère out/presentation-mobile.mp4 (9:16)
 ## Modifier le contenu
 
 - `src/timeline.json` : ordre des scènes, durée en mesures, couleur de fond, type de transition. La musique (`audio/generate.py`) lit le même fichier, donc relancer `npm run music` après un changement de durée.
-- `src/scenes/*.tsx` : contenu et animation de chaque scène ; l'objet `L` en tête de chaque scène donne les positions et tailles des deux formats.
+- `src/scenes/*.tsx` : contenu et animation de chaque scène ; les positions et tailles des deux formats sont définies en tête de chaque scène.
 - `src/components.tsx` : briques d'animation (texte lettre par lettre, mots qui défilent, machine à écrire, volets de transition).
 - `src/theme.ts` : couleurs, polices, tempo, courbes d'animation.
 
