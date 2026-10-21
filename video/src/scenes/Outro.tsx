@@ -34,7 +34,7 @@ export const Outro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                 <Chars text="un projet," delay={BEAT} stagger={2} style={{ ...display, fontSize: L.q }} />
                 <Chars text="une question ?" delay={2 * BEAT} stagger={2} style={{ ...display, fontSize: L.q, fontStyle: "italic" }} />
                 <Words
-                    text="Je réponds vite. Disponible dès maintenant, sur site ou en télétravail."
+                    text="Je réponds vite. Disponible pour un CDI ou un CDD."
                     delay={BAR}
                     stagger={2}
                     style={{ fontSize: L.sub, width: L.subWidth, color: g.soft, marginTop: 40 }}
