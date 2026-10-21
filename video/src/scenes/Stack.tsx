@@ -1,7 +1,7 @@
 import React from "react";
 import { Img, staticFile, useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Words, useMobile } from "../components";
-import { colors, easeOut, fonts, grounds, progress } from "../theme";
+import { colors, easeOut, fonts, grounds, progress, readTime } from "../theme";
 
 const g = grounds.paper;
 const TILE = 180;
@@ -19,6 +19,9 @@ const mobileRows = [
     ["postgresql", "mysql", "prisma", "docker"],
     ["github", "tailwind", "stripe", "sentry"],
 ];
+const TITLE = "Compétences";
+const SUB = "Du front au déploiement, les outils que je pratique au quotidien.";
+export const stackEnd = 4 + readTime(TITLE, SUB);
 const labels: Record<string, string> = { nextjs: "next.js", nodejs: "node.js", vue: "vue.js" };
 
 // Rangées de logos qui défilent en sens contraires, à des vitesses différentes
@@ -30,8 +33,8 @@ export const Stack: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
         : { x: 160, titleTop: 90, subTop: 280, sub: 38, rowsTop: 400, rows, tile: TILE, icon: 72, label: 18 };
     return (
         <Scene ground="paper" duration={duration} exit={exit} padded={false}>
-            <Chars text="Compétences" delay={4} stagger={2} style={{ position: "absolute", left: L.x, top: L.titleTop, fontFamily: fonts.display, fontSize: 150, lineHeight: 1.1, color: g.ink }} />
-            <Words text="Du front au déploiement, les outils que je pratique au quotidien." delay={20} stagger={2} style={{ position: "absolute", left: L.x, top: L.subTop, width: m ? 920 : undefined, fontSize: L.sub, color: g.soft }} />
+            <Chars text={TITLE} delay={4} stagger={2} style={{ position: "absolute", left: L.x, top: L.titleTop, fontFamily: fonts.display, fontSize: 150, lineHeight: 1.1, color: g.ink }} />
+            <Words text={SUB} delay={20} stagger={2} style={{ position: "absolute", left: L.x, top: L.subTop, width: m ? 920 : undefined, fontSize: L.sub, color: g.soft }} />
 
             {L.rows.map((row, r) => {
                 const dir = r % 2 === 0 ? -1 : 1;

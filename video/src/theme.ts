@@ -46,7 +46,17 @@ export const FPS = timeline.fps;
 export const BEAT = (60 / timeline.bpm) * FPS;
 export const BAR = BEAT * 4;
 
-export const easeOut = Easing.bezier(0.22, 1, 0.36, 1);
+// Vitesse de lecture : un texte reste à l'écran le temps de le trouver (0,5 s) puis de le lire
+// (20 caractères par seconde), arrondi au temps supérieur pour rester sur la musique.
+// Le bloc suivant n'apparaît qu'une fois ce temps écoulé, compté depuis l'apparition du bloc.
+const READ_CPS = 20;
+const READ_FIND = 0.5;
+export const readTime = (...texts: string[]) => {
+    const chars = texts.reduce((n, t) => n + t.length, 0);
+    return Math.ceil(((READ_FIND + chars / READ_CPS) * FPS) / BEAT) * BEAT;
+};
+
+export const easeOut =Easing.bezier(0.22, 1, 0.36, 1);
 export const easeInOut = Easing.bezier(0.76, 0, 0.24, 1);
 
 // Progression 0 → 1 démarrant à `delay` et durant `duration` images

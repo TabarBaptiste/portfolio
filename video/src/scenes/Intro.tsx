@@ -1,13 +1,19 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Slot, Words, useMobile } from "../components";
-import { BAR, BEAT, easeInOut, fonts, grounds, progress } from "../theme";
+import { BAR, easeInOut, fonts, grounds, progress, readTime } from "../theme";
 
 const g = grounds.night;
 const display: React.CSSProperties = { fontFamily: fonts.display, fontWeight: 400, lineHeight: 1 };
-const SLOT_START = 2 * BAR + 16;
-const SLOT_TIMES = [SLOT_START, SLOT_START + 1.5 * BEAT, SLOT_START + 3 * BEAT, SLOT_START + 4.5 * BEAT];
+const JOB = ["Développeur", "Full-Stack"];
+const JOB_AT = BAR + 8;
+// Le métier sort une fois lu, puis "Je conçois…" change de fin au rythme de lecture
+const CLEAR_AT = JOB_AT + readTime(...JOB);
+const PREFIX = "Je conçois";
+const SLOT_START = CLEAR_AT + 24;
 const SLOT_ITEMS = ["des bases de données", "des API REST", "des interfaces", "des pipelines CI/CD."];
+const SLOT_TIMES = SLOT_ITEMS.map((_, i) => SLOT_START + SLOT_ITEMS.slice(0, i).reduce((t, item, j) => t + readTime(j === 0 ? `${PREFIX} ${item}` : item), 0));
+export const introEnd = SLOT_TIMES[SLOT_TIMES.length - 1] + readTime(SLOT_ITEMS[SLOT_ITEMS.length - 1]);
 // En vertical, chaque mot tient sur deux lignes
 const SLOT_ITEMS_MOBILE = ["des bases\nde données", "des API\nREST", "des\ninterfaces", "des pipelines\nCI/CD."];
 
@@ -17,8 +23,8 @@ export const Intro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
     const m = useMobile();
     // Mesure 2 : le nom remonte et rétrécit pour laisser la place au métier
     const lift = progress(frame, BAR - 6, 36, easeInOut);
-    // Fin de mesure 2 : le métier sort par le haut
-    const clear = progress(frame, 2 * BAR - 18, 22, easeInOut);
+    // Le métier sort par le haut
+    const clear = progress(frame, CLEAR_AT, 22, easeInOut);
 
     const L = m
         ? { x: 80, nameTop: 640 - lift * 460, nameSize: 160, nameScale: 0.38, name: ["Baptiste", "TABAR", "LABONNE"], jobTop: 780, jobSize: 150, chainTop: 760, prefix: 68, slot: 130 }
@@ -51,13 +57,14 @@ export const Intro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                     opacity: 1 - clear,
                 }}
             >
-                <Chars text="Développeur" delay={BAR + 8} stagger={2} style={{ ...display, fontSize: L.jobSize, fontStyle: "italic" }} />
-                <Chars text="Full-Stack" delay={BAR + 22} stagger={2} style={{ ...display, fontSize: L.jobSize, fontStyle: "italic" }} />
+                {JOB.map((word, i) => (
+                    <Chars key={word} text={word} delay={JOB_AT + i * 14} stagger={2} style={{ ...display, fontSize: L.jobSize, fontStyle: "italic" }} />
+                ))}
             </div>
 
-            {/* Mesures 3 et 4 : "Je conçois…" complété par un nouveau mot tous les temps et demi */}
+            {/* "Je conçois…" complété par un nouveau mot, chacun le temps d'être lu */}
             <div style={{ position: "absolute", left: L.x, top: L.chainTop, color: g.ink, width: 1600 }}>
-                <Words text="Je conçois" delay={2 * BAR + 4} style={{ fontSize: L.prefix, color: g.soft }} />
+                <Words text={PREFIX} delay={SLOT_START - 12} style={{ fontSize: L.prefix, color: g.soft }} />
                 <Slot items={m ? SLOT_ITEMS_MOBILE : SLOT_ITEMS} times={SLOT_TIMES} style={{ ...display, fontSize: L.slot, marginTop: 8 }} />
             </div>
         </Scene>

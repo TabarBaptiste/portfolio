@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, useMobile } from "../components";
-import { BEAT, fonts, grounds, pop } from "../theme";
+import { fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.accent;
 const others = [
@@ -10,8 +10,13 @@ const others = [
     { title: "Beroli", text: "Application mobile de gestion des interventions terrain", tech: "Flutter, Firebase" },
     { title: "RjWeb", text: "Plateforme communautaire d'un quartier de Laval", tech: "PHP, MySQL" },
 ];
+const HEADER = "Et aussi";
+// Un projet n'arrive qu'une fois le précédent lu
+const readOf = (i: number) => readTime(...(i === 0 ? [HEADER] : []), others[i].title, others[i].text, others[i].tech);
+const STARTS = others.map((_, i) => 4 + others.slice(0, i).reduce((t, _p, j) => t + readOf(j), 0));
+export const othersEnd = STARTS[STARTS.length - 1] + readOf(others.length - 1);
 
-// Un projet par temps, chacun glisse depuis un côté différent
+// Chaque projet glisse depuis un côté différent
 export const Others: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
     const m = useMobile();
@@ -21,9 +26,9 @@ export const Others: React.FC<{ duration: number; exit?: Dir }> = ({ duration, e
         : { x: 160, headerTop: 110, top: 250, step: 190, title: 64, text: 30, tech: 24 };
     return (
         <Scene ground="accent" duration={duration} exit={exit} padded={false}>
-            <Chars text="Et aussi" delay={2} stagger={2} style={{ position: "absolute", left: L.x, top: L.headerTop, fontFamily: fonts.display, fontSize: 64, color: g.soft }} />
+            <Chars text={HEADER} delay={2} stagger={2} style={{ position: "absolute", left: L.x, top: L.headerTop, fontFamily: fonts.display, fontSize: 64, color: g.soft }} />
             {others.map((p, i) => {
-                const s = pop(frame, 12 + i * BEAT, 20);
+                const s = pop(frame, STARTS[i], 20);
                 const side = i % 2 === 0 ? -1 : 1;
                 return (
                     <div

@@ -1,20 +1,22 @@
 import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Typewriter, Words, useMobile } from "../components";
-import { BEAT, fonts, grounds, progress, easeInOut } from "../theme";
+import { fonts, grounds, progress, easeInOut, readTime } from "../theme";
 
 const g = grounds.paper;
 // Largeur d'un panneau : un chiffre par écran en vertical
 const panelFor = (mobile: boolean) => (mobile ? 1080 : 1150);
-// Un chiffre tous les trois temps ; la caméra glisse d'un panneau à l'autre
-const STOPS = [0, 3 * BEAT, 6 * BEAT, 9 * BEAT];
-
 const stats = [
     { value: "3", count: 3, size: 440, mobileSize: 480, label: "années d'alternance", note: "au Conseil Départemental du Val-de-Marne" },
     { value: "5", count: 5, size: 440, mobileSize: 480, label: "projets en production", note: "dont une extension publiée sur le VSCode Marketplace" },
     { value: "TS · PHP", size: 200, mobileSize: 130, label: "stack principale", note: "NestJS, Next.js, Angular, Symfony" },
     { value: "BAC+5", size: 300, mobileSize: 210, label: "niveau d'études", note: "Mastère Architecte Web, Digital School of Paris" },
 ];
+
+// Chaque chiffre reste le temps de lire sa légende ; la caméra glisse ensuite au panneau suivant
+const readOf = (stat: (typeof stats)[number]) => readTime(stat.value, stat.label, stat.note);
+const STOPS = stats.map((_, i) => stats.slice(0, i).reduce((t, stat) => t + readOf(stat), 0));
+export const statsEnd = STOPS[STOPS.length - 1] + readOf(stats[stats.length - 1]);
 
 const cameraAt = (frame: number, panel: number) =>
     STOPS.slice(1).reduce((x, stop) => x + progress(frame, stop - 8, 26, easeInOut) * panel, 0);

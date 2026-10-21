@@ -1,10 +1,16 @@
 import React from "react";
 import { Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { Chars, Chip, Dir, Scene, Typewriter, Words, useMobile } from "../components";
-import { BAR, BEAT, fonts, grounds, pop } from "../theme";
+import { BAR, BEAT, fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.paper;
 const tech = ["PHP", "Bash", "Linux", "Ext JS"];
+const LABEL = "en production · val-de-marne";
+const TITLE = "Interface de gestion SVN";
+const DESC = "Dépôts, branches, tags et sauvegardes gérés depuis le navigateur, sans ligne de commande.";
+// Les technologies arrivent une fois la description lue
+const CHIPS_AT = 4 + readTime(LABEL, TITLE, DESC);
+export const svnEnd = CHIPS_AT + readTime(...tech);
 
 const Card: React.FC<{ src: string; style: React.CSSProperties; imgStyle?: React.CSSProperties }> = ({ src, style, imgStyle }) => (
     <div style={{ position: "absolute", borderRadius: 12, overflow: "hidden", backgroundColor: "#fff", ...style }}>
@@ -41,12 +47,12 @@ export const Svn: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
     return (
         <Scene ground="paper" duration={duration} exit={exit} padded={false}>
             <div style={{ position: "absolute", ...L.header }}>
-                <Typewriter text="en production · val-de-marne" delay={8} speed={1} style={{ fontSize: L.label, color: g.accent }} />
+                <Typewriter text={LABEL} delay={8} speed={1} style={{ fontSize: L.label, color: g.accent }} />
                 {L.titleLines.map((line, i) => (
                     <Chars key={line} text={line} delay={4 + i * 10} stagger={1} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: i === 0 ? 16 : 0, color: g.ink }} />
                 ))}
                 <Words
-                    text="Dépôts, branches, tags et sauvegardes gérés depuis le navigateur, sans ligne de commande."
+                    text={DESC}
                     delay={20}
                     stagger={2}
                     style={{ fontSize: L.desc, lineHeight: 1.45, color: g.ink, marginTop: 16, width: L.descWidth }}
@@ -89,7 +95,7 @@ export const Svn: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
 
             <div style={{ position: "absolute", ...L.chips }}>
                 {tech.map((t, i) => (
-                    <Chip key={t} label={t} delay={2 * BAR + i * (BEAT / 2)} ground="paper" />
+                    <Chip key={t} label={t} delay={CHIPS_AT + i * (BEAT / 2)} ground="paper" />
                 ))}
             </div>
         </Scene>

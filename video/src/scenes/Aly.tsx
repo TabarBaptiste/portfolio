@@ -1,11 +1,17 @@
 import React from "react";
 import { Easing, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { Chars, Chip, Dir, Scene, Typewriter, Words, useMobile } from "../components";
-import { BEAT, fonts, grounds, pop } from "../theme";
+import { BEAT, fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.paper;
 const shots = ["hero", "soins", "massage_tonique", "reserver"];
 const tech = ["NestJS", "Next.js", "Prisma", "Stripe Connect", "Vercel"];
+const URL = "alydousheure.fr";
+const TITLE = "Aly dous’heure";
+const DESC = "Réservation en ligne pour une masseuse indépendante : créneaux en temps réel, paiement sécurisé, tableau de bord pour la professionnelle.";
+// Les technologies arrivent une fois la description lue
+const CHIPS_AT = 4 + readTime(URL, TITLE, DESC);
+export const alyEnd = CHIPS_AT + readTime(...tech);
 // Bord gauche de la zone d'images en fondu doux plutôt qu'en coupure nette
 const EDGE = "linear-gradient(to right, transparent 0, #000 90px)";
 
@@ -23,17 +29,17 @@ export const Aly: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
     return (
         <Scene ground="paper" duration={duration} exit={exit} padded={false}>
             <div style={{ position: "absolute", ...L.text }}>
-                <Typewriter text="alydousheure.fr" delay={10} speed={1} style={{ fontSize: L.url, color: g.accent }} />
-                <Chars text="Aly dous’heure" delay={6} stagger={2} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: 20 }} />
+                <Typewriter text={URL} delay={10} speed={1} style={{ fontSize: L.url, color: g.accent }} />
+                <Chars text={TITLE} delay={6} stagger={2} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: 20 }} />
                 <Words
-                    text="Réservation en ligne pour une masseuse indépendante : créneaux en temps réel, paiement sécurisé, tableau de bord pour la professionnelle."
+                    text={DESC}
                     delay={22}
                     stagger={2}
                     style={{ fontSize: L.desc, lineHeight: 1.45, color: g.ink, marginTop: 28 }}
                 />
                 <div style={{ marginTop: 40 }}>
                     {tech.map((t, i) => (
-                        <Chip key={t} label={t} delay={2 * BEAT + i * (BEAT / 2)} ground="paper" />
+                        <Chip key={t} label={t} delay={CHIPS_AT + i * (BEAT / 2)} ground="paper" />
                     ))}
                 </div>
             </div>

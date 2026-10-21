@@ -207,8 +207,9 @@ chords = [[57, 60, 64, 67], [53, 57, 60, 64], [60, 64, 67, 71], [55, 59, 62, 64]
 roots = [33, 29, 36, 31]
 
 drop = {starts["projects"]}  # la montée avant le zoom sur les projets
-signature = starts["outro"] + 2  # l'écran final (nom et liens)
-groove_until = starts["outro"] + 4  # la dernière mesure ne garde que la nappe
+outro = next(s for s in timeline["scenes"] if s["id"] == "outro")
+signature = starts["outro"] + outro["signature"]  # l'écran final (nom et liens), même mesure que src/scenes/Outro.tsx
+groove_until = starts["outro"] + outro["bars"] - 1  # la dernière mesure ne garde que la nappe
 groove_from = 1  # la grosse caisse entre quand le métier s'affiche
 
 

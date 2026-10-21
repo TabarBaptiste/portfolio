@@ -1,7 +1,7 @@
 import React from "react";
 import { Img, staticFile, useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Typewriter, Words, useMobile } from "../components";
-import { BEAT, colors, fonts, grounds, pop } from "../theme";
+import { BEAT, colors, fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.night;
 const features = [
@@ -10,8 +10,14 @@ const features = [
     "Mots de passe chiffrés en AES-256-CBC",
     "Erreurs utilisateurs remontées avec Sentry",
 ];
+const LABEL = "extension vscode · marketplace";
+const TITLE = "PHP DAO Generator";
+const DESC = "Une demande de mon maître d'apprentissage : générer en quelques secondes les DAO de toute l'équipe.";
+// Les fonctionnalités n'arrivent qu'une fois la description lue
+const FEATURES_AT = 8 + readTime(LABEL, TITLE, DESC);
+export const daoEnd = FEATURES_AT + readTime(...features);
 
-// Le logo tombe en place avec un ressort, les fonctionnalités arrivent une par temps
+// Le logo tombe en place avec un ressort, puis les fonctionnalités arrivent une par temps
 export const Dao: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
     const frame = useCurrentFrame();
     const logo = pop(frame, 4, 13);
@@ -40,17 +46,17 @@ export const Dao: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit
             </div>
 
             <div style={{ position: "absolute", ...L.text }}>
-                <Typewriter text="extension vscode · marketplace" delay={12} speed={1} style={{ fontSize: L.label, color: g.accent }} />
-                <Chars text="PHP DAO Generator" delay={8} stagger={2} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: 20, color: g.ink }} />
+                <Typewriter text={LABEL} delay={12} speed={1} style={{ fontSize: L.label, color: g.accent }} />
+                <Chars text={TITLE} delay={8} stagger={2} style={{ fontFamily: fonts.display, fontSize: L.title, lineHeight: 1.1, marginTop: 20, color: g.ink }} />
                 <Words
-                    text="Une demande de mon maître d'apprentissage : générer en quelques secondes les DAO de toute l'équipe."
+                    text={DESC}
                     delay={20}
                     stagger={2}
                     style={{ fontSize: L.desc, lineHeight: 1.45, color: g.soft, marginTop: 24 }}
                 />
                 <div style={{ marginTop: 40 }}>
                     {features.map((f, i) => (
-                        <Words key={f} text={f} delay={2 * BEAT + i * BEAT} stagger={1} style={{ fontSize: L.feature, lineHeight: 1.7, color: g.ink }} />
+                        <Words key={f} text={f} delay={FEATURES_AT + i * BEAT} stagger={1} style={{ fontSize: L.feature, lineHeight: 1.7, color: g.ink }} />
                     ))}
                 </div>
             </div>

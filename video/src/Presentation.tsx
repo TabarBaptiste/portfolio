@@ -2,17 +2,17 @@ import React from "react";
 import { AbsoluteFill, Audio, Sequence, interpolate, useCurrentFrame } from "remotion";
 import "./fonts";
 import { Dir, WIPE, Wipe, useMobile } from "./components";
-import { Aly } from "./scenes/Aly";
-import { Dao } from "./scenes/Dao";
-import { Intro } from "./scenes/Intro";
-import { Journey } from "./scenes/Journey";
-import { Others } from "./scenes/Others";
-import { Outro } from "./scenes/Outro";
-import { Principles } from "./scenes/Principles";
-import { ProjectsTitle } from "./scenes/ProjectsTitle";
-import { Stack } from "./scenes/Stack";
-import { Stats } from "./scenes/Stats";
-import { Svn } from "./scenes/Svn";
+import { Aly, alyEnd } from "./scenes/Aly";
+import { Dao, daoEnd } from "./scenes/Dao";
+import { Intro, introEnd } from "./scenes/Intro";
+import { Journey, journeyEnd } from "./scenes/Journey";
+import { Others, othersEnd } from "./scenes/Others";
+import { Outro, outroEnd } from "./scenes/Outro";
+import { Principles, principlesEnd } from "./scenes/Principles";
+import { ProjectsTitle, projectsEnd } from "./scenes/ProjectsTitle";
+import { Stack, stackEnd } from "./scenes/Stack";
+import { Stats, statsEnd } from "./scenes/Stats";
+import { Svn, svnEnd } from "./scenes/Svn";
 import { BAR, Ground, fonts, grounds } from "./theme";
 import timeline from "./timeline.json";
 import music from "../audio/music.mp3";
@@ -31,6 +31,20 @@ const components: Record<string, React.FC<SceneProps>> = {
     journey: Journey,
     outro: Outro,
 };
+// Image à laquelle le dernier texte de chaque scène a eu le temps d'être lu
+const readEnds: Record<string, number> = {
+    intro: introEnd,
+    stats: statsEnd,
+    principles: principlesEnd,
+    projects: projectsEnd,
+    aly: alyEnd,
+    dao: daoEnd,
+    svn: svnEnd,
+    others: othersEnd,
+    stack: stackEnd,
+    journey: journeyEnd,
+    outro: outroEnd,
+};
 
 // Début et durée de chaque scène, en images, à partir des mesures du fichier timeline.json
 const scenes = timeline.scenes.reduce<{ id: string; ground: Ground; label: string; enter?: Dir; from: number; duration: number }[]>(
@@ -41,6 +55,13 @@ const scenes = timeline.scenes.reduce<{ id: string; ground: Ground; label: strin
     },
     [],
 );
+
+// Une scène trop courte couperait sa lecture : on le signale plutôt que de rendre une vidéo illisible
+scenes.forEach((s, i) => {
+    const next = scenes[i + 1];
+    const need = readEnds[s.id] + (next?.enter && next.enter !== "zoom" ? WIPE : 0);
+    if (need > s.duration) throw new Error(`timeline.json : la scène "${s.id}" doit durer ${Math.ceil(need / BAR)} mesures pour laisser le temps de lire`);
+});
 
 export const totalDuration = scenes[scenes.length - 1].from + scenes[scenes.length - 1].duration;
 
