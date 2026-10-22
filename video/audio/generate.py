@@ -8,6 +8,7 @@ sur les transitions (whoosh, impacts, montée) et sur le texte tapé (clics).
 """
 
 import json
+import math
 import subprocess
 import wave
 from pathlib import Path
@@ -24,10 +25,11 @@ BAR = 4 * BEAT
 FPS = timeline["fps"]
 WIPE_FRAMES = 26  # doit correspondre à WIPE dans src/components.tsx
 
+# Les scènes durent un nombre de temps : leurs débuts tombent sur un temps, pas forcément sur une mesure
 starts, t = {}, 0
 for scene in timeline["scenes"]:
     starts[scene["id"]] = t
-    t += scene["bars"]
+    t += scene["beats"] / 4
 TOTAL_BARS = t
 LENGTH = TOTAL_BARS * BAR
 N = int(LENGTH * SR)
@@ -206,10 +208,10 @@ def normalize(x, peak=1.0):
 chords = [[57, 60, 64, 67], [53, 57, 60, 64], [60, 64, 67, 71], [55, 59, 62, 64]]  # Am7, Fmaj7, Cmaj7, G6
 roots = [33, 29, 36, 31]
 
-drop = {starts["aly"] - 1}  # la montée avant le zoom sur les projets (dernière mesure de "Projets")
+drop = (starts["aly"] - 1, starts["aly"])  # la montée avant le zoom sur les projets (dernière mesure de "Projets")
 outro = next(s for s in timeline["scenes"] if s["id"] == "outro")
-signature = starts["outro"] + outro["signature"]  # l'écran final (nom et liens), même mesure que src/scenes/Outro.tsx
-groove_until = starts["outro"] + outro["bars"] - 1  # la dernière mesure ne garde que la nappe
+signature = starts["outro"] + outro["signature"] / 4  # l'écran final (nom et liens), même mesure que src/scenes/Outro.tsx
+groove_until = starts["outro"] + outro["beats"] / 4 - 1  # la dernière mesure ne garde que la nappe
 groove_from = 1  # la grosse caisse entre quand le métier s'affiche
 
 
@@ -220,24 +222,25 @@ def chord_at(b):
 tracks = {name: np.zeros((N, 2)) for name in ["kick", "clap", "hats", "bass", "pad", "pluck", "fx", "ticks"]}
 kick_times = []
 
-for b in range(TOTAL_BARS):
+for b in range(math.ceil(TOTAL_BARS)):
     c = chord_at(b)
     place(tracks["pad"], pad_chord(chords[c], BAR + 0.5), bar(b))
-    groove = groove_from <= b < groove_until and b not in drop
     for beat in range(4):
         at = bar(b) + beat * BEAT
+        pos = b + beat / 4
+        groove = groove_from <= pos < groove_until and not drop[0] <= pos < drop[1]
         if groove:
             place(tracks["kick"], kick(), at)
             kick_times.append(at)
             if b >= 2:
                 place(tracks["hats"], hat(open_=beat % 2 == 1), at + BEAT / 2, gain=0.8, pan=0.25)
                 place(tracks["hats"], hat(), at + BEAT / 4, gain=0.35, pan=-0.3)
-            if b >= starts["stats"] and beat in (1, 3):
+            if pos >= starts["stats"] and beat in (1, 3):
                 place(tracks["clap"], clap(), at, pan=0.05)
-            if b >= starts["stats"]:
+            if pos >= starts["stats"]:
                 for half in (0, 1):
                     place(tracks["bass"], bass_note(midi(roots[c] + (12 if half and beat == 3 else 0)), BEAT / 2 - 0.02), at + half * BEAT / 2, gain=0.6 if half == 0 else 1.0)
-        if starts["principles"] <= b < groove_until and b not in drop:
+        if starts["principles"] <= pos < groove_until and not drop[0] <= pos < drop[1]:
             notes = chords[c] + [chords[c][1] + 12]
             for eighth in range(2):
                 m = notes[(beat * 2 + eighth + b) % len(notes)] + 12
@@ -309,4 +312,4 @@ with wave.open(str(wav), "wb") as f:
 
 subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(wav), "-b:a", "192k", str(ROOT / "audio" / "music.mp3")], check=True)
 wav.unlink()
-print(f"audio/music.mp3 : {LENGTH:.1f} s, {TOTAL_BARS} mesures à {timeline['bpm']} BPM")
+print(f"audio/music.mp3 : {LENGTH:.1f} s, {TOTAL_BARS:g} mesures à {timeline['bpm']} BPM")

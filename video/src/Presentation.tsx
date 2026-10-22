@@ -13,7 +13,7 @@ import { ProjectsTitle, projectsEnd } from "./scenes/ProjectsTitle";
 import { Stack, stackEnd } from "./scenes/Stack";
 import { Stats, statsEnd } from "./scenes/Stats";
 import { Svn, svnEnd } from "./scenes/Svn";
-import { BAR, Ground, fonts, grounds } from "./theme";
+import { BEAT, Ground, fonts, grounds } from "./theme";
 import timeline from "./timeline.json";
 import music from "../audio/music.mp3";
 
@@ -51,7 +51,7 @@ const scenes = timeline.scenes.reduce<{ id: string; ground: Ground; label: strin
     (acc, s) => {
         const prev = acc[acc.length - 1];
         const from = prev ? prev.from + prev.duration : 0;
-        return [...acc, { id: s.id, ground: s.bg as Ground, label: s.label, enter: s.enter as Dir | undefined, from, duration: s.bars * BAR }];
+        return [...acc, { id: s.id, ground: s.bg as Ground, label: s.label, enter: s.enter as Dir | undefined, from, duration: s.beats * BEAT }];
     },
     [],
 );
@@ -60,7 +60,7 @@ const scenes = timeline.scenes.reduce<{ id: string; ground: Ground; label: strin
 scenes.forEach((s, i) => {
     const next = scenes[i + 1];
     const need = readEnds[s.id] + (next?.enter && next.enter !== "zoom" ? WIPE : 0);
-    if (need > s.duration) throw new Error(`timeline.json : la scène "${s.id}" doit durer ${Math.ceil(need / BAR)} mesures pour laisser le temps de lire`);
+    if (need > s.duration) throw new Error(`timeline.json : la scène "${s.id}" doit durer ${Math.ceil(need / BEAT)} temps pour laisser le temps de lire`);
 });
 
 export const totalDuration = scenes[scenes.length - 1].from + scenes[scenes.length - 1].duration;

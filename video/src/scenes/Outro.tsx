@@ -1,17 +1,18 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Typewriter, Words, useMobile } from "../components";
-import { BAR, BEAT, easeInOut, fonts, grounds, progress, readTime } from "../theme";
+import { BEAT, easeInOut, fonts, grounds, progress, readTime } from "../theme";
 import timeline from "../timeline.json";
 
 const g = grounds.accent;
 const display: React.CSSProperties = { fontFamily: fonts.display, fontSize: 160, lineHeight: 1.05, color: g.ink };
 
-// Signature finale à la mesure `signature` de timeline.json : le nom, puis les liens tapés un par temps
+// Signature finale au temps `signature` de timeline.json : le nom, puis les liens tapés un par temps
 // (audio/generate.py place son impact et ses clics de machine à écrire sur ces mêmes instants)
-const SIGNATURE = timeline.scenes.find((s) => s.id === "outro")!.signature! * BAR;
+const SIGNATURE = timeline.scenes.find((s) => s.id === "outro")!.signature! * BEAT;
 const QUESTION = ["Un poste,", "un projet,", "une question ?"];
 const SUB = "Je réponds vite. Disponible pour un CDI ou un CDD.";
+const SUB_AT = QUESTION.length * BEAT;
 const NAME = "Baptiste TABAR LABONNE";
 const links = [
     ["email", "tabarbaptiste@gmail.com"],
@@ -21,7 +22,7 @@ const links = [
 ];
 const linkDelay = (i: number) => SIGNATURE + BEAT + i * BEAT;
 // La question doit être lue avant de céder la place à la signature
-if (4 + readTime(...QUESTION, SUB) + 30 > SIGNATURE) throw new Error("Outro : avancer `signature` dans timeline.json, la question n'a pas le temps d'être lue");
+if (SUB_AT + readTime(SUB) + 30 > SIGNATURE) throw new Error("Outro : avancer `signature` dans timeline.json, la question n'a pas le temps d'être lue");
 export const outroEnd = SIGNATURE + readTime(NAME, ...links.flat());
 
 // La question, puis un seul écran de fin : le nom et tous les liens
@@ -42,7 +43,7 @@ export const Outro: React.FC<{ duration: number; exit?: Dir }> = ({ duration, ex
                 ))}
                 <Words
                     text={SUB}
-                    delay={BAR}
+                    delay={SUB_AT}
                     stagger={2}
                     style={{ fontSize: L.sub, width: L.subWidth, color: g.soft, marginTop: 40 }}
                 />

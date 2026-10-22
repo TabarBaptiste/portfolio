@@ -46,14 +46,15 @@ export const FPS = timeline.fps;
 export const BEAT = (60 / timeline.bpm) * FPS;
 export const BAR = BEAT * 4;
 
-// Vitesse de lecture : un texte reste à l'écran le temps de le trouver (0,5 s) puis de le lire
-// (25 caractères par seconde), arrondi au temps supérieur pour rester sur la musique.
-// Le bloc suivant n'apparaît qu'une fois ce temps écoulé, compté depuis l'apparition du bloc.
-const READ_CPS = 25;
-const READ_FIND = 0.5;
+// Vitesse de lecture : un texte reste à l'écran le temps de le trouver (0,4 s) puis de le lire
+// (33 caractères par seconde), arrondi au temps le plus proche pour rester sur la musique.
+// La lecture commence dès les premières lettres : ce temps est compté depuis l'apparition du bloc,
+// et le bloc suivant arrive dès qu'il est écoulé.
+const READ_CPS = 33;
+const READ_FIND = 0.4;
 export const readTime = (...texts: string[]) => {
     const chars = texts.reduce((n, t) => n + t.length, 0);
-    return Math.ceil(((READ_FIND + chars / READ_CPS) * FPS) / BEAT) * BEAT;
+    return Math.max(1, Math.round(((READ_FIND + chars / READ_CPS) * FPS) / BEAT)) * BEAT;
 };
 
 export const easeOut = Easing.bezier(0.22, 1, 0.36, 1);

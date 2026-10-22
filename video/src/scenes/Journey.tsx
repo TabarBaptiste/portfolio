@@ -1,7 +1,7 @@
 import React from "react";
-import { interpolate, useCurrentFrame } from "remotion";
+import { Easing, interpolate, useCurrentFrame } from "remotion";
 import { Chars, Dir, Scene, Words, useMobile } from "../components";
-import { colors, easeInOut, fonts, grounds, pop, readTime } from "../theme";
+import { colors, fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.night;
 
@@ -17,28 +17,35 @@ const TITLE = "Parcours";
 const SUB = "Du BTS au Mastère, avec trois ans d'alternance.";
 const TODAY_TEXT = ["Aujourd’hui", "disponible pour un CDI ou un CDD"];
 
-// Une étape s'allume une fois la précédente lue (la première une fois le sous-titre lu)
-const AT = steps.reduce<number[]>((t, s, i) => [...t, t[i] + readTime(s.period, s.title, s.place)], [4 + readTime(TITLE, SUB)]);
-const TODAY_AT = AT[steps.length];
+// La frise se lit d'un seul mouvement : une tête de lecture la parcourt, du sous-titre jusqu'à « Aujourd'hui »,
+// sur le temps de lecture de toutes les étapes. Chaque étape s'allume quand la tête l'atteint, la caméra suit sans s'arrêter.
+const START = 4 + readTime(TITLE, SUB);
+const TODAY_AT = START + readTime(...steps.flatMap((s) => [s.period, s.title, s.place]));
 export const journeyEnd = TODAY_AT + readTime(...TODAY_TEXT);
-const MOVE = 36;
+
+// Avancée de la tête : 0 sur la première étape, 1 sur « Aujourd'hui », avec un léger ralenti à l'arrivée
+const headAt = (frame: number) =>
+    interpolate(frame, [START, TODAY_AT], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.3, 0, 0.6, 1) });
+const litAt = (f: number) => {
+    for (let frame = START; frame < TODAY_AT; frame++) if (headAt(frame) >= f) return frame;
+    return TODAY_AT;
+};
+const AT = steps.map((_, i) => litAt(i / steps.length));
 
 // La frise est décrite le long d'un axe : horizontal en 16:9, vertical en 9:16.
-// `start`/`step` placent les étapes sur l'axe, `focus` est la position écran où la caméra amène l'étape qui s'allume.
+// `start`/`step` placent les étapes sur l'axe, `camOffset` est la position écran de la tête une fois que la caméra la suit.
 const geometry = {
-    desktop: { start: 260, step: 560, lineFrom: 160, line: 600, focus: 1300, camOffset: 1000, reach: 1760 },
-    mobile: { start: 720, step: 330, lineFrom: 640, line: 120, focus: 1550, camOffset: 1150, reach: 1900 },
+    desktop: { start: 260, step: 560, lineFrom: 160, line: 600, camOffset: 1000, reach: 1760 },
+    mobile: { start: 720, step: 330, lineFrom: 640, line: 120, camOffset: 1150, reach: 1900 },
 };
 type Geometry = typeof geometry.desktop;
 const todayOf = (geo: Geometry) => geo.start + steps.length * geo.step;
 
-// Travelling le long de la frise : la caméra glisse jusqu'à chaque étape juste avant qu'elle s'allume, puis s'arrête le temps de la lire
+// La caméra prend la tête en douceur quand celle-ci atteint sa position écran, puis la suit
+const SOFT = 200;
 const cameraAt = (frame: number, geo: Geometry) => {
-    const stops = [...steps.map((_, i) => Math.max(0, geo.start + i * geo.step - geo.focus)), todayOf(geo) - geo.camOffset];
-    return stops.reduce((cam, stop, i) => {
-        const from = i === 0 ? 0 : stops[i - 1];
-        return stop === from ? cam : cam + (stop - from) * interpolate(frame, [AT[i] - MOVE, AT[i]], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeInOut });
-    }, 0);
+    const x = geo.start + headAt(frame) * (todayOf(geo) - geo.start) - geo.camOffset;
+    return x <= -SOFT ? 0 : x >= SOFT ? x : (x + SOFT) ** 2 / (4 * SOFT);
 };
 
 export const Journey: React.FC<{ duration: number; exit?: Dir }> = ({ duration, exit }) => {
