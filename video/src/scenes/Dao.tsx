@@ -5,14 +5,14 @@ import { BEAT, colors, fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.night;
 const features = [
-    "Connexion aux serveurs de bases de données",
-    "Exploration des tables depuis la sidebar",
-    "Mots de passe chiffrés en AES-256-CBC",
-    "Erreurs utilisateurs remontées avec Sentry",
+    "Connexion aux bases de données",
+    "Exploration des tables",
+    "Mots de passe chiffrés (AES-256)",
+    "Erreurs suivies avec Sentry",
 ];
 const LABEL = "extension vscode · marketplace";
 const TITLE = "PHP DAO Generator";
-const DESC = "Une demande de mon maître d'apprentissage : générer en quelques secondes les DAO de toute l'équipe.";
+const DESC = "Générer en quelques secondes les DAO de toute l'équipe.";
 // Les fonctionnalités n'arrivent qu'une fois la description lue
 const FEATURES_AT = 8 + readTime(LABEL, TITLE, DESC);
 export const daoEnd = FEATURES_AT + readTime(...features);

@@ -6,10 +6,10 @@ import { easeInOut, fonts, grounds, progress, readTime } from "../theme";
 const g = grounds.accent;
 
 const principles = [
-    { title: "Refondre sans tout casser", lines: ["Refondre sans", "tout casser"], text: "Moderniser du code legacy sans interrompre le service des agents qui l'utilisent." },
-    { title: "Du code qui se relit dans six mois", lines: ["Du code qui se relit", "dans six mois"], text: "Simple et bien typé, pour que la personne qui passe après moi s'y retrouve." },
-    { title: "Livrer, surveiller, corriger", lines: ["Livrer, surveiller,", "corriger"], text: "CI/CD, production suivie avec Sentry, et les bugs corrigés vite." },
-    { title: "Full-stack pour de vrai", lines: ["Full-stack", "pour de vrai"], text: "Base de données, API, interface, déploiement : toute la chaîne." },
+    { title: "Refondre sans tout casser", lines: ["Refondre sans", "tout casser"], text: "Moderniser du legacy sans couper le service." },
+    { title: "Du code qui se relit dans six mois", lines: ["Du code qui se relit", "dans six mois"], text: "Simple et bien typé, pour qui passe après moi." },
+    { title: "Livrer, surveiller, corriger", lines: ["Livrer, surveiller,", "corriger"], text: "CI/CD, suivi Sentry, bugs corrigés vite." },
+    { title: "Full-stack pour de vrai", lines: ["Full-stack", "pour de vrai"], text: "De la base de données au déploiement." },
 ];
 const HEADER = "Comment je travaille";
 // Le prompteur avance quand le principe affiché a eu le temps d'être lu (titre et texte),

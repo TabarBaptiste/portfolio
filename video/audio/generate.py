@@ -206,7 +206,7 @@ def normalize(x, peak=1.0):
 chords = [[57, 60, 64, 67], [53, 57, 60, 64], [60, 64, 67, 71], [55, 59, 62, 64]]  # Am7, Fmaj7, Cmaj7, G6
 roots = [33, 29, 36, 31]
 
-drop = {starts["projects"]}  # la montée avant le zoom sur les projets
+drop = {starts["aly"] - 1}  # la montée avant le zoom sur les projets (dernière mesure de "Projets")
 outro = next(s for s in timeline["scenes"] if s["id"] == "outro")
 signature = starts["outro"] + outro["signature"]  # l'écran final (nom et liens), même mesure que src/scenes/Outro.tsx
 groove_until = starts["outro"] + outro["bars"] - 1  # la dernière mesure ne garde que la nappe
@@ -244,12 +244,12 @@ for b in range(TOTAL_BARS):
                 place(tracks["pluck"], pluck(midi(m)), at + eighth * BEAT / 2, gain=0.7 + 0.3 * (eighth == 0), pan=0.3 * np.sin(b + beat))
 
 # Impacts : le métier, le retour après le zoom, la signature finale
-for b in (groove_from, starts["projects"] + 1, signature):
+for b in (groove_from, starts["aly"], signature):
     place(tracks["fx"], impact(), bar(b), gain=1.0)
 
-# Montée sur la mesure de "Projets", coupée net à l'impact
+# Montée sur la dernière mesure de "Projets", coupée net à l'impact
 rise = sweep(BAR, 250, 7000, lambda x: x**2)
-place(tracks["fx"], rise, bar(starts["projects"]), gain=0.9)
+place(tracks["fx"], rise, bar(starts["aly"] - 1), gain=0.9)
 
 # Whoosh sur chaque volet de transition (il culmine sur la coupe)
 for scene in timeline["scenes"]:

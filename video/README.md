@@ -1,6 +1,6 @@
 # Vidéo de présentation
 
-Vidéo motion design de 2 min 50 (60 i/s) générée avec [Remotion](https://www.remotion.dev/) : chaque scène est un composant React rendu image par image. Elle reprend la charte « Warm Ledger » du site et réutilise directement `../public` (polices, captures, icônes).
+Vidéo motion design de 2 min 20 (60 i/s) générée avec [Remotion](https://www.remotion.dev/) : chaque scène est un composant React rendu image par image. Elle reprend la charte « Warm Ledger » du site et réutilise directement `../public` (polices, captures, icônes).
 
 Deux formats sont produits à partir des mêmes scènes, du même texte et de la même musique :
 
@@ -9,7 +9,7 @@ Deux formats sont produits à partir des mêmes scènes, du même texte et de la
 
 Tout est calé sur une bande-son à 120 BPM (une mesure = 2 s = 120 images) : les mots arrivent sur les temps, les changements de chapitre tombent sur les mesures.
 
-Le rythme suit aussi la vitesse de lecture (`readTime` dans `src/theme.ts` : 0,5 s pour trouver le texte, puis 20 caractères par seconde, arrondi au temps) : un bloc de texte n'apparaît qu'une fois le précédent lu, et une scène ne se termine qu'une fois son dernier texte lu. Si un texte est rallongé, le rendu s'arrête en indiquant combien de mesures donner à la scène dans `src/timeline.json`.
+Le rythme suit aussi la vitesse de lecture (`readTime` dans `src/theme.ts` : 0,5 s pour trouver le texte, puis 25 caractères par seconde, arrondi au temps) : un bloc de texte n'apparaît qu'une fois le précédent lu, et une scène ne se termine qu'une fois son dernier texte lu. Si un texte est rallongé, le rendu s'arrête en indiquant combien de mesures donner à la scène dans `src/timeline.json`.
 
 Rendus finaux : `out/presentation.mp4` et `out/presentation-mobile.mp4`
 

@@ -3,15 +3,15 @@
     "bpm": 120,
     "scenes": [
         { "id": "intro", "bars": 6, "bg": "night", "label": "" },
-        { "id": "stats", "bars": 8, "bg": "paper", "label": "à propos", "enter": "up" },
-        { "id": "principles", "bars": 13, "bg": "accent", "label": "à propos", "enter": "left" },
-        { "id": "projects", "bars": 3, "bg": "paper", "label": "projets", "enter": "iris" },
+        { "id": "stats", "bars": 7, "bg": "paper", "label": "à propos", "enter": "up" },
+        { "id": "principles", "bars": 9, "bg": "accent", "label": "à propos", "enter": "left" },
+        { "id": "projects", "bars": 2, "bg": "paper", "label": "projets", "enter": "iris" },
         { "id": "aly", "bars": 6, "bg": "paper", "label": "projets", "enter": "zoom" },
-        { "id": "dao", "bars": 9, "bg": "night", "label": "projets", "enter": "down" },
+        { "id": "dao", "bars": 6, "bg": "night", "label": "projets", "enter": "down" },
         { "id": "svn", "bars": 5, "bg": "paper", "label": "projets", "enter": "right" },
-        { "id": "others", "bars": 11, "bg": "accent", "label": "projets", "enter": "up" },
+        { "id": "others", "bars": 8, "bg": "accent", "label": "projets", "enter": "up" },
         { "id": "stack", "bars": 3, "bg": "paper", "label": "compétences", "enter": "left" },
-        { "id": "journey", "bars": 14, "bg": "night", "label": "parcours", "enter": "iris" },
+        { "id": "journey", "bars": 11, "bg": "night", "label": "parcours", "enter": "iris" },
         { "id": "outro", "bars": 7, "bg": "accent", "label": "contact", "enter": "up", "signature": 3 }
     ]
 }

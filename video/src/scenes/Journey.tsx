@@ -6,11 +6,10 @@ import { colors, easeInOut, fonts, grounds, pop, readTime } from "../theme";
 const g = grounds.night;
 
 const steps = [
-    { period: "2021 - 2023", title: "BTS SIO, option SLAM", place: "Lycée Léonard de Vinci, Melun" },
-    { period: "2022", title: "Stage développeur web", place: "Crédit Agricole" },
-    { period: "2023", title: "Stage développeur web", place: "RJ Web" },
-    { period: "2023 - 2024", title: "Licence Pro Applications Web", place: "Université d'Évry, Paris-Saclay" },
-    { period: "2023 - 2026", title: "Alternance Full-Stack", place: "Conseil Départemental du Val-de-Marne" },
+    { period: "2021 - 2023", title: "BTS SIO, option SLAM", place: "Lycée Léonard de Vinci" },
+    { period: "2022 - 2023", title: "Stages développeur web", place: "Crédit Agricole, RJ Web" },
+    { period: "2023 - 2024", title: "Licence Pro Applications Web", place: "Université d'Évry" },
+    { period: "2023 - 2026", title: "Alternance Full-Stack", place: "Département du Val-de-Marne" },
     { period: "2024 - 2026", title: "Mastère Architecte Web", place: "Digital School of Paris" },
 ];
 

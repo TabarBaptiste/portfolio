@@ -5,9 +5,9 @@ import { fonts, grounds, pop, readTime } from "../theme";
 
 const g = grounds.accent;
 const others = [
-    { title: "Furious Ducks : Thé Tip Top", text: "Lead dev d'un jeu-concours prévu pour 500 000 codes uniques", tech: "NestJS, Next.js, Redis, K6" },
-    { title: "Furious Ducks : Workflow CI/CD", text: "Pipelines Docker industrialisés sur trois environnements", tech: "Jenkins, GitLab, Harbor, SonarQube" },
-    { title: "Beroli", text: "Application mobile de gestion des interventions terrain", tech: "Flutter, Firebase" },
+    { title: "Furious Ducks : Thé Tip Top", text: "Lead dev, jeu-concours à 500 000 codes", tech: "NestJS, Next.js, Redis, K6" },
+    { title: "Furious Ducks : Workflow CI/CD", text: "Pipelines Docker sur trois environnements", tech: "Jenkins, GitLab, SonarQube" },
+    { title: "Beroli", text: "Appli mobile d'interventions terrain", tech: "Flutter, Firebase" },
     { title: "RjWeb", text: "Plateforme communautaire d'un quartier de Laval", tech: "PHP, MySQL" },
 ];
 const HEADER = "Et aussi";
