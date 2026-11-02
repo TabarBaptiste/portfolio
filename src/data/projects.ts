@@ -2,7 +2,11 @@ export interface Project {
   slug: string;
   title: string;
   description: string;
+  /** Meta description courte (≈ 155 caractères max) pour les moteurs de recherche */
+  seoDescription: string;
   image: string;
+  /** Dimensions réelles de `image`, pour réserver la place et éviter le décalage de mise en page */
+  imageSize?: { width: number; height: number };
   imageLight?: string;
   technologies: string[];
   github?: string;
@@ -31,17 +35,19 @@ export const projects: Project[] = [
     slug: 'alydousheure-fullstack',
     title: 'Aly dous\'heure - Plateforme de réservation',
     description: 'Plateforme web de réservation et de gestion pour une masseuse professionnelle. Système de prise de rendez-vous en ligne, paiement sécurisé, gestion des disponibilités, authentification utilisateur et tableau de bord statistiques pour le professionnel.',
-    image: '/projects/alydousheure/hero.png',
+    seoDescription: 'Plateforme de réservation en production pour une masseuse : prise de rendez-vous, paiement Stripe et tableau de bord. Stack NestJS, Next.js, Prisma.',
+    image: '/projects/alydousheure/hero.webp',
+    imageSize: { width: 1600, height: 764 },
     technologies: ['NestJS', 'Next.js', 'Prisma', 'Supabase', 'Stripe Connect', 'Cloudinary', 'Resend', 'Vercel', 'Render', 'GitHub Actions', 'IONOS'],
     github: 'https://github.com/TabarBaptiste/masseuse',
     demo: 'https://alydousheure.fr/',
     demoLabel: 'Voir le site',
     category: 'web',
     screenshots: [
-      { name: 'Page d\'accueil', path: '/projects/alydousheure/hero.png' },
-      { name: 'Détail d\'un massage', path: '/projects/alydousheure/massage_tonique.png' },
-      { name: 'Liste des soins', path: '/projects/alydousheure/soins.png' },
-      { name: 'Réservation', path: '/projects/alydousheure/reserver.png' },
+      { name: 'Page d\'accueil', path: '/projects/alydousheure/hero.webp' },
+      { name: 'Détail d\'un massage', path: '/projects/alydousheure/massage_tonique.webp' },
+      { name: 'Liste des soins', path: '/projects/alydousheure/soins.webp' },
+      { name: 'Réservation', path: '/projects/alydousheure/reserver.webp' },
     ],
     detailedContent: {
       introduction: 'Plateforme web **full-stack** développée pour digitaliser l\'activité d\'une masseuse professionnelle indépendante.\n\nLe projet couvre l\'ensemble du parcours client : de la découverte des prestations à la réservation en ligne, en passant par le paiement sécurisé et la gestion post-visite (avis clients).\n\nCôté professionnel, l\'application offre un **tableau de bord complet** pour gérer les réservations, visualiser les statistiques, administrer les prestations et paramétrer le site.\n\nL\'architecture est pensée pour être **performante, maintenable et évolutive**, avec une **séparation claire entre frontend et backend**, un **déploiement automatisé** et une **gestion rigoureuse des données sensibles**.',
@@ -163,14 +169,16 @@ export const projects: Project[] = [
     slug: 'dao-generator',
     title: 'Extension VSCode - PHP DAO Generator',
     description: 'Extension VSCode permettant de générer automatiquement des fichiers DAO PHP à partir des attributs d\'une table de base de données. Connexion au serveur via formulaire intégré, génération de code optimisée et monitoring avec Sentry. Disponible sur le marketplace VSCode.',
+    seoDescription: 'Extension VSCode publiée sur le Marketplace qui génère des classes DAO PHP depuis une table de base de données. TypeScript, CI/CD GitHub Actions, Sentry.',
     image: '/projects/logo.png',
+    imageSize: { width: 749, height: 749 },
     technologies: ['TypeScript', 'CI/CD', 'Sentry', 'JavaScript', 'MCP', 'Base de données'],
     github: 'https://github.com/TabarBaptiste/dao-generation',
     demo: 'https://marketplace.visualstudio.com/items?itemName=Baptiste-TABAR-LABONNE.php-dao-generator',
     demoLabel: 'Marketplace',
     category: 'web',
     screenshots: [
-      { name: 'Procesus de génération', path: '/projects/PHP_DAO_Generator-visual_selection.png' },
+      { name: 'Procesus de génération', path: '/projects/PHP_DAO_Generator-visual_selection.webp' },
       { name: 'Workflow CI/CD', path: '/projects/CI-CD-dao.svg' },
       { name: 'Pipline et surveillance automatisés', path: '/projects/monitoring-black-dao.svg' },
       { name: 'Pipline et surveillance automatisés', path: '/projects/monitoring-white-dao.svg' },
@@ -230,6 +238,7 @@ export const projects: Project[] = [
     slug: 'interface-svn',
     title: 'Interface web de gestion SVN',
     description: 'Interface web développée pour le Conseil Départemental du Val-de-Marne afin de centraliser la gestion des dépôts SVN (création, branches, tags, migration de trunk, sauvegardes, utilisateurs) directement depuis le navigateur, sans ligne de commande. Un script wrapper sécurisé, appelé via sudo par Apache, exécute une liste strictement définie d\'opérations serveur sans exposer les scripts sensibles ni ouvrir les droits du groupe Apache.',
+    seoDescription: 'Interface web de gestion des dépôts SVN pour le Conseil départemental du Val-de-Marne : branches, tags, sauvegardes, droits Linux sécurisés. PHP, Bash.',
     image: '',
     technologies: ['PHP', 'Bash', 'Apache', 'Linux', 'SVN', 'Ext JS'],
     category: 'web',
@@ -303,6 +312,7 @@ export const projects: Project[] = [
     slug: 'furious-ducks-thetiptop',
     title: 'Furious Ducks - Thé Tip Top : jeu-concours & refonte de marque',
     description: 'Projet de fin d\'année réalisé en groupe de trois au sein d\'une agence fictive : conception et développement d\'une plateforme de jeu-concours "100% gagnant" pour une marque de thé, avec refonte complète de son identité visuelle et stratégie digitale associée. Architecture full-TypeScript (NestJS, Next.js, PostgreSQL) pensée pour absorber 500 000 codes uniques et des pics de trafic imprévisibles.',
+    seoDescription: 'Jeu-concours « 100 % gagnant » pour une marque de thé : 500 000 codes uniques, refonte de marque. Architecture NestJS, Next.js, PostgreSQL, Redis.',
     image: '',
     technologies: ['NestJS', 'Next.js', 'PostgreSQL', 'Prisma', 'Redis', 'Docker', 'Cypress', 'K6'],
     category: 'web',
@@ -373,6 +383,7 @@ export const projects: Project[] = [
     slug: 'furious-ducks-cicd',
     title: 'Furious Ducks - Workflow CI/CD industrialisé',
     description: 'Conception d\'un workflow CI/CD complet basé sur Docker pour industrialiser la production d\'une agence digitale fictive de 45 collaborateurs : pipelines automatisés (build, tests, sécurité, déploiement) sur trois environnements, monitoring, backups et transition vers l\'Agile Scrum. Projet de fin d\'année, livré avec sa propre infrastructure déployée pour la soutenance.',
+    seoDescription: 'Workflow CI/CD industrialisé sur Docker : Jenkins, GitLab, Harbor, SonarQube, monitoring Prometheus/Grafana et backups Restic sur trois environnements.',
     image: '',
     technologies: ['Docker', 'Jenkins', 'GitLab CE', 'Traefik', 'Harbor', 'SonarQube', 'Prometheus', 'Grafana', 'Loki', 'Restic'],
     category: 'web',
@@ -465,6 +476,7 @@ export const projects: Project[] = [
     slug: 'beroli',
     title: 'Beroli - Application mobile',
     description: 'Application mobile Flutter développée pour optimiser la gestion des interventions terrain d\'une entreprise. Authentification sécurisée, synchronisation en temps réel avec Firebase et interface intuitive pour les techniciens.',
+    seoDescription: 'Application mobile Flutter de gestion des interventions terrain pour techniciens : authentification sécurisée et synchronisation temps réel avec Firebase.',
     image: '',
     technologies: ['Flutter', 'Dart', 'Firebase'],
     github: 'https://github.com/matbel91765/beroli',
@@ -476,7 +488,9 @@ export const projects: Project[] = [
     slug: 'rjweb',
     title: 'RjWeb - Plateforme communautaire',
     description: 'Plateforme web développée durant mon stage pour centraliser les activités du quartier Hilard à Laval. Inscription aux évènements, newsletter automatisée, gestion des participants et espace administrateur complet.',
+    seoDescription: 'Plateforme communautaire PHP/MySQL pour le quartier Hilard à Laval : inscription aux évènements, newsletter automatisée et espace administrateur.',
     image: '/projects/preview.png',
+    imageSize: { width: 1176, height: 800 },
     imageLight: '/projects/preview_white.png',
     technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
     github: 'https://github.com/TabarBaptiste/pyramide',
@@ -484,12 +498,12 @@ export const projects: Project[] = [
     category: 'web',
     screenshots: [
       { name: 'Accueil', path: '/projects/utilisateur.png' },
-      { name: 'Connexion', path: '/projects/connexion.png' },
-      { name: 'Contact', path: '/projects/contact.png' },
-      { name: 'Inscription', path: '/projects/inscription.png' },
+      { name: 'Connexion', path: '/projects/connexion.webp' },
+      { name: 'Contact', path: '/projects/contact.webp' },
+      { name: 'Inscription', path: '/projects/inscription.webp' },
       { name: 'Liste inscrits', path: '/projects/inscrit.png' },
-      { name: 'Profil', path: '/projects/profil.png' },
-      { name: 'À propos', path: '/projects/about.png' }
+      { name: 'Profil', path: '/projects/profil.webp' },
+      { name: 'À propos', path: '/projects/about.webp' }
     ],
     detailedContent: {
       introduction: 'Plateforme web réalisée durant mon stage de BTS pour centraliser et faciliter la gestion des activités du quartier Hilard à Laval. \n\n Le site permettait aux habitants de s’inscrire aux évènements, de recevoir automatiquement les informations importantes par e-mail, et d’accéder à un espace personnel. \n\n Un espace administrateur complet permettait de gérer les évènements, les utilisateurs et les envois de newsletters.',

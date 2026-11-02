@@ -33,11 +33,19 @@ const fontFaces = `
 interface Props {
     title?: string;
     description?: string;
+    /** Exclut la page de l'index des moteurs (ex. 404) */
+    noindex?: boolean;
+    ogType?: "website" | "article";
+    /** Données structurées JSON-LD propres à la page, ajoutées à celles du site */
+    structuredData?: Record<string, unknown>[];
 }
 
 const {
     title = "Baptiste TABAR LABONNE - Développeur Full-Stack",
     description = "Portfolio de Baptiste TABAR LABONNE, développeur Full-Stack spécialisé en architectures web modernes, Next.js, NestJS et TypeScript.",
+    noindex = false,
+    ogType = "website",
+    structuredData = [],
 } = Astro.props;
 
 const gaId = import.meta.env.ID_GOOGLE_ANALYTICS ?? "";
@@ -50,9 +58,16 @@ const jsonLd = JSON.stringify([
     {
         "@context": "https://schema.org",
         "@type": "Person",
+        "@id": `${siteUrl}/#person`,
         name: "Baptiste TABAR LABONNE",
         jobTitle: "Développeur Full-Stack",
         url: siteUrl,
+        email: "mailto:tabarbaptiste@gmail.com",
+        alumniOf: [
+            { "@type": "EducationalOrganization", name: "Digital School of Paris - Institut F2I" },
+            { "@type": "CollegeOrUniversity", name: "Université d'Evry Val d'Essonne - Paris Saclay" },
+        ],
+        knowsAbout: ["TypeScript", "Next.js", "NestJS", "PostgreSQL", "Prisma", "Docker", "CI/CD", "PHP", "Architecture web"],
         sameAs: [
             "https://github.com/TabarBaptiste",
             "https://www.linkedin.com/in/baptiste-tabar-labonne/",
@@ -63,7 +78,10 @@ const jsonLd = JSON.stringify([
         "@type": "WebSite",
         name: "Baptiste TABAR LABONNE - Développeur Full-Stack",
         url: siteUrl,
+        inLanguage: "fr-FR",
+        author: { "@id": `${siteUrl}/#person` },
     },
+    ...structuredData,
 ]);
 ---
 
@@ -77,7 +95,7 @@ const jsonLd = JSON.stringify([
         <meta name="generator" content={Astro.generator} />
         <meta name="theme-color" content="#FAF8F3" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#131312" media="(prefers-color-scheme: dark)" />
-        <link rel="canonical" href={canonicalUrl} />
+        {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
         <!-- Fonts auto-hébergées : preload des fichiers utilisés dès le premier écran -->
@@ -97,7 +115,7 @@ const jsonLd = JSON.stringify([
         </script>
 
         <!-- Open Graph -->
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={ogType} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />

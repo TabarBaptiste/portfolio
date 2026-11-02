@@ -19,6 +19,31 @@ interface Props {
 
 const { project } = Astro.props;
 
+const siteUrl = "https://portfolio-tabarlabonne.netlify.app";
+const pageUrl = new URL(`/projects/${project.slug}/`, siteUrl).href;
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: `${siteUrl}/` },
+      { "@type": "ListItem", position: 2, name: project.title, item: pageUrl },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.description,
+    url: pageUrl,
+    inLanguage: "fr-FR",
+    author: { "@id": `${siteUrl}/#person` },
+    keywords: project.technologies.join(", "),
+    ...(project.image && { image: new URL(project.image, siteUrl).href }),
+    ...(project.github && { sameAs: project.github }),
+  },
+];
+
 // Mise en forme légère : **gras** et `code`
 const formatText = (text: string) =>
   text
@@ -31,7 +56,9 @@ const formatText = (text: string) =>
 
 <Layout
   title={`${project.title} - Baptiste TABAR LABONNE`}
-  description={project.description}
+  description={project.seoDescription}
+  ogType="article"
+  structuredData={structuredData}
 >
   <Header />
   <main id="main" class="min-h-[100dvh]">
@@ -87,6 +114,8 @@ const formatText = (text: string) =>
             <img
               src={project.image}
               alt={`Aperçu du projet ${project.title}`}
+              width={project.imageSize?.width}
+              height={project.imageSize?.height}
               class={project.image.includes('logo') ? 'w-full h-48 object-contain bg-white p-6' : 'w-full object-cover'}
               loading="eager"
             />
